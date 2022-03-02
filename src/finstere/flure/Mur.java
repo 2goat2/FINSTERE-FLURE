@@ -9,15 +9,12 @@ package finstere.flure;
  *
  * @author nadim
  */
-
- 
-public class Espace {
+public class Mur extends Espace{
     
-    private boolean occupe = true;
+    private String lettre = "A";
+    private final boolean s = false;
     
-    public Espace(boolean s){
-        this.occupe = s;
-
+    public Mur(boolean s){
+       super(s);
     }
-
 }
