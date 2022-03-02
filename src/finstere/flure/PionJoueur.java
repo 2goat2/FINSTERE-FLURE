@@ -9,6 +9,6 @@ package finstere.flure;
  *
  * @author nadim
  */
-public class Something {
-    //ffffffff
+public class PionJoueur {
+    
 }
