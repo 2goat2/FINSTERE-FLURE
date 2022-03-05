@@ -104,10 +104,12 @@ public class Espace {
             affichage = "|" + ((Joueur) obj).getNom().charAt(0) + "|";
         } else if (obj.getClass().equals(Pierre.class)) {
             affichage = "|🪨|";
+        } else if (obj.getClass().equals(Flague.class)) {
+            affichage = "|⛖|";
         } else if (obj.getClass().equals(Pivot90.class)) {
             affichage = "|⮔|";
         } else if (obj.getClass().equals(Pivot180.class)) {
-            affichage = "|⇼|";
+            affichage = "|⛖|";
         } else if (obj.getClass().equals(PionMonstre.class)) {
             switch (((PionMonstre) obj).getDirection()) {
                 case NORTH:
