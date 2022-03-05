@@ -172,6 +172,7 @@ public class Espace {
     }
 
     // Méthode toString
+    @Override
     public String toString() {
         return affichage;
     }

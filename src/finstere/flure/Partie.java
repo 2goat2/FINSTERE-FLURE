@@ -6,9 +6,18 @@
 package finstere.flure;
 
 /**
+ * Classe Partie qui gére et lance un partie du jeu
  *
  * @author nadim
  */
 public class Partie {
-    //ffffffff
+
+    public Partie() {
+
+    }
+
+    public void start() {
+        Plateau p = new Plateau();
+   
+    }
 }
