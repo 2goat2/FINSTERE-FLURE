@@ -15,8 +15,9 @@ import java.util.Arrays;
 public class Plateau {
 
     /**
-     * Variable qui répresente le plateau 1 => pour dire que cet index n’est pas
-     * occupé 0 => pour dire que cet index est occupé
+     * Variable qui répresente le plateau
+     * 1 => pour dire que cet index n’est pas occupé
+     * 0 => pour dire que cet index est occupé
      */
     private final int[][] booleanPlateau = {
         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0},
