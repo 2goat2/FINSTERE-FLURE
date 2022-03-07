@@ -98,9 +98,9 @@ public class Espace {
             return false;
         }
         this.obj = obj;
-        if (obj == null) {
+        if (obj == null) {//sssssssssssssssssssssssssssssssssssssssssssss
             affichage = "| |";
-        }// A place de : obj instanceof Joueur joueur 
+        }// A place de :obj instanceof Joueur joueur 
         else if (obj.getClass().equals(Joueur.class)) {
             affichage = "|" + ((Joueur) obj).getNom().charAt(0) + "|";
         } else if (obj.getClass().equals(Pierre.class)) {
