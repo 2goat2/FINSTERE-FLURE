@@ -25,8 +25,12 @@ public class PionJoueur {
         return this.couleur;
     }
     
-    public boolean getFace(){
-        return this.face;
+    public String getFace(){
+        if(this.face==true){
+            return "claire";
+        }else{
+            return "false";
+        }
     }
     
     public void setFace(boolean f){
@@ -35,10 +39,6 @@ public class PionJoueur {
     
     @Override
     public String toString(){
-        String stringCouleur="";
-        for(int i = 0 ; i < this.couleur.length ; i++){
-            stringCouleur=this.couleur[i];
-        }
-        return stringCouleur;
+        return getCouleur() + " face " + getFace();
     }
 }
