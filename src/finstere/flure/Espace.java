@@ -100,7 +100,8 @@ public class Espace {
         this.obj = obj;
         if (obj == null) {
             affichage = "| |";
-        } else if (obj.getClass().equals(Joueur.class)) {
+        }// A place de : obj instanceof Joueur joueur 
+        else if (obj.getClass().equals(Joueur.class)) {
             affichage = "|" + ((Joueur) obj).getNom().charAt(0) + "|";
         } else if (obj.getClass().equals(Pierre.class)) {
             affichage = "|🪨|";
