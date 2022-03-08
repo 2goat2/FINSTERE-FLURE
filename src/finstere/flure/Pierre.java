@@ -9,6 +9,14 @@ package finstere.flure;
  *
  * @author nadim
  */
-public class Pierre {
+public class Pierre extends Obstacle{
+    private int x,y;//
+    private int ax,ay;//précédent
+    
+    public Pierre(int x, int y){
+        this.x=x;
+        this.y=y;
+    }
+    
     
 }

@@ -11,25 +11,27 @@ package finstere.flure;
  */
 public class PionJoueur {
     
-    
-    private String[] couleur = new String[]{"bleu","brun","gris","vert","violet","rouge","jaune"};//Tableau String des couleurs
+    private int nombre;
+    private String couleur;
     private boolean face;//true : face claire ; false : face foncée
     
-    //Constructeur
-    public PionJoueur(String[] c, boolean f){
-        this.couleur=c;
+    public void init(int n, String c, boolean f){
+        
+        this.nombre=n;
+        this.couleur=c; 
         this.face=f;
     }
     
-    public String[] getCouleur(){
-        return this.couleur;
+    
+    public String getCouleur(){
+        return couleur;
     }
     
     public String getFace(){
         if(this.face==true){
             return "claire";
         }else{
-            return "false";
+            return "foncé";
         }
     }
     
