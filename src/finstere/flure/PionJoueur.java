@@ -9,14 +9,15 @@ package finstere.flure;
  *
  * @author nadim
  */
-public class PionJoueur {
+public class PionJoueur extends Pion{
     
     
     private String[] couleur = new String[]{"bleu","brun","gris","vert","violet","rouge","jaune"};//Tableau String des couleurs
     private boolean face;//true : face claire ; false : face foncée
     
     //Constructeur
-    public PionJoueur(String[] c, boolean f){
+    public PionJoueur(int x, int y, String[] c, boolean f){
+        super(x,y);
         this.couleur=c;
         this.face=f;
     }

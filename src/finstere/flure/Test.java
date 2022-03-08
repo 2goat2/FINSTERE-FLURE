@@ -17,6 +17,8 @@ public class Test {
     public static void main(String[] args) {
         Espace e = new Espace();
         System.out.println(e.toString());
+        
+        Plateau p = new Plateau();
     }
     
 }

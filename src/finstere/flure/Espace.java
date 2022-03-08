@@ -62,7 +62,7 @@ public class Espace {
         this.y = y;
         this.estOccupe = estOccupe;
         if (!estOccupe) {
-            affichage = "|X|";
+            affichage = "| |";
         }
 
     }
@@ -99,7 +99,7 @@ public class Espace {
         }
         this.obj = obj;
         if (obj == null) {//sssssssssssssssssssssssssssssssssssssssssssss
-            affichage = "| |";
+            affichage = "|X|";
         }// A place de :obj instanceof Joueur joueur 
         else if (obj.getClass().equals(Joueur.class)) {
             affichage = "|" + ((Joueur) obj).getNom().charAt(0) + "|";

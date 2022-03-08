@@ -9,6 +9,12 @@ package finstere.flure;
  *
  * @author nadim
  */
-public class Pion {
-    
+public abstract class Pion {
+
+    private final int x, y;
+
+    public Pion(int a, int b) {
+        this.x = a;
+        this.y = b;
+    }
 }
