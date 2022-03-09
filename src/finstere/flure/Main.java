@@ -36,7 +36,7 @@ public class Main {
             System.out.println("1. Nouvelle Partie");
             System.out.println("2. Quitter");
 
-            switch (Main.scanner.nextInt()) {
+             switch (Main.scanner.nextInt()) {
 
                 case 1:
                     partie = new Partie();

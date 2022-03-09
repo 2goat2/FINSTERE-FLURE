@@ -15,11 +15,10 @@ public class Test {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        PionJoueur pj = new PionJoueur();
-        Pion p = new Pion();
-        System.out.println(pj);
-        System.out.println(p);
+        Espace e = new Espace();
+        //System.out.println(e.toString());
         
+        Plateau p = new Plateau();
     }
     
 }
