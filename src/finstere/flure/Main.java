@@ -29,7 +29,7 @@ public class Main {
 
     private static void displayMainMenu() {
 
-        while (true) {
+       // while (true) {
 
             affichageLOGO();
 
@@ -40,7 +40,7 @@ public class Main {
 
                 case 1:
                     partie = new Partie();
-                    Main.partie.start();
+                    Main.partie.initJoueur();
                     break;
                 case 2:
                     System.exit(0);
@@ -52,7 +52,7 @@ public class Main {
             }
         }
 
-    }
+    //}
 
     private static void affichageLOGO() {
         System.out.println("             .                     .x+=:.        s                                                                   ..                                        ");

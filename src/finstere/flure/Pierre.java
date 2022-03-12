@@ -10,7 +10,7 @@ package finstere.flure;
  * @author nadim
  */
     //Classe Pierre
-public class Pierre extends Obstacle{
+public class Pierre{
     private final int x;//
     private final int y;//
     private int ax,ay;//précédent

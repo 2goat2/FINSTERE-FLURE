@@ -5,6 +5,8 @@
  */
 package finstere.flure;
 
+import java.util.Arrays;
+
 /**
  *
  * @author damie
@@ -15,11 +17,9 @@ public class Test {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Espace e = new Espace();
         //System.out.println(e.toString());
+        Joueur n = new Joueur("s");
         
-        Plateau p = new Plateau();
-        //ddddddddd
     }
     
 }

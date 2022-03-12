@@ -11,10 +11,35 @@ package finstere.flure;
  */
 public abstract class Pion {
 
-    private final int x, y;
+    // Les coordonées de chaque pion [ joueur - monstre ]
+    private int x;
+    private int y;
 
-    public Pion(int a, int b) {
-        this.x = a;
-        this.y = b;
+    /**
+     * @return the x
+     */
+    public int getX() {
+        return x;
+    }
+
+    /**
+     * @param x the x to set
+     */
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    /**
+     * @return the y
+     */
+    public int getY() {
+        return y;
+    }
+
+    /**
+     * @param y the y to set
+     */
+    public void setY(int y) {
+        this.y = y;
     }
 }

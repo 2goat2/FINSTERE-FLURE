@@ -22,7 +22,7 @@ public class Espace {
     private Object obj = null;
 
     //Permet d'afficher l'espace
-    private String affichage = "| |";
+    private String affichage = "|X|";
 
     //Orientations
     private final int NORTH = 1, EAST = 2, SOUTH = 3, WEST = 4;
@@ -43,7 +43,7 @@ public class Espace {
     public Espace(boolean estOccupe) {
         this.estOccupe = estOccupe;
         if (!estOccupe) {
-            affichage = "|X|";
+            affichage = "| |";
         }
 
     }
@@ -98,13 +98,14 @@ public class Espace {
             return false;
         }
         this.obj = obj;
-        if (obj == null) {//sssssssssssssssssssssssssssssssssssssssssssss
-            affichage = "|X|";
+        if (obj == null) {
+            affichage = "| |";
         }// A place de :obj instanceof Joueur joueur 
-        else if (obj.getClass().equals(Joueur.class)) {
-            affichage = "|" + ((Joueur) obj).getNom().charAt(0) + "|";
+        else if (obj.getClass().equals(PionJoueur.class)) {
+            // affichage = "|" + ((Joueur) obj).getNom().charAt(0) + "|";
+            affichage = "|J|";
         } else if (obj.getClass().equals(Pierre.class)) {
-            affichage = "|🪨|";
+            affichage = "|?|";
         } else if (obj.getClass().equals(Flague.class)) {
             affichage = "|⛖|";
         } else if (obj.getClass().equals(Pivot90.class)) {
@@ -180,15 +181,24 @@ public class Espace {
         return affichage;
     }
 
-    // Méthode pour supprimer l'objet d'un espace
-    public Object supprimerObjet() {
+    /*
+    * Méthode pour supprimer l'objet d'un espace
+    */
+    public boolean supprimerObject() {
         Object temp = obj;
         obj = null;
-        if (estOccupe) {
+        if (!estOccupe) {
             affichage = "| |";
         } else {
             affichage = "|X|";
         }
-        return temp;
+        return true;
+    }
+
+    /*
+    * Méthode pour modifier l'affichage d'un espace
+     */
+    public void setAffichage(int x) {
+        this.affichage = " " + x;
     }
 }
