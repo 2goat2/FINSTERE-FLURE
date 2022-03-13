@@ -18,7 +18,10 @@ public class Test {
      */
     public static void main(String[] args) {
         //System.out.println(e.toString());
-        Joueur n = new Joueur("s");
+        
+        Partie pl = new Partie();
+        pl.start();
+        
         
     }
     

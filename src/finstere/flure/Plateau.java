@@ -53,6 +53,8 @@ public final class Plateau {
      */
     private void initPlateau() {
 
+        System.out.println("\n");
+
         for (int i = 0; i < getHauteur(); i++) {
             for (int j = 0; j < getLargeur(); j++) {
 
@@ -60,7 +62,7 @@ public final class Plateau {
                     this.getPlateau()[i][j] = new Espace(true);
                     this.getPlateau()[i][j].setAffichage(i + 1);
                 } else if (this.getBooleanPlateau()[i][j] == 1) {
-                    this.getPlateau()[i][j] = new Espace(true);
+                    this.getPlateau()[i][j] = new Espace(false);
                     //System.out.println(this.plateau[i][j].toString());
                     //System.out.println(Arrays.toString(this.plateau[i]));
                 } else {
@@ -74,7 +76,7 @@ public final class Plateau {
         /*
         * Afficher un ligne des integers correspondant à chaque index de chaque colone.
         * avant d'afficher le plateau.
-        */
+         */
         String[] tabIndex = new String[getLargeur()];
         tabIndex[0] = "X/Y";
         for (int i = 1; i < getLargeur(); i++) {
@@ -98,13 +100,13 @@ public final class Plateau {
      * @param y
      * @param p
      */
-    public boolean set(int x, int y, Object obj) {
+    public boolean setObjet(int x, int y, Object obj) {
         return this.plateau[x][y].ajouterObjet(obj);
 
     }
 
-    public boolean moveup(int x, int y, Object obj) {
-        return this.set(x + 1, y, obj)
+    public boolean moveupObjet(int x, int y, Object obj) {
+        return this.setObjet(x + 1, y, obj)
                 && this.plateau[x][y].supprimerObject();
     }
 
@@ -163,15 +165,26 @@ public final class Plateau {
     public void setPlateau(Espace[][] plateau) {
         this.plateau = plateau;
     }
-    
-    
+
     /**
-     * Méthode pour afficher le plateau. 
+     * Méthode pour afficher le plateau.
      */
     public void print() {
-        for (int i = 0; i < getHauteur(); i++) {
-            System.out.println(Arrays.toString(this.getPlateau()[i]));
+
+        String[] tabIndex = new String[getLargeur()];
+        tabIndex[0] = "X/Y";
+        for (int i = 1; i < getLargeur(); i++) {
+            tabIndex[i] = " " + i + " ";
         }
+
+        System.out.println(Arrays.toString(tabIndex).replace("[", "").replace("]", "").replace(",", "-").replace("  10 -  11 -  12 -  13 -  14 -  15 -  16 ", " 10 - 11 - 12 - 13 - 14 - 15 - 16").replace("  1", " 1").replace("X/Y-", "X/Y "));
+
+        //Affichage modifiée!
+        for (int i = 0; i < getHauteur(); i++) {
+            System.out.println(Arrays.toString(this.getPlateau()[i]).replace("[", "").replace("]", "").replace(",", "-").replace("10- ", "10-").replace("11- ", "11-").replace("X/Y-", "X/Y "));
+        }
+        
+        System.out.println("\n");
 
     }
 

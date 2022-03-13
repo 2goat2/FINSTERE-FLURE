@@ -13,21 +13,22 @@ public class PionJoueur extends Pion {
 
     //Tableau String des couleurs
     private String[] couleur = new String[]{"bleu", "brun", "gris", "vert", "violet", "rouge", "jaune"};
-    
+
     //true : face foncée ; false : face claire
     private boolean face = false;
-    
+
     //permet de savoir si le pion est mort ou pas 
     private boolean perdu = false;
-    
+
     //2 variables qui stockent les valeurs de chaque face du pion
     private int valeurDeFaceFonce, valeurDeFaceClaire;
-    
+
     //permet de savoir si le pion est utilisé ou pas*
     private boolean utilise = false;
-    
+
     //Constructeur
-    public PionJoueur(boolean face, int f1, int f2) {
+    public PionJoueur(int x, int y, boolean face, int f1, int f2) {
+        super(x, y);
         this.face = face;
         this.valeurDeFaceClaire = f1;
         this.valeurDeFaceFonce = f2;
@@ -110,7 +111,6 @@ public class PionJoueur extends Pion {
     public void setValeurDeFaceClaire(int valeurDeFaceClaire) {
         this.valeurDeFaceClaire = valeurDeFaceClaire;
     }
-
 
     /**
      * @return the utilise
