@@ -47,7 +47,7 @@ public class Partie {
 
             Scanner sc = new Scanner(System.in);
             String nom = "";
-            while ((nom == "") || (nom == "\n")) {
+            while (("".equals(nom)) || ("\n".equals(nom))) {
                 System.out.println("Veuillez entrer le nom du joueur " + (i + 1));
                 nom = sc.nextLine();
             }
@@ -98,6 +98,8 @@ public class Partie {
                 int yScanne = 1;
 
                 do {
+                    
+                    
 
                     System.out.println("Le pion " + this.listJoueur.get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.listJoueur.get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.listJoueur.get(i).getNom() + " est hors le plateau!");
                     System.out.println(this.listJoueur.get(i).getPions().get(j).getValeurActuelle() + " cases possible pour ce pion.");
@@ -116,15 +118,17 @@ public class Partie {
                         yScanne = scY.nextInt();
                     }
 
-                } while (mettreEtVerifierUnObjetDansUneCase(xScanne - 1, yScanne, this.listJoueur.get(i).getPions().get(i)));
+                } while (deplacerEtVerifierUnObjetDansUneCase(xScanne - 1, yScanne, this.listJoueur.get(i).getPions().get(j)));
 
-                this.listJoueur.get(i).getPions().get(i).setX(xScanne);
-                this.listJoueur.get(i).getPions().get(i).setY(yScanne);
+                this.listJoueur.get(i).getPions().get(j).setX(xScanne);
+                this.listJoueur.get(i).getPions().get(j).setY(yScanne);
 
-                this.p.setObjet(xScanne - 1, yScanne, this.listJoueur.get(i).getPions().get(i));
+                this.p.setObjet(xScanne - 1, yScanne, this.listJoueur.get(i).getPions().get(j));
                 this.p.print();
             }
         }
+        
+        
     }
 
     private void mettreLeMontreSurPlateau() {
@@ -145,24 +149,24 @@ public class Partie {
 
         return jNoms.toString();
     }
+   
 
-    private boolean mettreEtVerifierUnObjetDansUneCase(int x, int y, Object obj) {
+    private boolean deplacerEtVerifierUnObjetDansUneCase(int x, int y, Object obj) {
 
-        if (obj != null) {
-            System.out.println("Objet Null");
-            return false;
-        } else if (this.p.getPlateau()[x][y].isOccupee()) {
+        if (this.p.getPlateau()[x][y].isOccupee()) {
             //Ajouter Des conditions pour chaque objet !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            System.out.println("Case occupée!");
-            return false;
+            System.out.println("Case occupée!\n");
+            return true;
         } else if (obj.getClass().equals(PionJoueur.class)) {
             PionJoueur pionJoueur = (PionJoueur) obj;
             if (pionJoueur.getX() == x && pionJoueur.getY() == y) {
                 System.out.println("Voulez-vous rester sur la même case ? (oui/non)");
                 Scanner sc = new Scanner(System.in);
                 String s = sc.nextLine();
-                return "oui".equals(s);
-            } else return !((x > pionJoueur.getX() + 1 || x < pionJoueur.getX() - 1) && (y > pionJoueur.getY() + 1 || y < pionJoueur.getY() - 1));
+                return !"oui".equals(s);
+            } else {
+                return !((x > pionJoueur.getX() + 1 || x < pionJoueur.getX() - 1) && (y > pionJoueur.getY() + 1 || y < pionJoueur.getY() - 1));
+            }
         } else {
             return false;
         }

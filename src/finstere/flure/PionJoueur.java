@@ -31,6 +31,9 @@ public class PionJoueur extends Pion {
     
     //permet de compter les espaces où le pion déplace
     private int compteur;
+    
+    //permet de garder les coordonées anciennces
+    private int xAncien, yAncien;
 
     //Constructeur
     public PionJoueur(int x, int y, boolean face, int f1, int f2) {
@@ -40,7 +43,9 @@ public class PionJoueur extends Pion {
         this.valeurDeFaceFonce = f2;
         this.utilise = false;
         this.valeurActuelle = this.valeurDeFaceClaire;
-        compteur = 0;
+        compteur = this.valeurActuelle;
+        this.xAncien = 0;
+        this.yAncien = 0;
     }
 
     public String[] getCouleur() {
@@ -156,6 +161,34 @@ public class PionJoueur extends Pion {
     
     public int getCompteur(){
         return this.compteur;
+    }
+
+    /**
+     * @return the xAncien
+     */
+    public int getxAncien() {
+        return xAncien;
+    }
+
+    /**
+     * @param xAncien the xAncien to set
+     */
+    public void setxAncien(int xAncien) {
+        this.xAncien = xAncien;
+    }
+
+    /**
+     * @return the yAncien
+     */
+    public int getyAncien() {
+        return yAncien;
+    }
+
+    /**
+     * @param yAncien the yAncien to set
+     */
+    public void setyAncien(int yAncien) {
+        this.yAncien = yAncien;
     }
       
     

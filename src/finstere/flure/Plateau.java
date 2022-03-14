@@ -109,13 +109,13 @@ public final class Plateau {
      Les Méthodes : moveupObjet, moveDownObjet, moveLeftObjet, moveRightObjet
         Pour déplacer un objet une case sur le plateau.
     */
-    public boolean moveupObjet(int x, int y, Object obj) {
-        return this.setObjet(x+1, y, obj)
+    public boolean moveUpObjet(int x, int y, Object obj) {
+        return this.setObjet(x-1, y, obj)
                 && this.plateau[x][y].supprimerObject();
     }
 
     public boolean moveDownObjet(int x, int y, Object obj) {
-        return this.setObjet(x-1, y, obj)
+        return this.setObjet(x+1, y, obj)
                 && this.plateau[x][y].supprimerObject();
     }
 
