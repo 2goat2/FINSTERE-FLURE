@@ -26,6 +26,12 @@ public class PionJoueur extends Pion {
     //permet de savoir si le pion est utilisé ou pas*
     private boolean utilise = false;
 
+    //permet de stocker la valeur de la face utilisée
+    private int valeurActuelle;
+    
+    //permet de compter les espaces où le pion déplace
+    private int compteur;
+
     //Constructeur
     public PionJoueur(int x, int y, boolean face, int f1, int f2) {
         super(x, y);
@@ -33,6 +39,8 @@ public class PionJoueur extends Pion {
         this.valeurDeFaceClaire = f1;
         this.valeurDeFaceFonce = f2;
         this.utilise = false;
+        this.valeurActuelle = this.valeurDeFaceClaire;
+        compteur = 0;
     }
 
     public String[] getCouleur() {
@@ -125,4 +133,30 @@ public class PionJoueur extends Pion {
     public void setUtilise(boolean utilise) {
         this.utilise = utilise;
     }
+
+    /**
+     * @return the valeurActuelle
+     */
+    public int getValeurActuelle() {
+        return valeurActuelle;
+    }
+
+    /**
+     * @param valeurActuelle the valeurActuelle to set
+     */
+    public void flipValeurActuelle() {
+        if (this.valeurActuelle == this.valeurDeFaceClaire) {
+            this.valeurActuelle = this.valeurDeFaceFonce;
+        } else this.valeurActuelle = this.valeurDeFaceClaire;
+    }
+    
+    public void setCompteur(int i){
+        this.compteur = i;
+    }
+    
+    public int getCompteur(){
+        return this.compteur;
+    }
+      
+    
 }

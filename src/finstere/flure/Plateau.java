@@ -78,7 +78,7 @@ public final class Plateau {
         * avant d'afficher le plateau.
          */
         String[] tabIndex = new String[getLargeur()];
-        tabIndex[0] = "X/Y";
+        tabIndex[0] = "Y/X";
         for (int i = 1; i < getLargeur(); i++) {
             tabIndex[i] = " " + i + " ";
         }
@@ -105,8 +105,27 @@ public final class Plateau {
 
     }
 
+    /*
+     Les Méthodes : moveupObjet, moveDownObjet, moveLeftObjet, moveRightObjet
+        Pour déplacer un objet une case sur le plateau.
+    */
     public boolean moveupObjet(int x, int y, Object obj) {
-        return this.setObjet(x + 1, y, obj)
+        return this.setObjet(x+1, y, obj)
+                && this.plateau[x][y].supprimerObject();
+    }
+
+    public boolean moveDownObjet(int x, int y, Object obj) {
+        return this.setObjet(x-1, y, obj)
+                && this.plateau[x][y].supprimerObject();
+    }
+
+    public boolean moveLeftObjet(int x, int y, Object obj) {
+        return this.setObjet(x, y-1, obj)
+                && this.plateau[x][y].supprimerObject();
+    }
+
+    public boolean moveRightObjet(int x, int y, Object obj) {
+        return this.setObjet(x, y+1, obj)
                 && this.plateau[x][y].supprimerObject();
     }
 
@@ -183,7 +202,7 @@ public final class Plateau {
         for (int i = 0; i < getHauteur(); i++) {
             System.out.println(Arrays.toString(this.getPlateau()[i]).replace("[", "").replace("]", "").replace(",", "-").replace("10- ", "10-").replace("11- ", "11-").replace("X/Y-", "X/Y "));
         }
-        
+
         System.out.println("\n");
 
     }

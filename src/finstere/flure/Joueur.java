@@ -44,4 +44,8 @@ public class Joueur {
     public ArrayList<PionJoueur> getPions(){
         return this.pion;
     }
+    
+    public String toString(){
+        return this.nom;
+    }
 }
