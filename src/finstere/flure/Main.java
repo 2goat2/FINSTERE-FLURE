@@ -5,21 +5,56 @@
  */
 package finstere.flure;
 
+import java.util.Scanner;
+
 /**
  *
  * @author nadim
  */
 public class Main {
 
+    //Constantes statiques pour faciliter les entrées:
+    public final static Scanner scanner = new Scanner(System.in);
+    public final static String msgErreurEntree = "\nErreur, veuillez entrer une valeur correspondant au menu affiché";
+
+    //Partie de jeu
+    private static Partie partie;
+
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // Appeler la fonction qui affiche le menu par Class Menu
-
+        Main.displayMainMenu();
     }
 
-    private void affichageLOGO() {
+    private static void displayMainMenu() {
+
+       // while (true) {
+
+            affichageLOGO();
+
+            System.out.println("1. Nouvelle Partie");
+            System.out.println("2. Quitter");
+
+             switch (Main.scanner.nextInt()) {
+
+                case 1:
+                    partie = new Partie();
+                    Main.partie.initJoueur();
+                    break;
+                case 2:
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println(Main.msgErreurEntree);
+                    break;
+
+            }
+        }
+
+    //}
+
+    private static void affichageLOGO() {
         System.out.println("             .                     .x+=:.        s                                                                   ..                                        ");
         System.out.println("   oec :    @88>                  z`    ^%      :8                                                      oec :  x .d88\"                                         ");
         System.out.println("  @88888    %8P      u.    u.        .   <k    .88                  .u    .                            @88888   5888R      x.    .        .u    .              ");

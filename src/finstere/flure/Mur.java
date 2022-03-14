@@ -9,6 +9,14 @@ package finstere.flure;
  *
  * @author nadim
  */
-public class Menu {
-    //pusujh
+public class Mur extends Espace{
+    
+    private int x,y;
+    private String lettre = "A";
+    private final boolean s = false;
+    
+    public Mur(int x, int y, boolean s){
+       super(s);
+       
+    }
 }

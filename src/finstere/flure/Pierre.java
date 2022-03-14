@@ -9,6 +9,17 @@ package finstere.flure;
  *
  * @author nadim
  */
-public class Pierre {
+    //Classe Pierre
+public class Pierre{
+    private final int x;//
+    private final int y;//
+    private int ax,ay;//précédent
+    
+    public Pierre(int x, int y){
+        this.x=x;
+        this.y=y;
+    }
+    
+    
     
 }
