@@ -20,7 +20,7 @@ public class PionMonstre {
     private int WEST = 4;
     private Plateau plateau;
     private Direction directions;
-    private final int pionsTues;
+    private int pionsTues;
     private int x,y;
     private int mouvement = 1;
 
@@ -40,23 +40,13 @@ public class PionMonstre {
             int droite = regarder(getDirections().getDroite(this.getDirection()));
             int droit = regarder(this.getDirection());
 
-            if (gauche < droit && gauche != 0) {
+
                 if (gauche > droite && droite != 0) {
                     this.setDirection(getDirections().getDroite(this.getDirection()));
                     this.getPlateau().deplacerLeMonstreUneFois(this);
-                } else {
+                } else if(droite > gauche && gauche != 0){
                     this.setDirection(this.getDirections().getGauche(this.getDirection()));
                     this.getPlateau().deplacerLeMonstreUneFois(this);
-                }
-            }
-            if (droite < gauche && droite != 0) {
-                if (droite > gauche && gauche != 0) {
-                    this.setDirection(this.getDirections().getGauche(this.getDirection()));
-                    this.getPlateau().deplacerLeMonstreUneFois(this);
-                } else {
-                    this.setDirection(this.getDirections().getDroite(this.getDirection()));
-                    this.getPlateau().deplacerLeMonstreUneFois(this);
-                }
             } else {
                 //straight
                 if (regarderObjet(this.getDirection()) != null && Objects.requireNonNull(regarderObjet(this.getDirection())).getClass() == Pierre.class) {
@@ -316,5 +306,7 @@ public class PionMonstre {
     public void setMouvement(int mouvement) {
         this.mouvement = mouvement;
     }
+
+    public void ajouterPionsTues(){ this.pionsTues += 1;}
 
 }

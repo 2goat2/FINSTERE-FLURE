@@ -218,14 +218,14 @@ public final class Plateau {
      *
      * @return true si le monstre a été bien déplacé .
      */
-    private boolean deplacerMonstre(PionMonstre m, int x, int y) {
-        boolean ok = true;
+    public boolean deplacerMonstre(PionMonstre m, int x, int y) {
+        boolean ok = false;
         int i = 0;
 
-        while (this.plateau[1][y].isOccupee()) {
-          //  if (i > 10) {
-           //     break;
-           // }
+        while (this.plateau[y][x].isOccupee()) {
+            if (i > 10) {
+                break;
+            }
             switch (m.getDirection()) {
                 case NORTH:
                     if (y - 2 <= 1) {
@@ -266,10 +266,11 @@ public final class Plateau {
             i += 1;
         }
 
-        if (this.plateau[x][y].getObjet() != null && this.plateau[x][y].getObjet().getClass() == PionJoueur.class) {
-            this.plateau[x][y].supprimerObject();
+        if (this.plateau[y-1][x].getObjet() != null && this.plateau[y-1][x].getObjet().getClass() == PionJoueur.class) {
+            this.plateau[y-1][x].supprimerObject();
+            m.ajouterPionsTues();
         }
-        ok = setObjet(x, y, this.plateau[x][y].supprimerObject());
+        ok = setObjet(y-1, x, m);
         m.setX(x);
         m.setY(y);
         return ok;

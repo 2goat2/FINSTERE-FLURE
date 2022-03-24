@@ -85,12 +85,16 @@ public class Partie {
         placerPionJoueur();
 
         p.print();
-        this.monstre.deplacer(1);
+        this.monstre.deplacer(6);
+
+
         p.print();
         
         deplacerPionJoueur();
 
         p.print();
+
+        this.monstre.deplacer(4);
 
     }
 
@@ -243,9 +247,6 @@ public class Partie {
         this.p.print();
     }
 
-    private void deplacerLeMonstre() {
-
-    }
 
     private String listJoueurToString() {
         ArrayList<String> jNoms = new ArrayList<>();
