@@ -34,6 +34,8 @@ public class PionJoueur extends Pion {
     
     //permet de garder les coordonées anciennces
     private int xAncien, yAncien;
+    
+
 
     //Constructeur
     public PionJoueur(int x, int y, boolean face, int f1, int f2) {
@@ -66,7 +68,7 @@ public class PionJoueur extends Pion {
 
     @Override
     public String toString() {
-        return getCouleur() + " face " + getFace();
+        return getCouleur()[0] + " face " + getFace();
     }
 
     /**
@@ -190,6 +192,6 @@ public class PionJoueur extends Pion {
     public void setyAncien(int yAncien) {
         this.yAncien = yAncien;
     }
-      
+    
     
 }

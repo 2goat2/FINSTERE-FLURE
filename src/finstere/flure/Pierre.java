@@ -11,8 +11,64 @@ package finstere.flure;
  */
     //Classe Pierre
 public class Pierre{
-    private final int x;//
-    private final int y;//
+
+    /**
+     * @return the x
+     */
+    public int getX() {
+        return x;
+    }
+
+    /**
+     * @param x the x to set
+     */
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    /**
+     * @return the y
+     */
+    public int getY() {
+        return y;
+    }
+
+    /**
+     * @param y the y to set
+     */
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    /**
+     * @return the ax
+     */
+    public int getAx() {
+        return ax;
+    }
+
+    /**
+     * @param ax the ax to set
+     */
+    public void setAx(int ax) {
+        this.ax = ax;
+    }
+
+    /**
+     * @return the ay
+     */
+    public int getAy() {
+        return ay;
+    }
+
+    /**
+     * @param ay the ay to set
+     */
+    public void setAy(int ay) {
+        this.ay = ay;
+    }
+    private int x;//
+    private int y;//
     private int ax,ay;//précédent
     
     public Pierre(int x, int y){

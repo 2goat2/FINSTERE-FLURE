@@ -12,12 +12,14 @@ package finstere.flure;
 public abstract class Pion {
 
     // Les coordonées de chaque pion [ joueur - monstre ]
-    private int x;
-    private int y;
+    int x;
+    int y;
+    private Espace espaceDeCommencer;
     
     public Pion(int x,int y){
         this.x = x;
         this.y = y;
+        this.espaceDeCommencer = new Espace(x,y,false);
     }
 
     /**
@@ -46,5 +48,19 @@ public abstract class Pion {
      */
     public void setY(int y) {
         this.y = y;
+    }
+
+    /**
+     * @return the espaceDeCommencer
+     */
+    public Espace getEspaceDeCommencer() {
+        return espaceDeCommencer;
+    }
+
+    /**
+     * @param espaceDeCommencer the espaceDeCommencer to set
+     */
+    public void setEspaceDeCommencer(Espace espaceDeCommencer) {
+        this.espaceDeCommencer = espaceDeCommencer;
     }
 }

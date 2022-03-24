@@ -48,4 +48,5 @@ public class Joueur {
     public String toString(){
         return this.nom;
     }
+
 }

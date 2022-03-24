@@ -5,6 +5,8 @@
  */
 package finstere.flure;
 
+import java.util.LinkedList;
+
 /**
  *
  * @author nadim
@@ -27,11 +29,14 @@ public class Espace {
     //Orientations
     private final int NORTH = 1, EAST = 2, SOUTH = 3, WEST = 4;
 
+    private final LinkedList<Espace> espacesAdj;
+
     //Constructeurs
     /**
      * permet de créer un espace vide standard
      */
     public Espace() {
+        espacesAdj = new LinkedList<>();
     }
 
     /**
@@ -45,7 +50,7 @@ public class Espace {
         if (!estOccupe) {
             affichage = "| |";
         }
-
+        espacesAdj = new LinkedList<>();
     }
 
     /**
@@ -64,7 +69,7 @@ public class Espace {
         if (!estOccupe) {
             affichage = "| |";
         }
-
+        espacesAdj = new LinkedList<>();
     }
 
     /**
@@ -80,7 +85,7 @@ public class Espace {
         this.x = x;
         this.y = y;
         ajouterObjet(obj);
-
+        espacesAdj = new LinkedList<>();
     }
 
     /**
@@ -102,7 +107,7 @@ public class Espace {
             affichage = "| |";
         }// A place de :obj instanceof Joueur joueur 
         else if (obj.getClass().equals(PionJoueur.class)) {
-            // affichage = "|" + ((Joueur) obj).getNom().charAt(0) + "|";
+            //affichage = "|" + ((Joueur) obj).getNom().charAt(0) + "|";
             affichage = "|J|";
         } else if (obj.getClass().equals(Pierre.class)) {
             affichage = "|?|";
@@ -134,6 +139,70 @@ public class Espace {
         }
 
         return true;
+    }
+
+    public boolean ajouterObjet(Object obj, Joueur j) {
+
+        if (this.obj != null) {
+            return false;
+        } else if (estOccupe) {
+            this.obj = obj;
+            return false;
+        }
+        this.obj = obj;
+        if (obj == null) {
+            affichage = "| |";
+        }// A place de :obj instanceof Joueur joueur 
+        else if (obj.getClass().equals(PionJoueur.class)) {
+            affichage = "|" + j.getNom().charAt(0) + "|";
+            this.setOccupee(true);
+        } else if (obj.getClass().equals(Pierre.class)) {
+            affichage = "|?|";
+            this.setOccupee(true);
+        } else if (obj.getClass().equals(Flague.class)) {
+            affichage = "|⛖|";
+            this.setOccupee(true);
+        } else if (obj.getClass().equals(Pivot90.class)) {
+            affichage = "|⮔|";
+            this.setOccupee(true);
+        } else if (obj.getClass().equals(Pivot180.class)) {
+            affichage = "|⛖|";
+            this.setOccupee(true);
+        } else if (obj.getClass().equals(PionMonstre.class)) {
+            switch (((PionMonstre) obj).getDirection()) {
+                case NORTH:
+                    affichage = "|⌃|";
+                    this.setOccupee(true);
+                    break;
+                case EAST:
+                    affichage = "|🢒|";
+                    this.setOccupee(true);
+                    break;
+                case SOUTH:
+                    affichage = "|⌄|";
+                    this.setOccupee(true);
+                    break;
+                case WEST:
+                    affichage = "|🢐|";
+                    this.setOccupee(true);
+                    break;
+                default:
+                    affichage = "|M|";
+                    this.setOccupee(true);
+            }
+        } else {
+            return false;
+        }
+
+        return true;
+    }
+
+    public void ajouterEspaceAdj(Espace e) {
+        if (e == null) {
+            throw new IllegalArgumentException("Cell cannot be null");
+        }
+        espacesAdj.add(e);
+
     }
 
     /**
@@ -175,6 +244,10 @@ public class Espace {
         this.obj = a;
     }
 
+    public LinkedList<Espace> getEspacesAdj() {
+        return espacesAdj;
+    }
+
     // Méthode toString
     @Override
     public String toString() {
@@ -183,11 +256,12 @@ public class Espace {
 
     /*
     * Méthode pour supprimer l'objet d'un espace
-    */
+     */
     public boolean supprimerObject() {
-        Object temp = obj;
-        obj = null;
-        if (!estOccupe) {
+        this.obj = null;
+        this.estOccupe = false;
+        
+        if (!this.estOccupe) {
             affichage = "| |";
         } else {
             affichage = "|X|";
@@ -201,4 +275,5 @@ public class Espace {
     public void setAffichage(int x) {
         this.affichage = " " + x;
     }
+
 }
