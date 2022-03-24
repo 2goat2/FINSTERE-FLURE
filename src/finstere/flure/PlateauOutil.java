@@ -23,7 +23,7 @@ public class PlateauOutil {
     
 
     public static int compterEspacesPossibles(Plateau p) {
-        if (p == null) {
+        if (p == null){
             throw new IllegalArgumentException("Arguments cannot be null");
         }
         boolean[][] EspacesPasse = new boolean[p.getHauteur()][p.getLargeur()];
