@@ -12,11 +12,11 @@ package finstere.flure;
 public class Mur extends Espace{
     
     private int x,y;
-    private String lettre = "A";
+    private String mur = "";
     private final boolean s = false;
     
-    public Mur(int x, int y, boolean s){
+    public Mur(boolean s){
        super(s);
-       
+       super.setAffichage(mur);
     }
 }

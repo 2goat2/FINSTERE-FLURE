@@ -79,22 +79,20 @@ public class Partie {
         System.out.println("\n");
         System.out.println("^ Plateau du jeu ^");
         this.p = new Plateau();
-        this.monstre = new PionMonstre(1, 1, 2, this.p);
+        this.monstre = new PionMonstre(1, 1, 1, this.p);
         mettreLeMontreSurPlateau();
 
         placerPionJoueur();
 
-        p.print();
-        this.monstre.deplacer(6);
+     //   p.print();
+        System.out.println("mouvemen1");
+        this.monstre.deplacer(4);
 
 
         p.print();
         
         deplacerPionJoueur();
 
-        p.print();
-
-        this.monstre.deplacer(4);
 
     }
 
@@ -243,7 +241,7 @@ public class Partie {
         System.out.println(" !!! Le monstre est venu !!! ");
         System.out.println(" !!!!!!!!!!!!!!!!!!!!!!!!!!! ");
         System.out.println("\n");
-        this.p.setObjet(this.monstre.getY() - 1, this.monstre.getX(), this.monstre);
+        this.p.setObjet(this.monstre.getY(), this.monstre.getX(), this.monstre);
         this.p.print();
     }
 

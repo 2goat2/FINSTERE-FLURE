@@ -10,14 +10,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Class Plateau qui gére l'environment du jeu
+ * Class Plateau qui gére l'environment du jeu.
  *
  * @author nadim
  */
 public final class Plateau {
 
-    private int hauteur = 11;
-    private int largeur = 17; // 1( pour afficher l'index) + 16(La taille du plateau normal)
+    private int hauteur = 13;
+    private int largeur = 18; // 1 ( pour afficher l'index) + 16 (La taille du plateau normal)
     private final int NORTH = 1, EAST = 2, SOUTH = 3, WEST = 4;
     /**
      * Matrice qui répresente le plateau :
@@ -27,17 +27,19 @@ public final class Plateau {
      *
      */
     private int[][] booleanPlateau = {
-        {2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0},
-        {2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0},
-        {2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-        {2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-        {2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {2, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {2, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {2, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {2, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
+        {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5},
+        {2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 5},
+        {2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 5},
+        {2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 5},
+        {2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 5},
+        {2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5},
+        {2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5},
+        {2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5},
+        {2, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5},
+        {2, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5},
+        {2, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5},
+        {2, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5},
+        {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5}};
 
     private Espace[][] plateau = new Espace[hauteur][largeur];
 
@@ -70,7 +72,10 @@ public final class Plateau {
 
                 if (this.getBooleanPlateau()[i][j] == 2) {
                     this.getPlateau()[i][j] = new Espace(true);
-                    this.getPlateau()[i][j].setAffichage(i + 1);
+                    this.getPlateau()[i][j].setAffichage(i);
+                }else if (this.getBooleanPlateau()[i][j] == 5) {
+                    this.getPlateau()[i][j] = new Mur(true);
+
                 } else if (this.getBooleanPlateau()[i][j] == 1) {
                     this.getPlateau()[i][j] = new Espace(false);
                     //System.out.println(this.plateau[i][j].toString());
@@ -87,9 +92,10 @@ public final class Plateau {
         * Afficher un ligne des integers correspondant à chaque index de chaque colone.
         * avant d'afficher le plateau.
          */
-        String[] tabIndex = new String[getLargeur()];
+        String[] tabIndex = new String[getLargeur() - 1];
         tabIndex[0] = "Y/X";
-        for (int i = 1; i < getLargeur(); i++) {
+        for (int i = 1; i < tabIndex.length; i++){
+
             tabIndex[i] = " " + i + " ";
         }
 
@@ -98,7 +104,7 @@ public final class Plateau {
 
         //Affichage modifiée!
         for (int i = 0; i < getHauteur(); i++) {
-            System.out.println(Arrays.toString(this.getPlateau()[i]).replace("[", "").replace("]", "").replace(",", "-").replace("10- ", "10-").replace("11- ", "11-").replace("X/Y-", "X/Y "));
+            System.out.println(Arrays.toString(this.getPlateau()[i]).replace("[", "").replace("]", "").replace(",", "-").replace("10- ", "10-").replace("11- ", "11-").replace("X/Y-", "X/Y ").replace("|X|-  ", "|X|").replace("| |-  ", "| |"));
         }
     }
 
@@ -127,15 +133,15 @@ public final class Plateau {
      * l'espace.
      * @return true si l'objet a été bien met dans l'espace(x,y,false)
      */
-    public boolean setObjet(int x, int y, Object obj) {
+    public boolean setObjet(int y, int x, Object obj) {
 
-        return this.plateau[x][y].ajouterObjet(obj);
+        return this.plateau[y][x].ajouterObjet(obj);
 
     }
 
-    public boolean setObjet(int x, int y, Object obj, Joueur j) {
+    public boolean setObjet(int y, int x, Object obj, Joueur j) {
 
-        return this.plateau[x][y].ajouterObjet(obj, j);
+        return this.plateau[y][x].ajouterObjet(obj, j);
 
     }
 
@@ -143,26 +149,6 @@ public final class Plateau {
      Les Méthodes : moveupObjet, moveDownObjet, moveLeftObjet, moveRightObjet
         Pour déplacer un objet une case sur le plateau.
      */
-    public boolean moveUpObjet(int x, int y, Object obj) {
-        return this.setObjet(x - 1, y, obj)
-                && this.plateau[x][y].supprimerObject();
-    }
-
-    public boolean moveDownObjet(int x, int y, Object obj) {
-        return this.setObjet(x + 1, y, obj)
-                && this.plateau[x][y].supprimerObject();
-    }
-
-    public boolean moveLeftObjet(int x, int y, Object obj) {
-        return this.setObjet(x, y - 1, obj)
-                && this.plateau[x][y].supprimerObject();
-    }
-
-    public boolean moveRightObjet(int x, int y, Object obj) {
-        return this.setObjet(x, y + 1, obj)
-                && this.plateau[x][y].supprimerObject();
-    }
-
     /**
      * La méthode deplacerLeMonstreUneFois permet de deplacer un monstre m une
      * case.
@@ -174,29 +160,29 @@ public final class Plateau {
         boolean ok = false;
         switch (m.getDirection()) {
             case NORTH:
-                if (m.getY() - 1 < 0) {
-                    ok = deplacerMonstre(m, (largeur - 2) - 1 - m.getX(), (hauteur - 2) - 1 - m.getY());
+                if (m.getY() == 0 || (m.getX() == 13 && m.getY() == 1) || (m.getX() == 14 && m.getY() == 2) || (m.getX() == 15 && m.getY() == 3) || (m.getX() == 16 && m.getY() == 4)) {
+                    ok = deplacerMonstre(m, largeur - m.getX(), hauteur - m.getY()   );
                 } else {
                     ok = deplacerMonstre(m, m.getX(), m.getY() - 1);
                 }
                 break;
             case EAST:
-                if (m.getX() + 2 > largeur - 2) {
-                    ok = deplacerMonstre(m, (largeur - 2) - 1 - m.getX(), (hauteur - 2) - 1 - m.getY());
+                if (m.getX() == 17 || (m.getX() == 12 && m.getY() == 1) || (m.getX() == 13 && m.getY() == 2) || (m.getX() == 14 && m.getY() == 3) || (m.getX() == 15 && m.getY() == 4)) {
+                    ok = deplacerMonstre(m, largeur - m.getX()- 1, hauteur - m.getY() - 1);
                 } else {
                     ok = deplacerMonstre(m, m.getX() + 1, m.getY());
                 }
                 break;
             case SOUTH:
-                if (m.getY() + 2 > hauteur - 2) {
-                    ok = deplacerMonstre(m, (largeur - 2) - 1 - m.getX(), (hauteur - 2) - 1 - m.getY());
+                if (m.getY() == this.hauteur || (m.getX() == 4 && m.getY() == 10) || (m.getX() == 3 && m.getY() == 9) || (m.getX() == 2 && m.getY() == 8) || (m.getX() == 1 && m.getY() == 7)) {
+                    ok = deplacerMonstre(m, largeur - m.getX() -1, hauteur - m.getY() - 1);
                 } else {
                     ok = deplacerMonstre(m, m.getX(), m.getY() + 1);
                 }
                 break;
             case WEST:
-                if (m.getX() - 1 < 0) {
-                    ok = deplacerMonstre(m, (largeur - 2) - 1 - m.getX(), (hauteur - 2) - 1 - m.getY());
+                if (m.getX() == 0 || (m.getX() == 1 && m.getY() == 8) || (m.getX() == 2 && m.getY() == 9) || (m.getX() == 3 && m.getY() == 10) || (m.getX() == 4 && m.getY() == 11)) {
+                    ok = deplacerMonstre(m, largeur - m.getX(), hauteur - m.getY());
                 } else {
                     ok = deplacerMonstre(m, m.getX() - 1, m.getY());
                 }
@@ -222,39 +208,43 @@ public final class Plateau {
         boolean ok = false;
         int i = 0;
 
+      //  if(y == 1) if (x == 13 || x == 14 || x == 15 || x == 16) {
+       //      y = y;
+       // } else y -= 1;
+
         while (this.plateau[y][x].isOccupee()) {
             if (i > 10) {
                 break;
             }
-            switch (m.getDirection()) {
+            switch ( m.getDirection() ) {
                 case NORTH:
-                    if (y - 2 <= 1) {
-                        x = (largeur - 2) - 1 - m.getX();
-                        y = (hauteur - 2) - 1 - m.getY();
+                    if (y == 0 || (x == 13 && y == 1) || (x == 14 && y == 2) || (x == 15 && y == 3) || (x == 16 && y == 4)) {
+                        x = largeur - m.getX() - 1;
+                        y = hauteur - m.getY();
                     } else {
                         y -= 1;
                     }
                     break;
                 case EAST:
-                    if (x + 2 > largeur - 2) {
-                        x = (largeur - 2) - 1 - m.getX();
-                        y = (hauteur - 2) - 1 - m.getY();
+                    if (x == 17 || (x == 12 && y == 1) || (x == 13 && y == 2) || (x == 14 && y == 3) || (x == 15 && y == 4)) {
+                        x = largeur - m.getX() - 1;
+                        y = hauteur - m.getY() - 1;
                     } else {
                         x += 1;
                     }
                     break;
                 case SOUTH:
-                    if (y + 2 > hauteur - 2) {
-                        x = (largeur - 2) - 1 - m.getX();
-                        y = (hauteur - 2) - 1 - m.getY();
+                    if (y == 12 || (x == 4 && y == 10) || (x == 3 && y == 9) || (x == 2 && y == 8) || (x == 1 && y == 7)) {
+                        x = largeur - m.getX() - 1;
+                        y = hauteur - m.getY() - 1;
                     } else {
                         y += 1;
                     }
                     break;
                 case WEST:
-                    if (x - 1 <= 1) {
-                        x = (largeur - 2) - 1 - m.getX();
-                        y = (hauteur - 2) - 1 - m.getY();
+                    if (x == 0 || (x == 1 && y == 8) || (x == 2 && y == 9) || (x == 3 && y == 10) || (x == 4 && y == 11)) {
+                        x = largeur - m.getX();
+                        y = hauteur - m.getY() - 1;
                     } else {
                         x -= 1;
                     }
@@ -266,13 +256,15 @@ public final class Plateau {
             i += 1;
         }
 
-        if (this.plateau[y-1][x].getObjet() != null && this.plateau[y-1][x].getObjet().getClass() == PionJoueur.class) {
-            this.plateau[y-1][x].supprimerObject();
+        if (this.plateau[y][x].getObjet() != null && this.plateau[y][x].getObjet().getClass() == PionJoueur.class) {
+            this.plateau[y][x].supprimerObject();
             m.ajouterPionsTues();
         }
-        ok = setObjet(y-1, x, m);
+        ok = setObjet(y, x, m);
+        this.plateau[m.getY()][m.getX()].supprimerObject();
         m.setX(x);
         m.setY(y);
+
         return ok;
     }
 

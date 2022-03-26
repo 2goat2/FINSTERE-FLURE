@@ -76,19 +76,19 @@ public class PionMonstre {
     }
 
     private Object regarderObjetWest() {
-        return this.getPlateau().getPlateau()[getX() - this.getMouvement()][getY()].getObjet();
+        return this.getPlateau().getPlateau()[getY()][getX() - this.getMouvement()].getObjet();
     }
 
     private Object regarderObjetNorth() {
-        return this.getPlateau().getPlateau()[getX()][getY() - this.getMouvement()].getObjet();
+        return this.getPlateau().getPlateau()[getY() - this.getMouvement()][getX()].getObjet();
     }
 
     private Object regarderObjetSouth() {
-        return this.getPlateau().getPlateau()[getX()][getY() + this.getMouvement()].getObjet();
+        return this.getPlateau().getPlateau()[getY() + this.getMouvement()][getX()].getObjet();
     }
 
     private Object regarderObjetEast() {
-        return this.getPlateau().getPlateau()[getX() + this.getMouvement()][getY()].getObjet();
+        return this.getPlateau().getPlateau()[getY()][getX() + this.mouvement].getObjet();
 
     }
 
@@ -122,12 +122,12 @@ public class PionMonstre {
 
     private int regarderNorth() {
 
-        for (int i = 0; i <= x; i++) {
-            if (this.getPlateau().getPlateau()[x-i][y].getObjet() == null) {
+        for (int i = 0; i <= y; i++) {
+            if (this.getPlateau().getPlateau()[y-i][x].getObjet() == null) {
                 continue;
-            } else if (this.getPlateau().getPlateau()[x-i][y].getObjet().getClass() == PionJoueur.class) {
+            } else if (this.getPlateau().getPlateau()[y-i][x].getObjet().getClass() == PionJoueur.class) {
                 return i;
-            } else if (this.getPlateau().getPlateau()[x-i][y].getObjet() == Pierre.class) {
+            } else if (this.getPlateau().getPlateau()[y-i][x].getObjet() == Pierre.class) {
                 return this.getPlateau().getLargeur() * this.getPlateau().getHauteur();//Ensures that it is the biggest number.
             }
         }
@@ -136,12 +136,13 @@ public class PionMonstre {
     }
 
     private int regarderSouth() {
-        for (int i = x; i < this.getPlateau().getHauteur(); i++) {
-            if (this.getPlateau().getPlateau()[i][y].getObjet() == null) {
+
+        for (int i = y; i < this.getPlateau().getHauteur(); i++) {
+            if (this.getPlateau().getPlateau()[i][x].getObjet() == null) {
                 continue;
-            } else if (this.getPlateau().getPlateau()[i][y].getObjet().getClass() == PionJoueur.class) {
-                return i - x;
-            } else if (this.getPlateau().getPlateau()[i][y].getObjet().getClass() == Pierre.class) {
+            } else if (this.getPlateau().getPlateau()[i][x].getObjet().getClass() == PionJoueur.class) {
+                return i - y;
+            } else if (this.getPlateau().getPlateau()[i][x].getObjet().getClass() == Pierre.class) {
                 return this.getPlateau().getLargeur() * this.getPlateau().getHauteur();//Ensures that it is the biggest number.
             }
         }
@@ -150,12 +151,13 @@ public class PionMonstre {
     }
 
     private int regarderWest() {
-        for (int i = 0; i <= y ; i++) {
-            if (this.getPlateau().getPlateau()[x][y-i].getObjet() == null) {
+
+        for (int i = 0; i <= x ; i++) {
+            if (this.getPlateau().getPlateau()[y][x-i].getObjet() == null) {
                 continue;
-            } else if (this.getPlateau().getPlateau()[x][y-i].getObjet().getClass() == PionJoueur.class) {
+            } else if (this.getPlateau().getPlateau()[y][x-i].getObjet().getClass() == PionJoueur.class) {
                 return i;
-            } else if (this.getPlateau().getPlateau()[x][y-i].getObjet().getClass() == Pierre.class) {
+            } else if (this.getPlateau().getPlateau()[y][x-i].getObjet().getClass() == Pierre.class) {
                 return this.getPlateau().getLargeur() * this.getPlateau().getHauteur();//Ensures that it is the biggest number.
             }
         }
@@ -165,15 +167,14 @@ public class PionMonstre {
 
     private int regarderEast() {
 
-
-        for (int i = y; i < this.getPlateau().getLargeur(); i++) {
-            if (this.getPlateau().getPlateau()[x][i].getObjet() == null) {
+        for (int i = x; i < this.getPlateau().getLargeur(); i++) {
+            if (this.getPlateau().getPlateau()[y][i].getObjet() == null) {
                 continue;
             } else
-                if (this.getPlateau().getPlateau()[x][i].getObjet().getClass() == PionJoueur.class) {
-                return i - y;
+                if (this.getPlateau().getPlateau()[y][i].getObjet().getClass() == PionJoueur.class) {
+                return i - x;
             } else
-                if (this.plateau.getPlateau()[x][i].getObjet().getClass() == Pierre.class) {
+                if (this.plateau.getPlateau()[y][i].getObjet().getClass() == Pierre.class) {
                 return this.getPlateau().getLargeur() * this.getPlateau().getHauteur();//Ensures that it is the biggest number.
             }
         }

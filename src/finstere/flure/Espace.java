@@ -257,7 +257,8 @@ public class Espace {
     /*
     * Méthode pour supprimer l'objet d'un espace
      */
-    public boolean supprimerObject() {
+    public Object supprimerObject() {
+        Object x = this.obj;
         this.obj = null;
         this.estOccupe = false;
         
@@ -266,7 +267,7 @@ public class Espace {
         } else {
             affichage = "|X|";
         }
-        return true;
+        return x;
     }
 
     /*
@@ -275,5 +276,7 @@ public class Espace {
     public void setAffichage(int x) {
         this.affichage = " " + x;
     }
-
+    public void setAffichage(String x) {
+        this.affichage = " " + x;
+    }
 }
