@@ -16,12 +16,13 @@ import java.util.Set;
  */
 public final class Plateau {
 
-    private int hauteur = 13;
-    private int largeur = 18; // 1 ( pour afficher l'index) + 16 (La taille du plateau normal)
+    private int hauteur = 13; // 1 le mur + 11 (L'hauteur du plateau normal) + 1 le mur
+    private int largeur = 18; // 1 ( pour afficher l'index) + 16 (Le largeur du plateau normal) + 1 le mur
     private final int NORTH = 1, EAST = 2, SOUTH = 3, WEST = 4;
     /**
      * Matrice qui répresente le plateau :
      *
+     * 5 => pour créer le mur,
      * 2 => pour afficher l'index de chaque ligne, 1 => pour dire que cet index
      * n’est pas occupé, 0 => pour dire que cet index est occupé.
      *
@@ -100,10 +101,10 @@ public final class Plateau {
         }
 
         //Affichage modifiée!
-        System.out.println(Arrays.toString(tabIndex).replace("[", "").replace("]", "").replace(",", "-").replace("  10 -  11 -  12 -  13 -  14 -  15 -  16 ", " 10 - 11 - 12 - 13 - 14 - 15 - 16").replace("  1", " 1").replace("X/Y-", "X/Y "));
-
-        //Affichage modifiée!
         for (int i = 0; i < getHauteur(); i++) {
+            if(i == 1){
+                System.out.println(Arrays.toString(tabIndex).replace("[", "").replace("]", "").replace(",", "-").replace("  10 -  11 -  12 -  13 -  14 -  15 -  16 ", " 10 - 11 - 12 - 13 - 14 - 15 - 16").replace("  1", " 1").replace("X/Y-", "X/Y "));
+            }
             System.out.println(Arrays.toString(this.getPlateau()[i]).replace("[", "").replace("]", "").replace(",", "-").replace("10- ", "10-").replace("11- ", "11-").replace("X/Y-", "X/Y ").replace("|X|-  ", "|X|").replace("| |-  ", "| |"));
         }
     }
@@ -387,19 +388,20 @@ public final class Plateau {
      */
     public void print() {
 
-        String[] tabIndex = new String[getLargeur()];
-        tabIndex[0] = "X/Y";
-        for (int i = 1; i < getLargeur(); i++) {
+        String[] tabIndex = new String[getLargeur() - 1];
+        tabIndex[0] = "Y/X";
+        for (int i = 1; i < tabIndex.length; i++){
+
             tabIndex[i] = " " + i + " ";
         }
 
-        System.out.println(Arrays.toString(tabIndex).replace("[", "").replace("]", "").replace(",", "-").replace("  10 -  11 -  12 -  13 -  14 -  15 -  16 ", " 10 - 11 - 12 - 13 - 14 - 15 - 16").replace("  1", " 1").replace("X/Y-", "X/Y "));
-
         //Affichage modifiée!
         for (int i = 0; i < getHauteur(); i++) {
-            System.out.println(Arrays.toString(this.getPlateau()[i]).replace("[", "").replace("]", "").replace(",", "-").replace("10- ", "10-").replace("11- ", "11-").replace("X/Y-", "X/Y "));
+            if(i == 1){
+                System.out.println(Arrays.toString(tabIndex).replace("[", "").replace("]", "").replace(",", "-").replace("  10 -  11 -  12 -  13 -  14 -  15 -  16 ", " 10 - 11 - 12 - 13 - 14 - 15 - 16").replace("  1", " 1").replace("X/Y-", "X/Y "));
+            }
+            System.out.println(Arrays.toString(this.getPlateau()[i]).replace("[", "").replace("]", "").replace(",", "-").replace("10- ", "10-").replace("11- ", "11-").replace("X/Y-", "X/Y ").replace("|X|-  ", "|X|").replace("| |-  ", "| |"));
         }
-
         System.out.println("\n");
 
     }
