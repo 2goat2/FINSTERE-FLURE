@@ -23,14 +23,16 @@ public class PionMonstre {
     private int pionsTues;
     private int x,y;
     private int mouvement = 1;
+    private Partie partie;
 
-    public PionMonstre(int x, int y, int direction, Plateau p) {
+    public PionMonstre(int x, int y, int direction, Plateau p, Partie partie) {
         this.x = x;
         this.y = y;
         this.direction = direction;
         this.directions = new Direction();
         this.plateau = p;
         this.pionsTues = 0;
+        this.partie = partie;
     }
 
 
@@ -182,6 +184,15 @@ public class PionMonstre {
         return this.getPlateau().getLargeur() * this.getPlateau().getHauteur();
     }
 
+    public void tuer(PionJoueur p){
+        this.ajouterPionsTues();
+        plateau.getPlateau()[this.y][this.x].supprimerObject();
+        if(!this.partie.getManche()){
+            this.partie.getListJoueur().get(p.getNumJoueur()).getPions().remove(p);
+            this.partie.getListJoueur().get(p.getNumJoueur()).setPions(this.partie.getListJoueur().get(p.getNumJoueur()).getPions());
+        }
+    }
+
     /**
      * @return the plateau
      */
@@ -309,5 +320,5 @@ public class PionMonstre {
     }
 
     public void ajouterPionsTues(){ this.pionsTues += 1;}
-
+    public int getPionsTues(){ return this.pionsTues;}
 }

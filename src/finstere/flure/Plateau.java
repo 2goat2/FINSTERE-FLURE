@@ -191,6 +191,7 @@ public final class Plateau {
             default:
                 ok = false;
         }
+
         return ok;
     }
 
@@ -209,12 +210,9 @@ public final class Plateau {
         boolean ok = false;
         int i = 0;
 
-      //  if(y == 1) if (x == 13 || x == 14 || x == 15 || x == 16) {
-       //      y = y;
-       // } else y -= 1;
 
         while (this.plateau[y][x].isOccupee()) {
-            if (i > 10) {
+            if (this.plateau[y][x].getObjet() != null && this.plateau[y][x].getObjet().getClass().equals(PionJoueur.class)) {
                 break;
             }
             switch ( m.getDirection() ) {
@@ -254,13 +252,15 @@ public final class Plateau {
                     System.out.println("Invalide!");
                     break;
             }
+
             i += 1;
         }
 
-        if (this.plateau[y][x].getObjet() != null && this.plateau[y][x].getObjet().getClass() == PionJoueur.class) {
-            this.plateau[y][x].supprimerObject();
-            m.ajouterPionsTues();
+        if (this.plateau[y][x].getObjet() != null && this.plateau[y][x].getObjet().getClass().equals(PionJoueur.class)) {
+            PionJoueur p = (PionJoueur) this.plateau[y][x].getObjet();
+            m.tuer(p);
         }
+
         ok = setObjet(y, x, m);
         this.plateau[m.getY()][m.getX()].supprimerObject();
         m.setX(x);

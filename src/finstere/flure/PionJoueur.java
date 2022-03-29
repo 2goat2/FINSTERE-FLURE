@@ -11,6 +11,28 @@ package finstere.flure;
  */
 public class PionJoueur extends Pion {
 
+
+    /**
+     * @param valeurActuelle the valeurActuelle to set
+     */
+    public void setValeurActuelle(int valeurActuelle) {
+        this.valeurActuelle = valeurActuelle;
+    }
+
+    /**
+     * @return the numJoueur
+     */
+    public int getNumJoueur() {
+        return numJoueur;
+    }
+
+    /**
+     * @param numJoueur the numJoueur to set
+     */
+    public void setNumJoueur(int numJoueur) {
+        this.numJoueur = numJoueur;
+    }
+
     //Tableau String des couleurs
     private String[] couleur = new String[]{"bleu", "brun", "gris", "vert", "violet", "rouge", "jaune"};
 
@@ -23,7 +45,7 @@ public class PionJoueur extends Pion {
     //2 variables qui stockent les valeurs de chaque face du pion
     private int valeurDeFaceFonce, valeurDeFaceClaire;
 
-    //permet de savoir si le pion est utilisé ou pas*
+    //permet de savoir si le pion est utilisé ou pas
     private boolean utilise = false;
 
     //permet de stocker la valeur de la face utilisée
@@ -34,11 +56,12 @@ public class PionJoueur extends Pion {
     
     //permet de garder les coordonées anciennces
     private int xAncien, yAncien;
-    
+
+    private int numJoueur;
 
 
     //Constructeur
-    public PionJoueur(int x, int y, boolean face, int f1, int f2) {
+    public PionJoueur(int x, int y, boolean face, int f1, int f2, int i) {
         super(x, y);
         this.face = face;
         this.valeurDeFaceClaire = f1;
@@ -48,7 +71,9 @@ public class PionJoueur extends Pion {
         compteur = this.valeurActuelle;
         this.xAncien = 0;
         this.yAncien = 0;
+        this.numJoueur = i;
     }
+
 
     public String[] getCouleur() {
         return this.couleur;
@@ -152,9 +177,9 @@ public class PionJoueur extends Pion {
      * @param valeurActuelle the valeurActuelle to set
      */
     public void flipValeurActuelle() {
-        if (this.valeurActuelle == this.valeurDeFaceClaire) {
-            this.valeurActuelle = this.valeurDeFaceFonce;
-        } else this.valeurActuelle = this.valeurDeFaceClaire;
+        if (this.getValeurActuelle() == this.getValeurDeFaceClaire()) {
+            this.setValeurActuelle(this.getValeurDeFaceFonce());
+        } else this.setValeurActuelle(this.getValeurDeFaceClaire());
     }
     
     public void setCompteur(int i){
