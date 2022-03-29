@@ -405,5 +405,18 @@ public final class Plateau {
         System.out.println("\n");
 
     }
+    
+    public void ajoutFlague(){
+        Flague[] tabflague = new Flague[8];
+        tabflague[0] = new Flague(3,9);
+        tabflague[1] = new Flague(3,10);
+        tabflague[2] = new Flague(4,9);
+        tabflague[3] = new Flague(4,10);
+        tabflague[4] = new Flague(9,5);
+        tabflague[5] = new Flague(9,6);
+        tabflague[6] = new Flague(9,7);
+        tabflague[7] = new Flague(9,8);
+        
+    }
 
 }
