@@ -19,6 +19,7 @@ public class PlateauOutil {
      *   2. Boucle à travers chaque espace adjacente.
      *   3. Si l'espace n'a pas déjà été visitée, DFS cette cellule et ajouter le nombre des espaces adjacentes à cette espace au décompte actuel.
      *   4. Retourner le nombre d'espaces adjacentes à l'espace actuelle + 1.
+     *
     **/
     
 

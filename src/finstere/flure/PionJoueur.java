@@ -7,31 +7,9 @@ package finstere.flure;
 
 /**
  *
- * @author nadim
+ * @author nadim La classe PionMonstre extends la classe Pion
  */
 public class PionJoueur extends Pion {
-
-
-    /**
-     * @param valeurActuelle the valeurActuelle to set
-     */
-    public void setValeurActuelle(int valeurActuelle) {
-        this.valeurActuelle = valeurActuelle;
-    }
-
-    /**
-     * @return the numJoueur
-     */
-    public int getNumJoueur() {
-        return numJoueur;
-    }
-
-    /**
-     * @param numJoueur the numJoueur to set
-     */
-    public void setNumJoueur(int numJoueur) {
-        this.numJoueur = numJoueur;
-    }
 
     //Tableau String des couleurs
     private String[] couleur = new String[]{"bleu", "brun", "gris", "vert", "violet", "rouge", "jaune"};
@@ -50,15 +28,15 @@ public class PionJoueur extends Pion {
 
     //permet de stocker la valeur de la face utilisée
     private int valeurActuelle;
-    
+
     //permet de compter les espaces où le pion déplace
     private int compteur;
-    
+
     //permet de garder les coordonées anciennces
     private int xAncien, yAncien;
 
+    //Permet de savoir le joueur lequel ce pion appartient
     private int numJoueur;
-
 
     //Constructeur
     public PionJoueur(int x, int y, boolean face, int f1, int f2, int i) {
@@ -74,6 +52,18 @@ public class PionJoueur extends Pion {
         this.numJoueur = i;
     }
 
+    public void flipValeurActuelle() {
+        if (this.getValeurActuelle() == this.getValeurDeFaceClaire()) {
+            this.setValeurActuelle(this.getValeurDeFaceFonce());
+        } else {
+            this.setValeurActuelle(this.getValeurDeFaceClaire());
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Joueur : " + this.numJoueur + " - Pion : " + this.valeurDeFaceClaire + "/" + this.valeurDeFaceFonce;
+    }
 
     public String[] getCouleur() {
         return this.couleur;
@@ -89,18 +79,6 @@ public class PionJoueur extends Pion {
 
     public void setFace(boolean f) {
         this.face = f;
-    }
-
-    @Override
-    public String toString() {
-        return getCouleur()[0] + " face " + getFace();
-    }
-
-    /**
-     * @param couleur the couleur to set
-     */
-    public void setCouleur(String[] couleur) {
-        this.setCouleur(couleur);
     }
 
     /**
@@ -173,20 +151,11 @@ public class PionJoueur extends Pion {
         return valeurActuelle;
     }
 
-    /**
-     * @param valeurActuelle the valeurActuelle to set
-     */
-    public void flipValeurActuelle() {
-        if (this.getValeurActuelle() == this.getValeurDeFaceClaire()) {
-            this.setValeurActuelle(this.getValeurDeFaceFonce());
-        } else this.setValeurActuelle(this.getValeurDeFaceClaire());
-    }
-    
-    public void setCompteur(int i){
+    public void setCompteur(int i) {
         this.compteur = i;
     }
-    
-    public int getCompteur(){
+
+    public int getCompteur() {
         return this.compteur;
     }
 
@@ -217,6 +186,26 @@ public class PionJoueur extends Pion {
     public void setyAncien(int yAncien) {
         this.yAncien = yAncien;
     }
-    
-    
+
+    /**
+     * @param valeurActuelle the valeurActuelle to set
+     */
+    public void setValeurActuelle(int valeurActuelle) {
+        this.valeurActuelle = valeurActuelle;
+    }
+
+    /**
+     * @return the numJoueur
+     */
+    public int getNumJoueur() {
+        return numJoueur;
+    }
+
+    /**
+     * @param numJoueur the numJoueur to set
+     */
+    public void setNumJoueur(int numJoueur) {
+        this.numJoueur = numJoueur;
+    }
+
 }

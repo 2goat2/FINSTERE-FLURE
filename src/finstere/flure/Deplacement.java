@@ -8,6 +8,7 @@ package finstere.flure;
 /**
  *
  * @author nadim
+ * La classe Deplacement permet au monstre de se déplacer sur le plateau
  */
 public class Deplacement {
 

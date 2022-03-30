@@ -29,7 +29,7 @@ public class Main {
 
     private static void displayMainMenu() {
 
-       // while (true) {
+        while (true) {
 
             affichageLOGO();
 
@@ -52,7 +52,7 @@ public class Main {
             }
         }
 
-    //}
+    }
 
     private static void affichageLOGO() {
         System.out.println("             .                     .x+=:.        s                                                                   ..                                        ");

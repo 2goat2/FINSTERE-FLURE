@@ -13,18 +13,34 @@ import java.util.Objects;
  */
 public class PionMonstre {
 
-    private int direction = 2;
+    //Permet de garder la direction 
+    private int direction = 2; // 2 = East
+
+    //Les directions utilisées
     private int NORTH = 1;
     private int EAST = 2;
     private int SOUTH = 3;
     private int WEST = 4;
-    private Plateau plateau;
-    private Direction directions;
-    private int pionsTues;
-    private int x,y;
-    private int mouvement = 1;
-    private Partie partie;
 
+    //le plateau 
+    private Plateau plateau;
+
+    //les directions qu'il faut voir à chaque déplacement
+    private Direction directions;
+
+    //Permet de garder les pions tués par ce monstre
+    private int pionsTues;
+
+    //Les coordonées
+    private int x, y;
+
+    //le nombre de mouvements qui peuvent déplacer le monstre 
+    private int mouvement = 1;
+
+    //La partie 
+    private final Partie partie;
+
+    //La constructeur
     public PionMonstre(int x, int y, int direction, Plateau p, Partie partie) {
         this.x = x;
         this.y = y;
@@ -35,22 +51,31 @@ public class PionMonstre {
         this.partie = partie;
     }
 
+    /**
+     * La méthode deplacer c'est la méthode principale qui déplace le monstre
+     * 
+     * 1. Le monstre regarde à sa gauche, sa droite et tout droit.
+     * 2. Le monstre calcule le chemin pour chaque objet détecté (S'il y a).
+     * 3. le monstre choisi le chemin le plus court.
+     * 4. le monstre se déplace vers l'objet choisi ou bien se déplace dans sa direction s'il n'a pas trouvé des objets.
+     * 
+     * @param movement le nombre de mouvements
+     */
+    public void deplacer(int movement) {
 
-    public void deplacer(int move) {
-        if (move > 0) {
+        if (movement > 0) {
             int gauche = regarder(getDirections().getGauche(this.getDirection()));
             int droite = regarder(getDirections().getDroite(this.getDirection()));
-            int droit = regarder(this.getDirection());
+            int toutDroit = regarder(this.getDirection());
 
-
-                if (gauche > droite && droite != 0) {
-                    this.setDirection(getDirections().getDroite(this.getDirection()));
-                    this.getPlateau().deplacerLeMonstreUneFois(this);
-                } else if(droite > gauche && gauche != 0){
-                    this.setDirection(this.getDirections().getGauche(this.getDirection()));
-                    this.getPlateau().deplacerLeMonstreUneFois(this);
+            if (gauche > droite && droite != 0) {
+                this.setDirection(getDirections().getDroite(this.getDirection()));
+                this.getPlateau().deplacerLeMonstreUneFois(this);
+            } else if (droite > gauche && gauche != 0) {
+                this.setDirection(this.getDirections().getGauche(this.getDirection()));
+                this.getPlateau().deplacerLeMonstreUneFois(this);
             } else {
-                //straight
+                //tout droit
                 if (regarderObjet(this.getDirection()) != null && Objects.requireNonNull(regarderObjet(this.getDirection())).getClass() == Pierre.class) {
                     this.getPlateau().deplacerPierreUneFois(this.getDirection(), (Pierre) regarderObjet(this.getDirection()));
                     this.getPlateau().deplacerLeMonstreUneFois(this);
@@ -59,10 +84,15 @@ public class PionMonstre {
                 }
             }
             this.getPlateau().print();
-            deplacer(move - 1);
+            deplacer(movement - 1);
         }
     }
 
+    /**
+     * La Méthode regarderObjet
+     *
+     * @return l'objet qui a été détecté sur la direction choisi
+     */
     private Object regarderObjet(int direction) {
         switch (direction) {
             case 1:
@@ -77,6 +107,12 @@ public class PionMonstre {
         return null;
     }
 
+    /**
+     * Les Méthodes
+     * regarderObjetWest(),regarderObjetNorth(),regarderObjetSouth(),regarderObjetEast()
+     *
+     * @return l'objet qui a été détecté sur une direction
+     */
     private Object regarderObjetWest() {
         return this.getPlateau().getPlateau()[getY()][getX() - this.getMouvement()].getObjet();
     }
@@ -95,18 +131,12 @@ public class PionMonstre {
     }
 
     /**
-     * SETTER et GETTERS
      *
-     * @param direction permet de modifier la direction du monstre
+     * @param direction
+     * @return ( rien ) s'il n'y a pas d'objet sur direction ou (l'index de
+     * l'objet) si l'objet est un PionJoueur ou (this.getPlateau().getLargeur()*
+     * this.getPlateau().getHauteur()) si l'objet est un Pierre
      */
-    public void setDirection(int direction) {
-        this.direction = direction;
-    }
-
-    public int getDirection() {
-        return direction;
-    }
-
     private int regarder(int direction) {
         switch (direction) {
             case 1:
@@ -122,15 +152,24 @@ public class PionMonstre {
         return -1;
     }
 
+    /**
+     * Les méthodes
+     * regarderNorth(),regarderEast(),regarderSouth(),regarderWest() pour
+     * chercher l'objet sur les 4 directions
+     *
+     * @return ( rien ) s'il n'y a pas d'objet sur une direction ou (l'index de
+     * l'objet) si l'objet est un PionJoueur ou (this.getPlateau().getLargeur()*
+     * this.getPlateau().getHauteur()) si l'objet est un Pierre
+     */
     private int regarderNorth() {
 
         for (int i = 0; i <= y; i++) {
-            if (this.getPlateau().getPlateau()[y-i][x].getObjet() == null) {
+            if (this.getPlateau().getPlateau()[y - i][x].getObjet() == null) {
                 continue;
-            } else if (this.getPlateau().getPlateau()[y-i][x].getObjet().getClass() == PionJoueur.class) {
+            } else if (this.getPlateau().getPlateau()[y - i][x].getObjet().getClass() == PionJoueur.class) {
                 return i;
-            } else if (this.getPlateau().getPlateau()[y-i][x].getObjet() == Pierre.class) {
-                return this.getPlateau().getLargeur() * this.getPlateau().getHauteur();//Ensures that it is the biggest number.
+            } else if (this.getPlateau().getPlateau()[y - i][x].getObjet() == Pierre.class) {
+                return this.getPlateau().getLargeur() * this.getPlateau().getHauteur();//pour assurer que c'est le nombre le plus grand
             }
         }
 
@@ -145,7 +184,7 @@ public class PionMonstre {
             } else if (this.getPlateau().getPlateau()[i][x].getObjet().getClass() == PionJoueur.class) {
                 return i - y;
             } else if (this.getPlateau().getPlateau()[i][x].getObjet().getClass() == Pierre.class) {
-                return this.getPlateau().getLargeur() * this.getPlateau().getHauteur();//Ensures that it is the biggest number.
+                return this.getPlateau().getLargeur() * this.getPlateau().getHauteur();
             }
         }
 
@@ -154,13 +193,13 @@ public class PionMonstre {
 
     private int regarderWest() {
 
-        for (int i = 0; i <= x ; i++) {
-            if (this.getPlateau().getPlateau()[y][x-i].getObjet() == null) {
+        for (int i = 0; i <= x; i++) {
+            if (this.getPlateau().getPlateau()[y][x - i].getObjet() == null) {
                 continue;
-            } else if (this.getPlateau().getPlateau()[y][x-i].getObjet().getClass() == PionJoueur.class) {
+            } else if (this.getPlateau().getPlateau()[y][x - i].getObjet().getClass() == PionJoueur.class) {
                 return i;
-            } else if (this.getPlateau().getPlateau()[y][x-i].getObjet().getClass() == Pierre.class) {
-                return this.getPlateau().getLargeur() * this.getPlateau().getHauteur();//Ensures that it is the biggest number.
+            } else if (this.getPlateau().getPlateau()[y][x - i].getObjet().getClass() == Pierre.class) {
+                return this.getPlateau().getLargeur() * this.getPlateau().getHauteur();
             }
         }
 
@@ -172,25 +211,66 @@ public class PionMonstre {
         for (int i = x; i < this.getPlateau().getLargeur(); i++) {
             if (this.getPlateau().getPlateau()[y][i].getObjet() == null) {
                 continue;
-            } else
-                if (this.getPlateau().getPlateau()[y][i].getObjet().getClass() == PionJoueur.class) {
+            } else if (this.getPlateau().getPlateau()[y][i].getObjet().getClass() == PionJoueur.class) {
                 return i - x;
-            } else
-                if (this.plateau.getPlateau()[y][i].getObjet().getClass() == Pierre.class) {
-                return this.getPlateau().getLargeur() * this.getPlateau().getHauteur();//Ensures that it is the biggest number.
+            } else if (this.plateau.getPlateau()[y][i].getObjet().getClass() == Pierre.class) {
+                return this.getPlateau().getLargeur() * this.getPlateau().getHauteur();
             }
         }
 
         return this.getPlateau().getLargeur() * this.getPlateau().getHauteur();
     }
 
-    public void tuer(PionJoueur p){
+    /**
+     * Methode qui permet au mostre de tuer un PionJoueur, du supprimer de la
+     * liste de pion du joueur, et de l'ajouter dans le liste des pions perdus
+     * d'une partie
+     *
+     * si (partie.manche = true) ==> réinitialiser ce pion. sinon si
+     * (partie.manche = false) ==> tuer ce pion et l'ajouter dans le liste des
+     * pions perdus d'une partie.
+     *
+     * @param p le pion tué
+     */
+    public void tuer(PionJoueur p) {
         this.ajouterPionsTues();
         plateau.getPlateau()[this.y][this.x].supprimerObject();
-        if(!this.partie.getManche()){
-            this.partie.getListJoueur().get(p.getNumJoueur()).getPions().remove(p);
-            this.partie.getListJoueur().get(p.getNumJoueur()).setPions(this.partie.getListJoueur().get(p.getNumJoueur()).getPions());
+
+        if (this.partie.getManche()) {
+
+            if (!this.partie.getListJoueur().isEmpty()) {
+
+                this.partie.getPionperdu().add(p);
+                this.partie.getListJoueur().get(p.getNumJoueur()).getPions().remove(p);
+
+                if (this.partie.getListJoueur().get(p.getNumJoueur()).getPions().isEmpty()) {
+
+                    if (this.partie.getListJoueur().size() == 1) {
+                        //  this.partie.getListJoueur().remove(this.partie.getListJoueur().get(1));
+                        this.partie.setFinish(true);
+                    } else {
+                        //    this.partie.getListJoueur().remove(this.partie.getListJoueur().get(p.getNumJoueur()));
+                    }
+                }
+
+            } else if (this.partie.getListJoueur().isEmpty()) {
+                this.mouvement = 0;
+                this.partie.setFinish(true);
+            }
         }
+    }
+
+    /**
+     * SETTER et GETTERS
+     *
+     * @param direction permet de modifier la direction du monstre
+     */
+    public void setDirection(int direction) {
+        this.direction = direction;
+    }
+
+    public int getDirection() {
+        return direction;
     }
 
     /**
@@ -319,6 +399,11 @@ public class PionMonstre {
         this.mouvement = mouvement;
     }
 
-    public void ajouterPionsTues(){ this.pionsTues += 1;}
-    public int getPionsTues(){ return this.pionsTues;}
+    public void ajouterPionsTues() {
+        this.pionsTues += 1;
+    }
+
+    public int getPionsTues() {
+        return this.pionsTues;
+    }
 }

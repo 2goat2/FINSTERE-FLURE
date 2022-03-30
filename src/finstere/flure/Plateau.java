@@ -22,9 +22,9 @@ public final class Plateau {
     /**
      * Matrice qui répresente le plateau :
      *
-     * 5 => pour créer le mur,
-     * 2 => pour afficher l'index de chaque ligne, 1 => pour dire que cet index
-     * n’est pas occupé, 0 => pour dire que cet index est occupé.
+     * 5 => pour créer le mur(le contour), 2 => pour afficher l'index de chaque
+     * ligne, 1 => pour dire que cet index n’est pas occupé, 0 => pour dire que
+     * cet index est occupé.
      *
      */
     private int[][] booleanPlateau = {
@@ -44,17 +44,19 @@ public final class Plateau {
 
     private Espace[][] plateau = new Espace[hauteur][largeur];
 
+    //Garde les déplacement utile sur le plateau
     private final Deplacement[] tabDeDeMoves;
 
+    //Espace de début
     private Espace espaceDeDebut;
 
     public Plateau() {
 
         tabDeDeMoves = new Deplacement[]{
-            new Deplacement(1, 0),
-            new Deplacement(-1, 0),
-            new Deplacement(0, 1),
-            new Deplacement(0, -1),};
+            new Deplacement(1, 0),  //South
+            new Deplacement(-1, 0),  //North
+            new Deplacement(0, 1),   //East
+            new Deplacement(0, -1),};//West
 
         initPlateau();
 
@@ -71,20 +73,23 @@ public final class Plateau {
         for (int i = 0; i < getHauteur(); i++) {
             for (int j = 0; j < getLargeur(); j++) {
 
-                if (this.getBooleanPlateau()[i][j] == 2) {
-                    this.getPlateau()[i][j] = new Espace(true);
-                    this.getPlateau()[i][j].setAffichage(i);
-                }else if (this.getBooleanPlateau()[i][j] == 5) {
-                    this.getPlateau()[i][j] = new Mur(true);
-
-                } else if (this.getBooleanPlateau()[i][j] == 1) {
-                    this.getPlateau()[i][j] = new Espace(false);
-                    //System.out.println(this.plateau[i][j].toString());
-                    //System.out.println(Arrays.toString(this.plateau[i]));
-                } else {
-                    this.getPlateau()[i][j] = new Espace(true);
-                    //System.out.println(this.plateau[i][j].toString());
-
+                switch (this.getBooleanPlateau()[i][j]) {
+                    case 2:
+                        this.getPlateau()[i][j] = new Espace(true);
+                        this.getPlateau()[i][j].setAffichage(i);
+                        break;
+                    case 5:
+                        this.getPlateau()[i][j] = new Mur(true);
+                        break;
+                    case 1:
+                        this.getPlateau()[i][j] = new Espace(false);
+                        //System.out.println(this.plateau[i][j].toString());
+                        //System.out.println(Arrays.toString(this.plateau[i]));
+                        break;
+                    default:
+                        this.getPlateau()[i][j] = new Espace(true);
+                        //System.out.println(this.plateau[i][j].toString());
+                        break;
                 }
             }
         }
@@ -95,20 +100,23 @@ public final class Plateau {
          */
         String[] tabIndex = new String[getLargeur() - 1];
         tabIndex[0] = "Y/X";
-        for (int i = 1; i < tabIndex.length; i++){
+        for (int i = 1; i < tabIndex.length; i++) {
 
             tabIndex[i] = " " + i + " ";
         }
 
         //Affichage modifiée!
         for (int i = 0; i < getHauteur(); i++) {
-            if(i == 1){
+            if (i == 1) {
                 System.out.println(Arrays.toString(tabIndex).replace("[", "").replace("]", "").replace(",", "-").replace("  10 -  11 -  12 -  13 -  14 -  15 -  16 ", " 10 - 11 - 12 - 13 - 14 - 15 - 16").replace("  1", " 1").replace("X/Y-", "X/Y "));
             }
             System.out.println(Arrays.toString(this.getPlateau()[i]).replace("[", "").replace("]", "").replace(",", "-").replace("10- ", "10-").replace("11- ", "11-").replace("X/Y-", "X/Y ").replace("|X|-  ", "|X|").replace("| |-  ", "| |"));
         }
     }
 
+    /**
+     * Méthode permet à l'espace de génerer les espace adjacentes
+     */
     private void genererAdj() {
         for (int i = 0; i < this.plateau.length; i++) {
             for (int j = 0; j < this.plateau[i].length; i++) {
@@ -162,21 +170,21 @@ public final class Plateau {
         switch (m.getDirection()) {
             case NORTH:
                 if (m.getY() == 0 || (m.getX() == 13 && m.getY() == 1) || (m.getX() == 14 && m.getY() == 2) || (m.getX() == 15 && m.getY() == 3) || (m.getX() == 16 && m.getY() == 4)) {
-                    ok = deplacerMonstre(m, largeur - m.getX(), hauteur - m.getY()   );
+                    ok = deplacerMonstre(m, largeur - m.getX(), hauteur - m.getY());
                 } else {
                     ok = deplacerMonstre(m, m.getX(), m.getY() - 1);
                 }
                 break;
             case EAST:
                 if (m.getX() == 17 || (m.getX() == 12 && m.getY() == 1) || (m.getX() == 13 && m.getY() == 2) || (m.getX() == 14 && m.getY() == 3) || (m.getX() == 15 && m.getY() == 4)) {
-                    ok = deplacerMonstre(m, largeur - m.getX()- 1, hauteur - m.getY() - 1);
+                    ok = deplacerMonstre(m, largeur - m.getX() - 1, hauteur - m.getY() - 1);
                 } else {
                     ok = deplacerMonstre(m, m.getX() + 1, m.getY());
                 }
                 break;
             case SOUTH:
                 if (m.getY() == this.hauteur || (m.getX() == 4 && m.getY() == 10) || (m.getX() == 3 && m.getY() == 9) || (m.getX() == 2 && m.getY() == 8) || (m.getX() == 1 && m.getY() == 7)) {
-                    ok = deplacerMonstre(m, largeur - m.getX() -1, hauteur - m.getY() - 1);
+                    ok = deplacerMonstre(m, largeur - m.getX() - 1, hauteur - m.getY() - 1);
                 } else {
                     ok = deplacerMonstre(m, m.getX(), m.getY() + 1);
                 }
@@ -210,12 +218,11 @@ public final class Plateau {
         boolean ok = false;
         int i = 0;
 
-
         while (this.plateau[y][x].isOccupee()) {
             if (this.plateau[y][x].getObjet() != null && this.plateau[y][x].getObjet().getClass().equals(PionJoueur.class)) {
                 break;
             }
-            switch ( m.getDirection() ) {
+            switch (m.getDirection()) {
                 case NORTH:
                     if (y == 0 || (x == 13 && y == 1) || (x == 14 && y == 2) || (x == 15 && y == 3) || (x == 16 && y == 4)) {
                         x = largeur - m.getX() - 1;
@@ -269,12 +276,6 @@ public final class Plateau {
         return ok;
     }
 
-    /**
-     * This moves a rock object one space
-     *
-     * @param face The direction to move the rock
-     * @param r The rock to be moved
-     */
     public void deplacerPierreUneFois(int direction, Pierre r) {
         boolean ok = false;
         switch (direction) {
@@ -296,7 +297,6 @@ public final class Plateau {
 
     }
 
-    //Moves rock, r to spot (x, y) and performs any necessary actions (killing people, moving other rocks, disappearing, etc)
     public boolean deplacerPierre(Pierre r, int x, int y, int direction) {
         boolean ok = true;
         if (this.plateau[x][y].isOccupee()) {
@@ -315,6 +315,28 @@ public final class Plateau {
         return ok;
     }
 
+        /**
+     * Méthode pour afficher le plateau.
+     */
+    public void print() {
+
+        String[] tabIndex = new String[getLargeur() - 1];
+        tabIndex[0] = "Y/X";
+        for (int i = 1; i < tabIndex.length; i++) {
+
+            tabIndex[i] = " " + i + " ";
+        }
+
+        //Affichage modifiée!
+        for (int i = 0; i < getHauteur(); i++) {
+            if (i == 1) {
+                System.out.println(Arrays.toString(tabIndex).replace("[", "").replace("]", "").replace(",", "-").replace("  10 -  11 -  12 -  13 -  14 -  15 -  16 ", " 10 - 11 - 12 - 13 - 14 - 15 - 16").replace("  1", " 1").replace("X/Y-", "X/Y "));
+            }
+            System.out.println(Arrays.toString(this.getPlateau()[i]).replace("[", "").replace("]", "").replace(",", "-").replace("10- ", "10-").replace("11- ", "11-").replace("X/Y-", "X/Y ").replace("|X|-  ", "|X|").replace("| |-  ", "| |"));
+        }
+        System.out.println("\n");
+
+    }
     /**
      * @return the hauteur
      */
@@ -383,40 +405,19 @@ public final class Plateau {
         this.espaceDeDebut.equals(p);
     }
 
-    /**
-     * Méthode pour afficher le plateau.
-     */
-    public void print() {
 
-        String[] tabIndex = new String[getLargeur() - 1];
-        tabIndex[0] = "Y/X";
-        for (int i = 1; i < tabIndex.length; i++){
 
-            tabIndex[i] = " " + i + " ";
-        }
-
-        //Affichage modifiée!
-        for (int i = 0; i < getHauteur(); i++) {
-            if(i == 1){
-                System.out.println(Arrays.toString(tabIndex).replace("[", "").replace("]", "").replace(",", "-").replace("  10 -  11 -  12 -  13 -  14 -  15 -  16 ", " 10 - 11 - 12 - 13 - 14 - 15 - 16").replace("  1", " 1").replace("X/Y-", "X/Y "));
-            }
-            System.out.println(Arrays.toString(this.getPlateau()[i]).replace("[", "").replace("]", "").replace(",", "-").replace("10- ", "10-").replace("11- ", "11-").replace("X/Y-", "X/Y ").replace("|X|-  ", "|X|").replace("| |-  ", "| |"));
-        }
-        System.out.println("\n");
-
-    }
-    
-    public void ajoutFlague(){
+    public void ajoutFlague() {
         Flague[] tabflague = new Flague[8];
-        tabflague[0] = new Flague(3,9);
-        tabflague[1] = new Flague(3,10);
-        tabflague[2] = new Flague(4,9);
-        tabflague[3] = new Flague(4,10);
-        tabflague[4] = new Flague(9,5);
-        tabflague[5] = new Flague(9,6);
-        tabflague[6] = new Flague(9,7);
-        tabflague[7] = new Flague(9,8);
-        
+        tabflague[0] = new Flague(3, 9);
+        tabflague[1] = new Flague(3, 10);
+        tabflague[2] = new Flague(4, 9);
+        tabflague[3] = new Flague(4, 10);
+        tabflague[4] = new Flague(9, 5);
+        tabflague[5] = new Flague(9, 6);
+        tabflague[6] = new Flague(9, 7);
+        tabflague[7] = new Flague(9, 8);
+
     }
 
 }

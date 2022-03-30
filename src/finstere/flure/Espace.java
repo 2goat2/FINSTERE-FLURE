@@ -29,6 +29,7 @@ public class Espace {
     //Orientations
     private final int NORTH = 1, EAST = 2, SOUTH = 3, WEST = 4;
 
+    //Permet de garder les espace adjacentes de cette espace
     private final LinkedList<Espace> espacesAdj;
 
     //Constructeurs
@@ -91,7 +92,7 @@ public class Espace {
     /**
      * Ajouter l'objet dans l'espace
      *
-     * @param obj The object to be added
+     * @param obj l'objet qu'on veut l'ajouter
      * @return Retourne true si l'objet a été bien ajouté, sinon false
      */
     public boolean ajouterObjet(Object obj) {
@@ -140,6 +141,14 @@ public class Espace {
 
         return true;
     }
+    
+        /**
+     * Ajouter l'objet dans l'espace
+     *
+     * @param obj l'objet qu'on veut ajouter
+     * @param j permet de prendre le nom d'un joueur et afficher son premier lettre dans l'espace
+     * @return Retourne true si l'objet a été bien ajouté, sinon false
+     */
 
     public boolean ajouterObjet(Object obj, Joueur j) {
 
@@ -197,9 +206,10 @@ public class Espace {
         return true;
     }
 
+    // Méthode permet d'ajouter un espace adjacente à l'espace
     public void ajouterEspaceAdj(Espace e) {
         if (e == null) {
-            throw new IllegalArgumentException("Cell cannot be null");
+            throw new IllegalArgumentException("null espace");
         }
         espacesAdj.add(e);
 

@@ -8,6 +8,7 @@ package finstere.flure;
 /**
  *
  * @author nadim
+ * La classe Direction permet au monstre de choisir et changer son orientation
  */
 public class Direction {
 

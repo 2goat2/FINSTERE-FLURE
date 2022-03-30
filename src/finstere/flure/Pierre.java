@@ -8,10 +8,20 @@ package finstere.flure;
 /**
  *
  * @author nadim
+ * Classe Pierre extends la classe Obstacle
  */
-    //Classe Pierre
-public class Pierre{
 
+public class Pierre extends Obstacle {
+
+    private int x;//
+    private int y;//
+    private int ax, ay;//précédent
+
+    public Pierre(int x, int y) {
+        super(x,y);
+    }
+
+    //GETTERS ET SETTERS
     /**
      * @return the x
      */
@@ -67,15 +77,4 @@ public class Pierre{
     public void setAy(int ay) {
         this.ay = ay;
     }
-    private int x;//
-    private int y;//
-    private int ax,ay;//précédent
-    
-    public Pierre(int x, int y){
-        this.x=x;
-        this.y=y;
-    }
-    
-    
-    
 }

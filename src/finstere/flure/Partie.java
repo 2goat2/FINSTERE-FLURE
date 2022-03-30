@@ -24,27 +24,41 @@ public class Partie {
     //La liste des pions morts dans cette partie
     private ArrayList<PionJoueur> pionperdu;
 
+    //Le joueur gagnant de ce partie
+    private Joueur gagnant;
+
+    //La liste des pions gagnants dans cette partie
+    private ArrayList<PionJoueur> piongagnant;
+
     //La liste d'obstacles dans cette partie
     private ArrayList<Obstacle> obstacle;
 
     //le monstre dans cette partie
     private PionMonstre monstre;
 
+    //l'espace de début du tour
     private Espace EspaceDeDebut;
 
+    //La manche
     private boolean manche = true; // TRUE == Manche 1 & FALSE == Manche 2
 
-    //Constructeur sans paramètres permet de déclarer les liste de la partie
+    //boolean pour savoir si la partie est terminée
+    private boolean finish = false;
+
+    //Constructeur sans paramètres permet de déclarer les listes de la partie et le gagnant.
     public Partie() {
 
         listJoueur = new ArrayList<>();
         pionperdu = new ArrayList<>();
+        piongagnant = new ArrayList<>();
         obstacle = new ArrayList<>();
+        gagnant = new Joueur();
+
     }
 
     /*
     * Méthode pour init les joueurs avant de commencer la partie
-    * permettant d'initiailiser les pions pour chaque joueur en plus! 
+    * permettant d'initiailiser les pions pour chaque joueur. 
      */
     public void initJoueur() {
 
@@ -61,10 +75,10 @@ public class Partie {
 
             ArrayList<PionJoueur> pionJoueurList = new ArrayList<>();
 
-            pionJoueurList.add(new PionJoueur(16, 11, false, 6, 1 ,i+1));
-         //   pionJoueurList.add(new PionJoueur(16, 11, false, 4, 3, i+1));
-         //   pionJoueurList.add(new PionJoueur(16, 11, false, 3, 4, i+1));
-         //   pionJoueurList.add(new PionJoueur(16, 11, false, 2, 5, i+1));
+            pionJoueurList.add(new PionJoueur(16, 11, false, 6, 1, i));
+            pionJoueurList.add(new PionJoueur(16, 11, false, 4, 3, i));
+            pionJoueurList.add(new PionJoueur(16, 11, false, 3, 4, i));
+            pionJoueurList.add(new PionJoueur(16, 11, false, 2, 5, i));
 
             getListJoueur().get(i).setPions(pionJoueurList);
         }
@@ -78,33 +92,43 @@ public class Partie {
     * C'est la méthode principale pour commencer une partie du jeu ! 
      */
     public void start() {
+
         System.out.println("\n");
         System.out.println("^ Plateau du jeu ^");
+
+        //set new Plateau()
         this.setP(new Plateau());
+
+        //set new Monstre(1, 1, 2, this.getP(), this);
         this.setMonstre(new PionMonstre(1, 1, 2, this.getP(), this));
+
         mettreLeMontreSurPlateau();
 
         placerPionJoueur();
 
-     //   p.print();
-        System.out.println("mouvemen1");
-        this.getMonstre().deplacer(10);
+        //Le tour termine quand il n'y a plus de PionJoueur sur le plateau.
+        while (!isFinish() || getFinish()) {
 
+            System.out.println("mouvement");
+            this.getMonstre().deplacer(5);
 
-        getP().print();
-        
-        deplacerPionJoueur();
-        this.getMonstre().deplacer(10);
-        System.out.println(this.getMonstre().getPionsTues());
+            deplacerPionJoueur();
 
-        deplacerPionJoueur();
-        this.getMonstre().deplacer(2);
-        System.out.println(this.getMonstre().getPionsTues());
+            this.gagnant = this.gagnant(this.getListJoueur());
+
+            System.out.println("liste de joueurs : " + this.getListJoueur().toString());
+            System.out.println("joueur gagnant : " + this.gagnant.getNom());
+            System.out.println("liste de Pions perdus : " + this.getPionperdu().toString());
+            System.out.println("liste de Pions gagnants : " + this.piongagnant.toString());
+
+        }
+
+        //JOueur Encoree
     }
 
 
     /*
-    * Méthode permet le joueur de mettre les pions sur le plateau
+    * Méthode permet le joueur de mettre les pions sur le plateau commanceant par l'espace de début
      */
     private void placerPionJoueur() {
 
@@ -185,13 +209,16 @@ public class Partie {
                 System.out.println("new " + this.getP().getPlateau()[xScanne][yScanne].isOccupee());
 
                 this.getP().print();
-                this.manche = !this.manche;
+                this.setManche(!this.isManche());
 
             }
         }
 
     }
 
+    /*
+    * Méthode qui permet au joueur de déplacer ou de sortir les pions du plateau 
+     */
     private void deplacerPionJoueur() {
 
         for (int i = 0; i < this.getListJoueur().size(); i++) {
@@ -201,10 +228,36 @@ public class Partie {
 
                 Scanner scX = new Scanner(System.in);
                 Scanner scY = new Scanner(System.in);
-                int xScanne;
-                int yScanne;
+                int xScanne = -1;
+                int yScanne = -1;
 
                 do {
+
+                    if (this.getListJoueur().get(i).getPions().get(j).getX() == 1 && this.getListJoueur().get(i).getPions().get(j).getY() == 1) {
+                        System.out.println(" Félicitation ! vous avez arriver à la sortie :) ");
+                        System.out.println("$$$ Pour Sortir du plateau et gagner la partie, il faut aller à la case (0;0) $$$ ");
+                        System.out.println("Veuillez entrer --- Y --- du pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom());
+                        xScanne = scX.nextInt();
+                        while ((xScanne < 0) || (xScanne > this.getP().getHauteur())) {
+                            System.out.println("Veuillez entrer une valeur vrai entre (1 et 11) pour l'Y du pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom());
+                            xScanne = scX.nextInt();
+                        }
+
+                        System.out.println("Veuillez entrer --- X --- du pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom());
+                        yScanne = scY.nextInt();
+                        while ((yScanne < 0) || (yScanne > this.getP().getLargeur())) {
+                            System.out.println("Veuillez entrer une valeur vrai entre (1 et 16) pour l'X du pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom());
+                            yScanne = scY.nextInt();
+                        }
+
+                        break;
+                    }
+
+                    if (this.getListJoueur().get(i).getPions().get(j).getY() == 0) {
+                        xScanne = 0;
+                        yScanne = this.getListJoueur().get(i).getPions().get(j).getX();
+                        break;
+                    }
 
                     System.out.println(this.getListJoueur().get(i).getPions().get(j).getValeurActuelle() + " cases possible pour ce pion.");
                     System.out.println(" Place actuelle pour ce pion : " + this.getListJoueur().get(i).getPions().get(j).getX() + " | " + this.getListJoueur().get(i).getPions().get(j).getY());
@@ -228,21 +281,62 @@ public class Partie {
 
                 this.p.getPlateau()[this.getListJoueur().get(i).getPions().get(j).getX()][this.getListJoueur().get(i).getPions().get(j).getY()] = new Espace(false);
 
-                this.getListJoueur().get(i).getPions().get(j).setX(xScanne);
-                this.getListJoueur().get(i).getPions().get(j).setY(yScanne);
+                if (xScanne != 0 || yScanne != 0) {
 
-                System.out.println("Ancien " + this.getP().getPlateau()[xScanne][yScanne].isOccupee());
-                this.getP().setObjet(xScanne, yScanne, this.getListJoueur().get(i).getPions().get(j), this.getListJoueur().get(i));
-                System.out.println("new " + this.getP().getPlateau()[xScanne][yScanne].isOccupee());
+                    this.getListJoueur().get(i).getPions().get(j).setX(xScanne);
+                    this.getListJoueur().get(i).getPions().get(j).setY(yScanne);
+                    this.getP().setObjet(xScanne, yScanne, this.getListJoueur().get(i).getPions().get(j), this.getListJoueur().get(i));
+
+                } else if (xScanne == 0 && yScanne == 0) {
+
+                    this.piongagnant.add(this.getListJoueur().get(i).getPions().get(j));
+                    this.p.getPlateau()[1][1].supprimerObject();
+                    this.listJoueur.get(i).getPions().remove(j);
+                }
 
                 this.getP().print();
+                System.out.println(this.piongagnant.toString());
 
-                this.manche = !this.manche;
+                this.setManche(!this.isManche());
             }
         }
 
     }
 
+    /**
+     * @param l la liste de joueur
+     * @return Retourne le joueur gagnant de la liste l
+     */
+    private Joueur gagnant(ArrayList<Joueur> l) {
+
+        int pions1 = 0;
+        int pions2 = 0;
+
+        for (int i = 0; i < this.piongagnant.size(); i++) {
+            if (this.piongagnant.get(i).getNumJoueur() == 0) {
+                pions1 += 1;
+            } else if (this.piongagnant.get(i).getNumJoueur() == 1) {
+                pions2 += 1;
+            }
+        }
+
+        if (pions1 >= 3) {
+            return l.get(0);
+        } else if (pions1 >= 3) {
+            return l.get(1);
+        } else {
+            if (pions1 == pions2) {
+                return l.get(0);
+            } else if (pions1 > pions2) {
+                return l.get(0);
+            } else {
+                return l.get(1);
+            }
+        }
+
+    }
+
+    //Methode qui permet au monstre à se mettre sur le plateau
     private void mettreLeMontreSurPlateau() {
         System.out.println("\n");
         System.out.println(" !!!!!!!!!!!!!!!!!!!!!!!!!!! ");
@@ -253,7 +347,19 @@ public class Partie {
         this.getP().print();
     }
 
+    //Méthode qui retourne true si il y a pas des pions sur le plateau, sinon false
+    private boolean isFinish() {
+        int nom = 0;
 
+        for (int i = 0; i < this.getListJoueur().size(); i++) {
+            if (this.getListJoueur().get(i).getPions().size() == 0) {
+                nom += 1;
+            }
+        }
+        return nom == this.getListJoueur().size();
+    }
+
+    //Retourne listJoueur to String
     private String listJoueurToString() {
         ArrayList<String> jNoms = new ArrayList<>();
         for (Joueur j : this.getListJoueur()) {
@@ -263,6 +369,14 @@ public class Partie {
         return jNoms.toString();
     }
 
+    /**
+     * Verifier les deplacément des objets
+     *
+     * @param x la nouvelle X
+     * @param y la nouvelle Y
+     * @param obj l'objet qui se déplace
+     * @return Retourne true si l'objet a été bien se déplacé, sinon false
+     */
     private boolean deplacerEtVerifierUnObjetDansUneCase(int x, int y, Object obj) {
 
         if (this.getP().getPlateau()[x][y].isOccupee()) {
@@ -271,20 +385,20 @@ public class Partie {
             return true;
         } else if (obj.getClass().equals(PionJoueur.class)) {
             PionJoueur pionJoueur = (PionJoueur) obj;
-            if (pionJoueur.getX() == y && pionJoueur.getY() == x) {
+            if (pionJoueur.getX() != y && pionJoueur.getY() != x) {
                 System.out.println("Voulez-vous rester sur la même case ? (oui/non)");
                 Scanner sc = new Scanner(System.in);
                 String s = sc.nextLine();
                 return "oui".equals(s);
-            }// else {
-            //   return !((x > pionJoueur.getX() + 1 || x < pionJoueur.getX() - 1) && (y > pionJoueur.getY() + 1 || y < pionJoueur.getY() - 1));
-            //}
+            }
         } else {
             return false;
         }
         return false;
     }
 
+    
+    //GETTERS ET SETTERS
     /**
      * @return the p
      */
@@ -373,7 +487,7 @@ public class Partie {
      * @return the manche
      */
     public boolean getManche() {
-        return manche;
+        return isManche();
     }
 
     /**
@@ -381,6 +495,27 @@ public class Partie {
      */
     public void setManche(boolean manche) {
         this.manche = manche;
+    }
+
+    /**
+     * @return the manche
+     */
+    public boolean isManche() {
+        return manche;
+    }
+
+    /**
+     * @return the finish
+     */
+    public boolean getFinish() {
+        return finish;
+    }
+
+    /**
+     * @param finish the finish to set
+     */
+    public void setFinish(boolean finish) {
+        this.finish = finish;
     }
 
 }

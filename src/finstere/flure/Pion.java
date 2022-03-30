@@ -12,8 +12,10 @@ package finstere.flure;
 public abstract class Pion {
 
     // Les coordonées de chaque pion [ joueur - monstre ]
-    int x;
-    int y;
+    private int x;
+    private int y;
+    
+    //l'espace de commencer
     private Espace espaceDeCommencer;
     
     public Pion(int x,int y){
