@@ -110,30 +110,40 @@ public class Espace {
         else if (obj.getClass().equals(PionJoueur.class)) {
             //affichage = "|" + ((Joueur) obj).getNom().charAt(0) + "|";
             affichage = "|J|";
+            this.setOccupee(true);
         } else if (obj.getClass().equals(Pierre.class)) {
-            affichage = "|?|";
+            affichage = "|0|";
+            this.setOccupee(true);
         } else if (obj.getClass().equals(Flague.class)) {
             affichage = "|⛖|";
+            this.setOccupee(true);
         } else if (obj.getClass().equals(Pivot90.class)) {
             affichage = "|⮔|";
+            this.setOccupee(true);
         } else if (obj.getClass().equals(Pivot180.class)) {
             affichage = "|⛖|";
+            this.setOccupee(true);
         } else if (obj.getClass().equals(PionMonstre.class)) {
             switch (((PionMonstre) obj).getDirection()) {
                 case NORTH:
                     affichage = "|⌃|";
+                    this.setOccupee(true);
                     break;
                 case EAST:
                     affichage = "|🢒|";
+                    this.setOccupee(true);
                     break;
                 case SOUTH:
                     affichage = "|⌄|";
+                    this.setOccupee(true);
                     break;
                 case WEST:
                     affichage = "|🢐|";
+                    this.setOccupee(true);
                     break;
                 default:
                     affichage = "|M|";
+                    this.setOccupee(true);
             }
         } else {
             return false;
@@ -166,7 +176,7 @@ public class Espace {
             affichage = "|" + j.getNom().charAt(0) + "|";
             this.setOccupee(true);
         } else if (obj.getClass().equals(Pierre.class)) {
-            affichage = "|?|";
+            affichage = "|0|";
             this.setOccupee(true);
         } else if (obj.getClass().equals(Flague.class)) {
             affichage = "|⛖|";

@@ -76,9 +76,12 @@ public class PionMonstre {
                 this.getPlateau().deplacerLeMonstreUneFois(this);
             } else {
                 //tout droit
+
                 if (regarderObjet(this.getDirection()) != null && Objects.requireNonNull(regarderObjet(this.getDirection())).getClass() == Pierre.class) {
+
                     this.getPlateau().deplacerPierreUneFois(this.getDirection(), (Pierre) regarderObjet(this.getDirection()));
                     this.getPlateau().deplacerLeMonstreUneFois(this);
+
                 } else {
                     this.getPlateau().deplacerLeMonstreUneFois(this);
                 }
@@ -234,8 +237,12 @@ public class PionMonstre {
      */
     public void tuer(PionJoueur p) {
         this.ajouterPionsTues();
-        plateau.getPlateau()[this.y][this.x].supprimerObject();
+        plateau.getPlateau()[p.getY()][p.getX()].setAffichage("X");
+        plateau.getPlateau()[p.getY()][p.getX()].supprimerObject();
+        p.setxAncien(17);
+        p.setyAncien(11);
 
+        System.out.println(this.partie.getManche());
         if (this.partie.getManche()) {
 
             if (!this.partie.getListJoueur().isEmpty()) {
@@ -248,8 +255,6 @@ public class PionMonstre {
                     if (this.partie.getListJoueur().size() == 1) {
                         //  this.partie.getListJoueur().remove(this.partie.getListJoueur().get(1));
                         this.partie.setFinish(true);
-                    } else {
-                        //    this.partie.getListJoueur().remove(this.partie.getListJoueur().get(p.getNumJoueur()));
                     }
                 }
 

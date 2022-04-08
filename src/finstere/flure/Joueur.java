@@ -15,14 +15,16 @@ public class Joueur {
 
     //le nom d'un joueur
     private String nom;
-    
+
     //La liste qui garde les pion d'un joueur
     private ArrayList<PionJoueur> pion = new ArrayList<PionJoueur>();
+
+    //La liste qui garde les pion d'un joueur
+    private ArrayList<PionJoueur> pionsReste = new ArrayList<PionJoueur>();
 
     //booleen pour voir si le joueur est gagnant
     private boolean gagnant = false;
 
-    
     //Constructeurs
     public Joueur(String nom) {
         this.nom = nom;
@@ -30,32 +32,30 @@ public class Joueur {
 
     public Joueur() {
     }
-    
-    
+
     /*
     * GETTERS AND SETTERS
-    */
-    public String getNom(){
+     */
+    public String getNom() {
         return nom;
     }
-    
-    public void setNom(String nom){
+
+    public void setNom(String nom) {
         this.nom = nom;
     }
-    
-    public void setPions(ArrayList<PionJoueur> pion){
+
+    public void setPions(ArrayList<PionJoueur> pion) {
         this.setPion(pion);
     }
-    
-    public ArrayList<PionJoueur> getPions(){
+
+    public ArrayList<PionJoueur> getPions() {
         return this.getPion();
     }
-    
-    public String toString(){
+
+    public String toString() {
         return this.getNom();
     }
-    
-    
+
     /**
      * @return the pion
      */
@@ -84,5 +84,18 @@ public class Joueur {
         this.gagnant = gagnant;
     }
 
+    /**
+     * @return the pionsReste
+     */
+    public ArrayList<PionJoueur> getPionsReste() {
+        return pionsReste;
+    }
+
+    /**
+     * @param pionsReste the pionsReste to set
+     */
+    public void setPionsReste(ArrayList<PionJoueur> pionsReste) {
+        this.pionsReste = pionsReste;
+    }
 
 }

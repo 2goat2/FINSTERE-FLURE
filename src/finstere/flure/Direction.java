@@ -12,11 +12,13 @@ package finstere.flure;
  */
 public class Direction {
 
-    final private int gaucheDroite = 2;
-    final private int directionsPossible = 4;
     private final int[][] directions;
 
     public Direction() {
+
+        int gaucheDroite = 2;
+        int directionsPossible = 4;
+
         directions = new int[directionsPossible][gaucheDroite];
         directions[0][0] = 4;
         directions[0][1] = 2;

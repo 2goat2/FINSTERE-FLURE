@@ -7,6 +7,7 @@ package finstere.flure;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.IllegalFormatCodePointException;
 import java.util.Set;
 
 /**
@@ -29,7 +30,7 @@ public final class Plateau {
      */
     private int[][] booleanPlateau = {
         {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5},
-        {2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 5},
+        {2, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 5},
         {2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 5},
         {2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 5},
         {2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 5},
@@ -153,6 +154,15 @@ public final class Plateau {
         return this.plateau[y][x].ajouterObjet(obj, j);
 
     }
+
+
+    public boolean setObjet(Object obj){
+        if (obj instanceof Pierre){
+            return this.plateau[((Pierre) obj).getX()][((Pierre) obj).getY()].ajouterObjet(obj);
+        }
+        return false;
+    }
+
 
     /*
      Les Méthodes : moveupObjet, moveDownObjet, moveLeftObjet, moveRightObjet
@@ -278,40 +288,52 @@ public final class Plateau {
 
     public void deplacerPierreUneFois(int direction, Pierre r) {
         boolean ok = false;
+
+        System.out.println("1 x : " + r.getX());
+        System.out.println("1 y : " + r.getY());
+
         switch (direction) {
             case NORTH:
-                ok = deplacerPierre(r, r.getX(), r.getY() - 1, direction);
+                ok = deplacerPierre(r, r.getX() , r.getY() -1, direction);
                 break;
             case EAST:
-                ok = deplacerPierre(r, r.getX() + 1, r.getY(), direction);
+                ok = deplacerPierre(r, r.getX()+1, r.getY(), direction);
                 break;
             case SOUTH:
-                ok = deplacerPierre(r, r.getX(), r.getY() + 1, direction);
+                ok = deplacerPierre(r, r.getX(), r.getY() +1, direction);
                 break;
             case WEST:
-                ok = deplacerPierre(r, r.getX() - 1, r.getY(), direction);
+                ok = deplacerPierre(r, r.getX()-1 , r.getY(), direction);
                 break;
             default:
                 ok = false;
         }
+        System.out.println("2 x : " + r.getX());
+        System.out.println("2 y : " + r.getY());
 
     }
 
     public boolean deplacerPierre(Pierre r, int x, int y, int direction) {
-        boolean ok = true;
-        if (this.plateau[x][y].isOccupee()) {
-            this.plateau[r.getX()][r.getY()].supprimerObject();
-            return false;
+
+        if (this.plateau[y][x].isOccupee() || this.plateau[y][x].getClass() == Mur.class) {
+
+            if (this.plateau[y][x].getObjet() != null && this.plateau[y][x].getObjet().getClass() == Pierre.class) {
+                deplacerPierreUneFois(direction, (Pierre) this.plateau[y][x].getObjet());
+
+            } else if (this.plateau[y][x].getObjet() != null && this.plateau[y][x].getObjet().getClass() == PionJoueur.class) {
+                this.plateau[r.getY()][r.getX()].supprimerObject();
+
+            } else {
+                this.plateau[r.getY()][r.getX()].supprimerObject();
+                return false;
+            }
         }
-        if (this.plateau[x][y].getObjet() != null && this.plateau[x][y].getObjet().getClass() == PionJoueur.class) {
-            this.plateau[r.getX()][r.getY()].supprimerObject();
-        }
-        if (this.plateau[x][y].getObjet() != null && this.plateau[x][y].getObjet().getClass() == Pierre.class) {
-            deplacerPierreUneFois(direction, (Pierre) this.plateau[x][y].getObjet());
-        }
-        ok = this.setObjet(x, y, this.plateau[r.getX()][r.getY()].supprimerObject());
+
+        boolean ok = this.setObjet(y, x, r);
+        this.plateau[r.getY()][r.getX()].supprimerObject();
         r.setX(x);
         r.setY(y);
+
         return ok;
     }
 

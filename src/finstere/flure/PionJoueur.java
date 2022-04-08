@@ -38,8 +38,11 @@ public class PionJoueur extends Pion {
     //Permet de savoir le joueur lequel ce pion appartient
     private int numJoueur;
 
+    private boolean estSurPlateau;
+
     //Constructeur
     public PionJoueur(int x, int y, boolean face, int f1, int f2, int i) {
+
         super(x, y);
         this.face = face;
         this.valeurDeFaceClaire = f1;
@@ -50,6 +53,8 @@ public class PionJoueur extends Pion {
         this.xAncien = 0;
         this.yAncien = 0;
         this.numJoueur = i;
+        this.estSurPlateau = false;
+
     }
 
     public void flipValeurActuelle() {
@@ -62,7 +67,7 @@ public class PionJoueur extends Pion {
 
     @Override
     public String toString() {
-        return "Joueur : " + this.numJoueur + " - Pion : " + this.valeurDeFaceClaire + "/" + this.valeurDeFaceFonce;
+        return "Pion : " + this.valeurDeFaceClaire + "/" + this.valeurDeFaceFonce;
     }
 
     public String[] getCouleur() {
@@ -207,5 +212,20 @@ public class PionJoueur extends Pion {
     public void setNumJoueur(int numJoueur) {
         this.numJoueur = numJoueur;
     }
+
+    /**
+     * @return the estSurPlateau
+     */
+    public boolean getEstSurPlateau() {
+        return estSurPlateau;
+    }
+
+    /**
+     * @param estSurPlateau the estSurPlateau to set
+     */
+    public void setEstSurPlateau(boolean estSurPlateau) {
+        this.estSurPlateau = estSurPlateau;
+    }
+
 
 }

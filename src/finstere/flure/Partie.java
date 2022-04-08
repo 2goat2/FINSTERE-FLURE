@@ -5,6 +5,9 @@
  */
 package finstere.flure;
 
+import jdk.swing.interop.SwingInterOpUtils;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -31,16 +34,21 @@ public class Partie {
     private ArrayList<PionJoueur> piongagnant;
 
     //La liste d'obstacles dans cette partie
-    private ArrayList<Obstacle> obstacle;
+    private ArrayList<Pierre> obstacle;
 
     //le monstre dans cette partie
     private PionMonstre monstre;
+
+    //le paquet de tuiles qui deplace le monstre
+    private PaquetDeTuiles paquet;
+
+    private boolean premierDeplacementDeJoueurs;
 
     //l'espace de début du tour
     private Espace EspaceDeDebut;
 
     //La manche
-    private boolean manche = true; // TRUE == Manche 1 & FALSE == Manche 2
+    private boolean manche = false; // false == Manche 1 & true == Manche 2
 
     //boolean pour savoir si la partie est terminée
     private boolean finish = false;
@@ -53,6 +61,8 @@ public class Partie {
         piongagnant = new ArrayList<>();
         obstacle = new ArrayList<>();
         gagnant = new Joueur();
+
+        this.premierDeplacementDeJoueurs = true;
 
     }
 
@@ -76,9 +86,9 @@ public class Partie {
             ArrayList<PionJoueur> pionJoueurList = new ArrayList<>();
 
             pionJoueurList.add(new PionJoueur(16, 11, false, 6, 1, i));
-            pionJoueurList.add(new PionJoueur(16, 11, false, 4, 3, i));
-            pionJoueurList.add(new PionJoueur(16, 11, false, 3, 4, i));
-            pionJoueurList.add(new PionJoueur(16, 11, false, 2, 5, i));
+         //   pionJoueurList.add(new PionJoueur(16, 11, false, 4, 3, i));
+        //    pionJoueurList.add(new PionJoueur(16, 11, false, 3, 4, i));
+        //    pionJoueurList.add(new PionJoueur(16, 11, false, 2, 5, i));
 
             getListJoueur().get(i).setPions(pionJoueurList);
         }
@@ -100,131 +110,371 @@ public class Partie {
         this.setP(new Plateau());
 
         //set new Monstre(1, 1, 2, this.getP(), this);
-        this.setMonstre(new PionMonstre(1, 1, 2, this.getP(), this));
+        this.setMonstre(new PionMonstre(4, 2, 1, this.getP(), this));
 
+        this.ajouterObstacles();
+
+        //créer un paquet de tuiles
+        this.paquet = new PaquetDeTuiles();
+
+        //Mettre le monstre sur le plateau
         mettreLeMontreSurPlateau();
 
-        placerPionJoueur();
+        System.out.println("MANCHE 1");
+        //Mettre les pions de joueurs sur le plateau
+        placer2pionsAuDebut();
 
         //Le tour termine quand il n'y a plus de PionJoueur sur le plateau.
         while (!isFinish() || getFinish()) {
 
             System.out.println("mouvement");
-            this.getMonstre().deplacer(5);
+            if (this.premierDeplacementDeJoueurs) {
+
+                Tuile t = this.paquet.donnerTuile();
+
+                while (t.getMouvement() == 1) {
+                    t = this.paquet.donnerTuile();
+                }
+
+                this.getMonstre().deplacer(t.getMouvement());
+                System.out.println(t.getMouvement());
+
+            } else {
+
+                Tuile t = this.paquet.donnerTuile();
+
+                if (t.getMouvement() == 1) {
+                    for (int i = 0; i < 8; i++) {
+                        if (this.pionperdu.size() == i) {
+                            int m = 0;
+                            if (this.pionperdu.size() != i + 1) {
+                                this.getMonstre().deplacer(t.getMouvement());
+                                m += 1;
+                            }
+                            System.out.println(m);
+                        }
+                    }
+                } else {
+
+                    this.getMonstre().deplacer(t.getMouvement());
+                    System.out.println(t.getMouvement());
+                }
+            }
+            this.monstre.deplacer(10);
 
             deplacerPionJoueur();
 
             this.gagnant = this.gagnant(this.getListJoueur());
 
-            System.out.println("liste de joueurs : " + this.getListJoueur().toString());
-            System.out.println("joueur gagnant : " + this.gagnant.getNom());
-            System.out.println("liste de Pions perdus : " + this.getPionperdu().toString());
-            System.out.println("liste de Pions gagnants : " + this.piongagnant.toString());
-
         }
 
-        //JOueur Encoree
+        System.out.println("liste de joueurs : " + this.getListJoueur().toString());
+        System.out.println("joueur gagnant : " + this.gagnant.getNom());
+        System.out.println("liste de Pions perdus : " + this.getPionperdu().toString());
+        System.out.println("liste de Pions gagnants : " + this.piongagnant.toString());
+
+    }
+
+    private void ajouterObstacles(){
+
+        this.obstacle.add(new Pierre(4,3,this.p));
+        this.obstacle.add(new Pierre(5,8,this.p));
+        this.obstacle.add(new Pierre(6,10,this.p));
+        this.obstacle.add(new Pierre(7,7,this.p));
+        this.obstacle.add(new Pierre(8,5,this.p));
+        this.obstacle.add(new Pierre(9,6,this.p));
+        this.obstacle.add(new Pierre(9,10,this.p));
+        this.obstacle.add(new Pierre(13,4,this.p));
+        this.obstacle.add(new Pierre(13,8,this.p));
+        this.obstacle.add(new Pierre(14,6,this.p));
+        this.obstacle.add(new Pierre(15,9,this.p));
+
+        for (int i = 0 ; i < this.obstacle.size() ; i ++){
+            this.getP().setObjet(this.obstacle.get(i).getY(),this.obstacle.get(i).getX(),this.obstacle.get(i));
+        }
     }
 
 
     /*
-    * Méthode permet le joueur de mettre les pions sur le plateau commanceant par l'espace de début
+    * Méthode permet le joueur de choisir et mettre 2 pions sur le plateau commanceant par l'espace de début
      */
-    private void placerPionJoueur() {
+    private void placer2pionsAuDebut() {
+
+        for (int i = 0; i < this.getListJoueur().size(); i++) {
+
+            ArrayList<PionJoueur> temp = new ArrayList<PionJoueur>(this.getListJoueur().get(i).getPions());
+
+            Scanner s, s2;
+            int p1, p2;
+
+            System.out.println("Le joueur : "+ this.getListJoueur().get(i).getNom() +". Veuillez choisir 2 pions pour commencer la partie\n");
+
+                for (int k = 0; k < temp.size(); k++) {
+                    System.out.println(k + " : " + temp.get(k).toString() + "\n");
+                }
+
+                while (true) {
+                    System.out.println("Veuillez entrer un nombre entre 0 et 3 pour choisir le 1er pion : ");
+                    s = new Scanner(System.in);
+                    p1 = s.nextInt();
+                    if (p1 == 0 || p1 == 1 || p1 == 2 || p1 == 3) {
+                        break;
+                    }
+                }
+
+                for (int k = 0; k < temp.size(); k++) {
+                    System.out.println(k + " : " + temp.get(k).toString() + "\n");
+                }
+
+                while (true) {
+                    System.out.println("Veuillez entrer un nombre entre 0 et 3 pour choisir le 2em pion 2: ");
+                    s2 = new Scanner(System.in);
+                    p2 = s2.nextInt();
+                    if (p2 == 0 || p2 == 1 || p2 == 2|| p1 == 3) {
+                        if (p1 == p2){
+                            System.out.println("vous avez déjà choisi ce pion");
+                        }else
+                        break;
+                    }
+                }
+
+                this.getListJoueur().get(i).setPionsReste(temp);
+                this.p.print();
+
+                for (int j = 0; j < this.getListJoueur().get(i).getPions().size(); j++) {
+
+                    if (j == p1 || j == p2) {
+
+                        //Garder les coordonées anciennes
+                        this.getListJoueur().get(i).getPions().get(j).setxAncien(this.getListJoueur().get(i).getPions().get(j).getX());
+                        this.getListJoueur().get(i).getPions().get(j).setyAncien(this.getListJoueur().get(i).getPions().get(j).getY());
+
+                        Scanner scX = new Scanner(System.in);
+                        Scanner scY = new Scanner(System.in);
+                        int xScanne = 1;
+                        int yScanne = 1;
+
+                        if (this.manche) {
+                            System.out.println("MANCHE 1");
+                        } else {
+                            System.out.println("MANCHE 2");
+                        }
+
+                        do {
+
+                            System.out.println("Le pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom() + " est hors le plateau!");
+                            System.out.println(this.getListJoueur().get(i).getPions().get(j).getValeurActuelle() + " cases possible pour ce pion.");
+
+                            System.out.println("Veuillez entrer --- Y --- du pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom());
+                            xScanne = scX.nextInt();
+
+                            while ((xScanne < 1) || (xScanne > this.getP().getHauteur())) {
+                                System.out.println("Veuillez entrer une valeur vrai entre (1 et 11) pour l'Y du pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom());
+                                xScanne = scX.nextInt();
+                            }
+
+                            while (xScanne != this.getListJoueur().get(i).getPions().get(j).getEspaceDeCommencer().getY()) {
+                                System.out.println("Le pion doit commencer par la case : " + this.getListJoueur().get(i).getPions().get(j).getEspaceDeCommencer().getX() + "-" + this.getListJoueur().get(i).getPions().get(j).getEspaceDeCommencer().getY());
+                                xScanne = scX.nextInt();
+                            }
+
+                            System.out.println("Veuillez entrer --- X --- du pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom());
+                            yScanne = scY.nextInt();
+                            while ((yScanne < 0) || (yScanne > this.getP().getLargeur())) {
+                                System.out.println("Veuillez entrer une valeur vrai entre (1 et 16) pour l'X du pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom());
+                                yScanne = scY.nextInt();
+                            }
+                            while (yScanne != this.getListJoueur().get(i).getPions().get(j).getEspaceDeCommencer().getX()) {
+                                System.out.println("Le pion doit commencer par la case : " + this.getListJoueur().get(i).getPions().get(j).getEspaceDeCommencer().getX() + "-" + this.getListJoueur().get(i).getPions().get(j).getEspaceDeCommencer().getY());
+                                yScanne = scY.nextInt();
+                            }
+
+                        } while (deplacerEtVerifierUnObjetDansUneCase(xScanne, yScanne, this.getListJoueur().get(i).getPions().get(j)));
+
+                        this.getListJoueur().get(i).getPions().get(j).setX(xScanne);
+                        this.getListJoueur().get(i).getPions().get(j).setY(yScanne);
+
+                        //Garder les coordonées anciennes
+                        this.getListJoueur().get(i).getPions().get(j).setxAncien(this.getListJoueur().get(i).getPions().get(j).getX());
+                        this.getListJoueur().get(i).getPions().get(j).setyAncien(this.getListJoueur().get(i).getPions().get(j).getY());
+
+                        this.getP().setObjet(xScanne, yScanne, this.getListJoueur().get(i).getPions().get(j), this.getListJoueur().get(i));
+
+                        this.getListJoueur().get(i).getPion().get(j).setValeurActuelle(this.getListJoueur().get(i).getPion().get(j).getValeurActuelle() - 1);
+                        this.getP().print();
+
+                        this.p.getPlateau()[xScanne][yScanne] = new Espace(false);
+
+                        do {
+
+                            System.out.println(this.getListJoueur().get(i).getPions().get(j).getValeurActuelle() + " cases possible pour ce pion.");
+
+                            System.out.println("Veuillez entrer --- Y --- du pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom());
+                            xScanne = scX.nextInt();
+
+                            while ((xScanne < 1) || (xScanne > this.getP().getHauteur())) {
+                                System.out.println("Veuillez entrer une valeur vrai entre (1 et 11) pour l'Y du pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom());
+                                xScanne = scX.nextInt();
+                            }
+
+                            System.out.println("Veuillez entrer --- X --- du pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom());
+                            yScanne = scY.nextInt();
+                            while ((yScanne < 0) || (yScanne > this.getP().getLargeur())) {
+                                System.out.println("Veuillez entrer une valeur vrai entre (1 et 16) pour l'X du pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom());
+                                yScanne = scY.nextInt();
+                            }
+
+                        } while (deplacerEtVerifierUnObjetDansUneCase(xScanne, yScanne, this.getListJoueur().get(i).getPions().get(j)));
+
+                        this.getListJoueur().get(i).getPions().get(j).setX(xScanne);
+                        this.getListJoueur().get(i).getPions().get(j).setY(yScanne);
+                        System.out.println("Place ancienne pour ce pion : " + this.getListJoueur().get(i).getPions().get(j).getxAncien() + " | " + this.getListJoueur().get(i).getPions().get(j).getyAncien());
+                        System.out.println("Ancien2 " + this.getP().getPlateau()[xScanne][yScanne].isOccupee());
+                        this.getP().setObjet(xScanne, yScanne, this.getListJoueur().get(i).getPions().get(j), this.getListJoueur().get(i));
+                        System.out.println("new " + this.getP().getPlateau()[xScanne][yScanne].isOccupee());
+                        this.getListJoueur().get(i).getPion().get(j).setEstSurPlateau(true);
+                        this.getListJoueur().get(i).getPion().get(j).setValeurActuelle(this.getListJoueur().get(i).getPion().get(j).getValeurActuelle() + 1);
+
+                        this.getP().print();
+                    }
+                }
+            }
+        
+        this.setManche(!this.isManche());
+
+    }
+
+    /*
+     * Méthode permet le joueur de mettre les 2 pions restants sur le plateau commançant par l'espace de début
+     */
+    private void placer2pionsALaFin() {
 
         for (int i = 0; i < this.getListJoueur().size(); i++) {
             for (int j = 0; j < this.getListJoueur().get(i).getPions().size(); j++) {
 
-                Scanner scX = new Scanner(System.in);
-                Scanner scY = new Scanner(System.in);
-                int xScanne = 1;
-                int yScanne = 1;
+                if (!this.getListJoueur().get(i).getPion().get(j).getEstSurPlateau()) {
 
-                do {
+                    //Garder les coordonées anciennes
+                    this.getListJoueur().get(i).getPions().get(j).setxAncien(this.getListJoueur().get(i).getPions().get(j).getX());
+                    this.getListJoueur().get(i).getPions().get(j).setyAncien(this.getListJoueur().get(i).getPions().get(j).getY());
 
-                    System.out.println("Le pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom() + " est hors le plateau!");
-                    System.out.println(this.getListJoueur().get(i).getPions().get(j).getValeurActuelle() + " cases possible pour ce pion.");
+                    Scanner scX = new Scanner(System.in);
+                    Scanner scY = new Scanner(System.in);
+                    int xScanne = 1;
+                    int yScanne = 1;
 
-                    System.out.println("Veuillez entrer --- Y --- du pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom());
-                    xScanne = scX.nextInt();
+                    if (this.manche) {
+                        System.out.println("MANCHE 1");
+                    } else {
+                        System.out.println("MANCHE 2");
+                    }
 
-                    while ((xScanne < 1) || (xScanne > this.getP().getHauteur())) {
-                        System.out.println("Veuillez entrer une valeur vrai entre (1 et 11) pour l'Y du pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom());
+                    do {
+
+                        System.out.println("Le pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom() + " est hors le plateau!");
+                        System.out.println(this.getListJoueur().get(i).getPions().get(j).getValeurActuelle() + " cases possible pour ce pion.");
+
+                        System.out.println("Veuillez entrer --- Y --- du pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom());
                         xScanne = scX.nextInt();
-                    }
 
-                    while (xScanne != this.getListJoueur().get(i).getPions().get(j).getEspaceDeCommencer().getY()) {
-                        System.out.println("Le pion doit commencer par la case : " + this.getListJoueur().get(i).getPions().get(j).getEspaceDeCommencer().getX() + "-" + this.getListJoueur().get(i).getPions().get(j).getEspaceDeCommencer().getY());
+                        while ((xScanne < 1) || (xScanne > this.getP().getHauteur())) {
+                            System.out.println("Veuillez entrer une valeur vrai entre (1 et 11) pour l'Y du pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom());
+                            xScanne = scX.nextInt();
+                        }
+
+                        while (xScanne != this.getListJoueur().get(i).getPions().get(j).getEspaceDeCommencer().getY()) {
+                            System.out.println("Le pion doit commencer par la case : " + this.getListJoueur().get(i).getPions().get(j).getEspaceDeCommencer().getX() + "-" + this.getListJoueur().get(i).getPions().get(j).getEspaceDeCommencer().getY());
+                            xScanne = scX.nextInt();
+                        }
+
+                        System.out.println("Veuillez entrer --- X --- du pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom());
+                        yScanne = scY.nextInt();
+                        while ((yScanne < 0) || (yScanne > this.getP().getLargeur())) {
+                            System.out.println("Veuillez entrer une valeur vrai entre (1 et 16) pour l'X du pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom());
+                            yScanne = scY.nextInt();
+                        }
+                        while (yScanne != this.getListJoueur().get(i).getPions().get(j).getEspaceDeCommencer().getX()) {
+                            System.out.println("Le pion doit commencer par la case : " + this.getListJoueur().get(i).getPions().get(j).getEspaceDeCommencer().getX() + "-" + this.getListJoueur().get(i).getPions().get(j).getEspaceDeCommencer().getY());
+                            yScanne = scY.nextInt();
+                        }
+
+                    } while (deplacerEtVerifierUnObjetDansUneCase(xScanne, yScanne, this.getListJoueur().get(i).getPions().get(j)));
+
+                    this.getListJoueur().get(i).getPions().get(j).setX(xScanne);
+                    this.getListJoueur().get(i).getPions().get(j).setY(yScanne);
+
+                    //Garder les coordonées anciennes
+                    this.getListJoueur().get(i).getPions().get(j).setxAncien(this.getListJoueur().get(i).getPions().get(j).getX());
+                    this.getListJoueur().get(i).getPions().get(j).setyAncien(this.getListJoueur().get(i).getPions().get(j).getY());
+
+                    this.getP().setObjet(xScanne, yScanne, this.getListJoueur().get(i).getPions().get(j), this.getListJoueur().get(i));
+
+                    this.getListJoueur().get(i).getPion().get(j).setValeurActuelle(this.getListJoueur().get(i).getPion().get(j).getValeurActuelle() - 1);
+
+                    this.getP().print();
+
+                    this.p.getPlateau()[xScanne][yScanne] = new Espace(false);
+
+                    do {
+
+                        System.out.println(this.getListJoueur().get(i).getPions().get(j).getValeurActuelle() + " cases possible pour ce pion.");
+
+                        System.out.println("Veuillez entrer --- Y --- du pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom());
                         xScanne = scX.nextInt();
-                    }
 
-                    System.out.println("Veuillez entrer --- X --- du pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom());
-                    yScanne = scY.nextInt();
-                    while ((yScanne < 0) || (yScanne > this.getP().getLargeur())) {
-                        System.out.println("Veuillez entrer une valeur vrai entre (1 et 16) pour l'X du pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom());
+                        while ((xScanne < 1) || (xScanne > this.getP().getHauteur())) {
+                            System.out.println("Veuillez entrer une valeur vrai entre (1 et 11) pour l'Y du pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom());
+                            xScanne = scX.nextInt();
+                        }
+
+                        System.out.println("Veuillez entrer --- X --- du pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom());
                         yScanne = scY.nextInt();
-                    }
-                    while (yScanne != this.getListJoueur().get(i).getPions().get(j).getEspaceDeCommencer().getX()) {
-                        System.out.println("Le pion doit commencer par la case : " + this.getListJoueur().get(i).getPions().get(j).getEspaceDeCommencer().getX() + "-" + this.getListJoueur().get(i).getPions().get(j).getEspaceDeCommencer().getY());
-                        yScanne = scY.nextInt();
-                    }
+                        while ((yScanne < 0) || (yScanne > this.getP().getLargeur())) {
+                            System.out.println("Veuillez entrer une valeur vrai entre (1 et 16) pour l'X du pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom());
+                            yScanne = scY.nextInt();
+                        }
 
-                } while (deplacerEtVerifierUnObjetDansUneCase(xScanne, yScanne, this.getListJoueur().get(i).getPions().get(j)));
+                    } while (deplacerEtVerifierUnObjetDansUneCase(xScanne, yScanne, this.getListJoueur().get(i).getPions().get(j)));
 
-                this.getListJoueur().get(i).getPions().get(j).setX(xScanne);
-                this.getListJoueur().get(i).getPions().get(j).setY(yScanne);
+                    this.getListJoueur().get(i).getPions().get(j).setX(xScanne);
+                    this.getListJoueur().get(i).getPions().get(j).setY(yScanne);
+                    System.out.println("Place ancienne pour ce pion : " + this.getListJoueur().get(i).getPions().get(j).getxAncien() + " | " + this.getListJoueur().get(i).getPions().get(j).getyAncien());
+                    System.out.println("Ancien2 " + this.getP().getPlateau()[xScanne][yScanne].isOccupee());
+                    this.getP().setObjet(xScanne, yScanne, this.getListJoueur().get(i).getPions().get(j), this.getListJoueur().get(i));
+                    System.out.println("new " + this.getP().getPlateau()[xScanne][yScanne].isOccupee());
+                    this.getListJoueur().get(i).getPion().get(j).setValeurActuelle(this.getListJoueur().get(i).getPion().get(j).getValeurActuelle() + 1);
 
-                this.getP().setObjet(xScanne, yScanne, this.getListJoueur().get(i).getPions().get(j), this.getListJoueur().get(i));
 
-                this.getP().print();
-
-                this.p.getPlateau()[xScanne][yScanne] = new Espace(false);
-
-                do {
-
-                    System.out.println(this.getListJoueur().get(i).getPions().get(j).getValeurActuelle() - 1 + " cases possible pour ce pion.");
-
-                    System.out.println("Veuillez entrer --- Y --- du pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom());
-                    xScanne = scX.nextInt();
-
-                    while ((xScanne < 1) || (xScanne > this.getP().getHauteur())) {
-                        System.out.println("Veuillez entrer une valeur vrai entre (1 et 11) pour l'Y du pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom());
-                        xScanne = scX.nextInt();
-                    }
-
-                    System.out.println("Veuillez entrer --- X --- du pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom());
-                    yScanne = scY.nextInt();
-                    while ((yScanne < 0) || (yScanne > this.getP().getLargeur())) {
-                        System.out.println("Veuillez entrer une valeur vrai entre (1 et 16) pour l'X du pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom());
-                        yScanne = scY.nextInt();
-                    }
-
-                } while (deplacerEtVerifierUnObjetDansUneCase(xScanne, yScanne, this.getListJoueur().get(i).getPions().get(j)));
-
-                this.getListJoueur().get(i).getPions().get(j).setX(xScanne);
-                this.getListJoueur().get(i).getPions().get(j).setY(yScanne);
-
-                System.out.println("Ancien2 " + this.getP().getPlateau()[xScanne][yScanne].isOccupee());
-                this.getP().setObjet(xScanne, yScanne, this.getListJoueur().get(i).getPions().get(j), this.getListJoueur().get(i));
-                System.out.println("new " + this.getP().getPlateau()[xScanne][yScanne].isOccupee());
-
-                this.getP().print();
-                this.setManche(!this.isManche());
-
+                    this.getP().print();
+                }
             }
         }
 
+        this.setManche(!this.isManche());
+
     }
+
+
 
     /*
     * Méthode qui permet au joueur de déplacer ou de sortir les pions du plateau 
      */
     private void deplacerPionJoueur() {
 
+        if (this.premierDeplacementDeJoueurs){
+            placer2pionsALaFin();
+        }
+
+        this.premierDeplacementDeJoueurs = false;
+
         for (int i = 0; i < this.getListJoueur().size(); i++) {
             for (int j = 0; j < this.getListJoueur().get(i).getPions().size(); j++) {
 
                 this.getListJoueur().get(i).getPions().get(j).flipValeurActuelle();
+
+                //Garder les coordonées anciennes
+                this.getListJoueur().get(i).getPions().get(j).setxAncien(this.getListJoueur().get(i).getPions().get(j).getX());
+                this.getListJoueur().get(i).getPions().get(j).setyAncien(this.getListJoueur().get(i).getPions().get(j).getY());
 
                 Scanner scX = new Scanner(System.in);
                 Scanner scY = new Scanner(System.in);
@@ -234,7 +484,7 @@ public class Partie {
                 do {
 
                     if (this.getListJoueur().get(i).getPions().get(j).getX() == 1 && this.getListJoueur().get(i).getPions().get(j).getY() == 1) {
-                        System.out.println(" Félicitation ! vous avez arriver à la sortie :) ");
+                        System.out.println("Félicitation ! vous avez arriver à la sortie :) ");
                         System.out.println("$$$ Pour Sortir du plateau et gagner la partie, il faut aller à la case (0;0) $$$ ");
                         System.out.println("Veuillez entrer --- Y --- du pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom());
                         xScanne = scX.nextInt();
@@ -260,11 +510,10 @@ public class Partie {
                     }
 
                     System.out.println(this.getListJoueur().get(i).getPions().get(j).getValeurActuelle() + " cases possible pour ce pion.");
-                    System.out.println(" Place actuelle pour ce pion : " + this.getListJoueur().get(i).getPions().get(j).getX() + " | " + this.getListJoueur().get(i).getPions().get(j).getY());
-
+                    System.out.println("Place actuelle pour ce pion : " + this.getListJoueur().get(i).getPions().get(j).getX() + " | " + this.getListJoueur().get(i).getPions().get(j).getY());
+                    System.out.println("Place ancienne pour ce pion : " + this.getListJoueur().get(i).getPions().get(j).getxAncien() + " | " + this.getListJoueur().get(i).getPions().get(j).getyAncien());
                     System.out.println("Veuillez entrer --- Y --- du pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom());
                     xScanne = scX.nextInt();
-
                     while ((xScanne < 1) || (xScanne > this.getP().getHauteur())) {
                         System.out.println("Veuillez entrer une valeur vrai entre (1 et 11) pour l'Y du pion " + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.getListJoueur().get(i).getNom());
                         xScanne = scX.nextInt();
@@ -380,24 +629,68 @@ public class Partie {
     private boolean deplacerEtVerifierUnObjetDansUneCase(int x, int y, Object obj) {
 
         if (this.getP().getPlateau()[x][y].isOccupee()) {
-            //Ajouter Des conditions pour chaque objet !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            System.out.println("Case occupée!\n");
-            return true;
-        } else if (obj.getClass().equals(PionJoueur.class)) {
-            PionJoueur pionJoueur = (PionJoueur) obj;
-            if (pionJoueur.getX() != y && pionJoueur.getY() != x) {
-                System.out.println("Voulez-vous rester sur la même case ? (oui/non)");
-                Scanner sc = new Scanner(System.in);
-                String s = sc.nextLine();
-                return "oui".equals(s);
+
+            if (obj.getClass().equals(PionJoueur.class) && this.getP().getPlateau()[x][y].getObjet() == PionJoueur.class) {
+
+                PionJoueur pionJoueur = (PionJoueur) obj;
+
+                if (pionJoueur.getX() == y && pionJoueur.getY() == x) {
+
+                    System.out.println("Voulez-vous rester sur la même case ? (oui/non)");
+                    Scanner sc = new Scanner(System.in);
+                    String s = sc.nextLine();
+                    if (s.equals("oui")) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+
+                } else {
+                    return true;
+                }
+
+            } else {
+
+                System.out.println("Case occupée!\n");
+                return true;
             }
-        } else {
-            return false;
+        } else if (obj.getClass().equals(PionJoueur.class)) {
+
+            PionJoueur pionJoueur = (PionJoueur) obj;
+
+            if (pionJoueur.getX() == y && pionJoueur.getY() == x) {
+
+                System.out.println("\n");
+
+            } else if (Math.abs(x - pionJoueur.getxAncien()) + Math.abs(y - pionJoueur.getyAncien()) > pionJoueur.getValeurActuelle()) {
+
+                System.out.println("Vous avez passé le nombre maximal de mouvement pour ce pion ! ");
+                System.out.println("Veuillez entrer une case valide ! ");
+                return true;
+
+            } else if (x == 1 && y == 1) {     // si le joueur a encore (n != 0) de mouvements et veut sortir pendant le même tour
+
+                if (obj.getClass().equals(PionJoueur.class)) {
+
+                    PionJoueur pion = (PionJoueur) obj;
+
+                    if (Math.abs(x - pion.getxAncien()) + Math.abs(y - pion.getyAncien()) < pion.getValeurActuelle()) {
+
+                        pion.setX(1);
+                        pion.setY(1);
+                        this.p.setObjet(1, 1, pion);
+                        this.p.getPlateau()[pion.getxAncien()][pion.getyAncien()].supprimerObject();
+                        this.p.print();
+                        return true;
+
+                    }
+                }
+            }
         }
+
         return false;
     }
 
-    
     //GETTERS ET SETTERS
     /**
      * @return the p
@@ -444,14 +737,14 @@ public class Partie {
     /**
      * @return the obstacle
      */
-    public ArrayList<Obstacle> getObstacle() {
+    public ArrayList<Pierre> getObstacle() {
         return obstacle;
     }
 
     /**
      * @param obstacle the obstacle to set
      */
-    public void setObstacle(ArrayList<Obstacle> obstacle) {
+    public void setObstacle(ArrayList<Pierre> obstacle) {
         this.obstacle = obstacle;
     }
 

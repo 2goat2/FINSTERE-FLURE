@@ -10,5 +10,28 @@ package finstere.flure;
  * @author nadim
  */
 public class Tuile {
+
+    /**
+     * @return the mouvement
+     */
+    public int getMouvement() {
+        return mouvement;
+    }
+
+    /**
+     * @param mouvement the mouvement to set
+     */
+    public void setMouvement(int mouvement) {
+        this.mouvement = mouvement;
+    }
+
+    private int mouvement;
+
+    public Tuile(int m){
+        this.mouvement = m;
+    }
+
+    public Tuile(){
+    }
     
 }

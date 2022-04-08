@@ -23,6 +23,7 @@ public class Test {
         
         Partie pl = new Partie();
         pl.start();
+
         
         
     }
