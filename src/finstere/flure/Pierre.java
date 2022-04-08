@@ -15,8 +15,8 @@ public class Pierre{
 
     private int x;//
     private int y;//
-    private int ax, ay;//précédent
-    private Plateau plateau;
+    
+    private final Plateau plateau;
 
     public Pierre(int x, int y, Plateau plateau) {
         this.x = x;
@@ -54,31 +54,4 @@ public class Pierre{
         this.y = y;
     }
 
-    /**
-     * @return the ax
-     */
-    public int getAx() {
-        return ax;
-    }
-
-    /**
-     * @param ax the ax to set
-     */
-    public void setAx(int ax) {
-        this.ax = ax;
-    }
-
-    /**
-     * @return the ay
-     */
-    public int getAy() {
-        return ay;
-    }
-
-    /**
-     * @param ay the ay to set
-     */
-    public void setAy(int ay) {
-        this.ay = ay;
-    }
 }

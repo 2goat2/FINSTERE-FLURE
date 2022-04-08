@@ -33,12 +33,6 @@ public class Espace {
     private final LinkedList<Espace> espacesAdj;
 
     //Constructeurs
-    /**
-     * permet de créer un espace vide standard
-     */
-    public Espace() {
-        espacesAdj = new LinkedList<>();
-    }
 
     /**
      * permet de créer un espace vide standard mais le définit comme utilisable
@@ -70,22 +64,6 @@ public class Espace {
         if (!estOccupe) {
             affichage = "| |";
         }
-        espacesAdj = new LinkedList<>();
-    }
-
-    /**
-     *
-     * permet de créer un espace qui contient un objet par rapport à ses x et y
-     *
-     * @param x
-     * @param y
-     * @param obj l'objet lequel on vas le mettre dans cet espace
-     */
-    public Espace(int x, int y, Object obj) {
-
-        this.x = x;
-        this.y = y;
-        ajouterObjet(obj);
         espacesAdj = new LinkedList<>();
     }
 
@@ -233,17 +211,9 @@ public class Espace {
         return x;
     }
 
-    public void setX(int a) {
-        this.x = a;
-    }
-
     // POUR Y
     public int getY() {
         return y;
-    }
-
-    public void setY(int a) {
-        this.y = a;
     }
 
     //POUR estOccupe
@@ -258,10 +228,6 @@ public class Espace {
     //POUR l'objet
     public Object getObjet() {
         return obj;
-    }
-
-    public void setObjet(Object a) {
-        this.obj = a;
     }
 
     public LinkedList<Espace> getEspacesAdj() {

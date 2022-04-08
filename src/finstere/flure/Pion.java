@@ -9,7 +9,7 @@ package finstere.flure;
  *
  * @author nadim
  */
-public abstract class Pion {
+public class Pion {
 
     // Les coordonées de chaque pion [ joueur - monstre ]
     private int x;

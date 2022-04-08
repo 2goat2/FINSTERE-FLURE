@@ -5,10 +5,9 @@
  */
 package finstere.flure;
 
-import jdk.swing.interop.SwingInterOpUtils;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -31,7 +30,7 @@ public class Partie {
     private Joueur gagnant;
 
     //La liste des pions gagnants dans cette partie
-    private ArrayList<PionJoueur> piongagnant;
+    private final ArrayList<PionJoueur> piongagnant;
 
     //La liste d'obstacles dans cette partie
     private ArrayList<Pierre> obstacle;
@@ -39,15 +38,12 @@ public class Partie {
     //le monstre dans cette partie
     private PionMonstre monstre;
 
-    //le paquet de tuiles qui deplace le monstre
-    private PaquetDeTuiles paquet;
-
     private boolean premierDeplacementDeJoueurs;
 
     //l'espace de début du tour
     private Espace EspaceDeDebut;
 
-    //La manche
+    //La manche courante
     private boolean manche = false; // false == Manche 1 & true == Manche 2
 
     //boolean pour savoir si la partie est terminée
@@ -86,9 +82,9 @@ public class Partie {
             ArrayList<PionJoueur> pionJoueurList = new ArrayList<>();
 
             pionJoueurList.add(new PionJoueur(16, 11, false, 6, 1, i));
-         //   pionJoueurList.add(new PionJoueur(16, 11, false, 4, 3, i));
-        //    pionJoueurList.add(new PionJoueur(16, 11, false, 3, 4, i));
-        //    pionJoueurList.add(new PionJoueur(16, 11, false, 2, 5, i));
+            pionJoueurList.add(new PionJoueur(16, 11, false, 4, 3, i));
+            pionJoueurList.add(new PionJoueur(16, 11, false, 3, 4, i));
+            pionJoueurList.add(new PionJoueur(16, 11, false, 2, 5, i));
 
             getListJoueur().get(i).setPions(pionJoueurList);
         }
@@ -110,12 +106,13 @@ public class Partie {
         this.setP(new Plateau());
 
         //set new Monstre(1, 1, 2, this.getP(), this);
-        this.setMonstre(new PionMonstre(4, 2, 1, this.getP(), this));
+        this.setMonstre(new PionMonstre(1, 1, 2, this.getP(), this));
 
         this.ajouterObstacles();
 
         //créer un paquet de tuiles
-        this.paquet = new PaquetDeTuiles();
+        //le paquet de tuiles qui deplace le monstre
+        PaquetDeTuiles paquet = new PaquetDeTuiles();
 
         //Mettre le monstre sur le plateau
         mettreLeMontreSurPlateau();
@@ -128,12 +125,11 @@ public class Partie {
         while (!isFinish() || getFinish()) {
 
             System.out.println("mouvement");
+
+            Tuile t = paquet.donnerTuile();
             if (this.premierDeplacementDeJoueurs) {
-
-                Tuile t = this.paquet.donnerTuile();
-
-                while (t.getMouvement() == 1) {
-                    t = this.paquet.donnerTuile();
+                while (Objects.requireNonNull(t).getMouvement() == 1) {
+                    t = paquet.donnerTuile();
                 }
 
                 this.getMonstre().deplacer(t.getMouvement());
@@ -141,26 +137,25 @@ public class Partie {
 
             } else {
 
-                Tuile t = this.paquet.donnerTuile();
+                if (Objects.requireNonNull(t).getMouvement() == 1) {
 
-                if (t.getMouvement() == 1) {
-                    for (int i = 0; i < 8; i++) {
-                        if (this.pionperdu.size() == i) {
-                            int m = 0;
-                            if (this.pionperdu.size() != i + 1) {
-                                this.getMonstre().deplacer(t.getMouvement());
-                                m += 1;
-                            }
-                            System.out.println(m);
-                        }
+                    int m = 0;
+
+                    while (!this.monstre.isaTue()) {
+
+                        this.getMonstre().deplacer(t.getMouvement());
+
+                        m+=1;
+                        if (m > 20)
+                            break;
                     }
+
                 } else {
 
                     this.getMonstre().deplacer(t.getMouvement());
                     System.out.println(t.getMouvement());
                 }
             }
-            this.monstre.deplacer(10);
 
             deplacerPionJoueur();
 
@@ -171,7 +166,7 @@ public class Partie {
         System.out.println("liste de joueurs : " + this.getListJoueur().toString());
         System.out.println("joueur gagnant : " + this.gagnant.getNom());
         System.out.println("liste de Pions perdus : " + this.getPionperdu().toString());
-        System.out.println("liste de Pions gagnants : " + this.piongagnant.toString());
+        System.out.println("liste de Pions gagnants : " + this.piongagnant);
 
     }
 
@@ -189,8 +184,8 @@ public class Partie {
         this.obstacle.add(new Pierre(14,6,this.p));
         this.obstacle.add(new Pierre(15,9,this.p));
 
-        for (int i = 0 ; i < this.obstacle.size() ; i ++){
-            this.getP().setObjet(this.obstacle.get(i).getY(),this.obstacle.get(i).getX(),this.obstacle.get(i));
+        for (Pierre pierre : this.obstacle) {
+            this.getP().setObjet(pierre.getY(), pierre.getX(), pierre);
         }
     }
 
@@ -202,7 +197,7 @@ public class Partie {
 
         for (int i = 0; i < this.getListJoueur().size(); i++) {
 
-            ArrayList<PionJoueur> temp = new ArrayList<PionJoueur>(this.getListJoueur().get(i).getPions());
+            ArrayList<PionJoueur> temp = new ArrayList<>(this.getListJoueur().get(i).getPions());
 
             Scanner s, s2;
             int p1, p2;
@@ -544,7 +539,7 @@ public class Partie {
                 }
 
                 this.getP().print();
-                System.out.println(this.piongagnant.toString());
+                System.out.println(this.piongagnant);
 
                 this.setManche(!this.isManche());
             }
@@ -639,11 +634,7 @@ public class Partie {
                     System.out.println("Voulez-vous rester sur la même case ? (oui/non)");
                     Scanner sc = new Scanner(System.in);
                     String s = sc.nextLine();
-                    if (s.equals("oui")) {
-                        return false;
-                    } else {
-                        return true;
-                    }
+                    return !s.equals("oui");
 
                 } else {
                     return true;
@@ -714,38 +705,10 @@ public class Partie {
     }
 
     /**
-     * @param listJoueur the listJoueur to set
-     */
-    public void setListJoueur(ArrayList<Joueur> listJoueur) {
-        this.listJoueur = listJoueur;
-    }
-
-    /**
      * @return the pionperdu
      */
     public ArrayList<PionJoueur> getPionperdu() {
         return pionperdu;
-    }
-
-    /**
-     * @param pionperdu the pionperdu to set
-     */
-    public void setPionperdu(ArrayList<PionJoueur> pionperdu) {
-        this.pionperdu = pionperdu;
-    }
-
-    /**
-     * @return the obstacle
-     */
-    public ArrayList<Pierre> getObstacle() {
-        return obstacle;
-    }
-
-    /**
-     * @param obstacle the obstacle to set
-     */
-    public void setObstacle(ArrayList<Pierre> obstacle) {
-        this.obstacle = obstacle;
     }
 
     /**
@@ -760,13 +723,6 @@ public class Partie {
      */
     public void setMonstre(PionMonstre monstre) {
         this.monstre = monstre;
-    }
-
-    /**
-     * @return the EspaceDeDebut
-     */
-    public Espace getEspaceDeDebut() {
-        return EspaceDeDebut;
     }
 
     /**

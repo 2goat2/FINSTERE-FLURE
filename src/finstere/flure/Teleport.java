@@ -9,6 +9,6 @@ package finstere.flure;
  *
  * @author nadim
  */
-public class Teleport {
-    
+public class Teleport extends Obstacle{
+
 }

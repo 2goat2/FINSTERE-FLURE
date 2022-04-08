@@ -6,10 +6,6 @@
 package finstere.flure;
 
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.IllegalFormatCodePointException;
-import java.util.Set;
-
 /**
  * Class Plateau qui gére l'environment du jeu.
  *
@@ -139,8 +135,6 @@ public final class Plateau {
      * @param x
      * @param y
      * @param obj
-     * @param j le joueuer qu'on a bien pris son nom pour l'afficher dans
-     * l'espace.
      * @return true si l'objet a été bien met dans l'espace(x,y,false)
      */
     public boolean setObjet(int y, int x, Object obj) {
@@ -149,18 +143,21 @@ public final class Plateau {
 
     }
 
+    /**
+     * La méthode setObjet permet d'ajouter un objet dans une case specifique
+     * sur le plateau
+     *
+     * @param x
+     * @param y
+     * @param obj
+     * @param j le joueuer qu'on a bien pris son nom pour l'afficher dans
+     * l'espace.
+     * @return true si l'objet a été bien met dans l'espace(x,y,false)
+     */
     public boolean setObjet(int y, int x, Object obj, Joueur j) {
 
         return this.plateau[y][x].ajouterObjet(obj, j);
 
-    }
-
-
-    public boolean setObjet(Object obj){
-        if (obj instanceof Pierre){
-            return this.plateau[((Pierre) obj).getX()][((Pierre) obj).getY()].ajouterObjet(obj);
-        }
-        return false;
     }
 
 
@@ -367,24 +364,10 @@ public final class Plateau {
     }
 
     /**
-     * @param hauteur the hauteur to set
-     */
-    public void setHauteur(int hauteur) {
-        this.hauteur = hauteur;
-    }
-
-    /**
      * @return the largeur
      */
     public int getLargeur() {
         return largeur;
-    }
-
-    /**
-     * @param largeur the largeur to set
-     */
-    public void setLargeur(int largeur) {
-        this.largeur = largeur;
     }
 
     /**
@@ -395,38 +378,15 @@ public final class Plateau {
     }
 
     /**
-     * @param booleanPlateau the booleanPlateau to set
-     */
-    public void setBooleanPlateau(int[][] booleanPlateau) {
-        this.booleanPlateau = booleanPlateau;
-    }
-
-    /**
      * @return the plateau
      */
     public Espace[][] getPlateau() {
         return plateau;
     }
 
-    /**
-     * @param plateau the plateau to set.
-     */
-    public void setPlateau(Espace[][] plateau) {
-        this.plateau = plateau;
-    }
-
     public Espace getEspaceDeDebut() {
         return espaceDeDebut;
     }
-
-    public void setEspaceDeDebut(Espace p) {
-        if (!p.isOccupee()) {
-            throw new IllegalArgumentException("Espace Invalide!");
-        }
-
-        this.espaceDeDebut.equals(p);
-    }
-
 
 
     public void ajoutFlague() {

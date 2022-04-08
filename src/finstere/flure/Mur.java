@@ -16,7 +16,7 @@ public class Mur extends Espace{
     private int x, y;
     
     //l'affichage 
-    private String mur = "";
+    private final String mur = "";
     
     //boolean pour init le mur comme des espaces occupées
     private final boolean s = true;

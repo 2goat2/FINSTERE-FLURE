@@ -42,6 +42,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../ASN1/src/F" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
   </component>
   <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -91,7 +92,7 @@
       <workItem from="1648633361513" duration="41765000" />
       <workItem from="1648910635173" duration="28771000" />
       <workItem from="1649239840452" duration="28473000" />
-      <workItem from="1649435081162" duration="2091000" />
+      <workItem from="1649435081162" duration="6965000" />
     </task>
     <servers />
   </component>

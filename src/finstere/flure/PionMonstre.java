@@ -16,13 +16,7 @@ public class PionMonstre {
     //Permet de garder la direction 
     private int direction = 2; // 2 = East
 
-    //Les directions utilisées
-    private int NORTH = 1;
-    private int EAST = 2;
-    private int SOUTH = 3;
-    private int WEST = 4;
-
-    //le plateau 
+    //le plateau
     private Plateau plateau;
 
     //les directions qu'il faut voir à chaque déplacement
@@ -39,6 +33,9 @@ public class PionMonstre {
 
     //La partie 
     private final Partie partie;
+
+    //permet de savoir si le monstre a tué un pion
+    private boolean aTue = false; // true si le monstre a tué un pion lorsqu'il déplace. La variable est toujours false au debut de chaque déplacement.
 
     //La constructeur
     public PionMonstre(int x, int y, int direction, Plateau p, Partie partie) {
@@ -62,6 +59,8 @@ public class PionMonstre {
      * @param movement le nombre de mouvements
      */
     public void deplacer(int movement) {
+
+        this.setaTue(false);
 
         if (movement > 0) {
             int gauche = regarder(getDirections().getGauche(this.getDirection()));
@@ -241,6 +240,7 @@ public class PionMonstre {
         plateau.getPlateau()[p.getY()][p.getX()].supprimerObject();
         p.setxAncien(17);
         p.setyAncien(11);
+        this.setaTue(true);
 
         System.out.println(this.partie.getManche());
         if (this.partie.getManche()) {
@@ -286,80 +286,10 @@ public class PionMonstre {
     }
 
     /**
-     * @param plateau the plateau to set
-     */
-    public void setPlateau(Plateau plateau) {
-        this.plateau = plateau;
-    }
-
-    /**
-     * @return the NORTH
-     */
-    public int getNORTH() {
-        return NORTH;
-    }
-
-    /**
-     * @param NORTH the NORTH to set
-     */
-    public void setNORTH(int NORTH) {
-        this.NORTH = NORTH;
-    }
-
-    /**
-     * @return the EAST
-     */
-    public int getEAST() {
-        return EAST;
-    }
-
-    /**
-     * @param EAST the EAST to set
-     */
-    public void setEAST(int EAST) {
-        this.EAST = EAST;
-    }
-
-    /**
-     * @return the SOUTH
-     */
-    public int getSOUTH() {
-        return SOUTH;
-    }
-
-    /**
-     * @param SOUTH the SOUTH to set
-     */
-    public void setSOUTH(int SOUTH) {
-        this.SOUTH = SOUTH;
-    }
-
-    /**
-     * @return the WEST
-     */
-    public int getWEST() {
-        return WEST;
-    }
-
-    /**
-     * @param WEST the WEST to set
-     */
-    public void setWEST(int WEST) {
-        this.WEST = WEST;
-    }
-
-    /**
      * @return the directions
      */
     public Direction getDirections() {
         return directions;
-    }
-
-    /**
-     * @param directions the directions to set
-     */
-    public void setDirections(Direction directions) {
-        this.directions = directions;
     }
 
     /**
@@ -397,18 +327,22 @@ public class PionMonstre {
         return mouvement;
     }
 
-    /**
-     * @param mouvement the mouvement to set
-     */
-    public void setMouvement(int mouvement) {
-        this.mouvement = mouvement;
-    }
-
     public void ajouterPionsTues() {
         this.pionsTues += 1;
     }
 
-    public int getPionsTues() {
-        return this.pionsTues;
+
+    /**
+     * @return the aTue
+     */
+    public boolean isaTue() {
+        return aTue;
+    }
+
+    /**
+     * @param aTue the aTue to set
+     */
+    public void setaTue(boolean aTue) {
+        this.aTue = aTue;
     }
 }

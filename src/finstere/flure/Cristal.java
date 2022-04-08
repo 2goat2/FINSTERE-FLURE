@@ -9,6 +9,11 @@ package finstere.flure;
  *
  * @author nadim
  */
-public class Cristal {
-    
+public class Cristal extends Obstacle {
+
+    public Cristal(int x, int y){
+        super.x = x;
+        super.y = y;
+    }
+
 }

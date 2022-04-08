@@ -6,10 +6,16 @@
 package finstere.flure;
 
 /**
- *
+ * La classe qui gére les tuiles qui donnent le monstre le nombre de ses mouvements
  * @author nadim
  */
 public class Tuile {
+
+    private int mouvement;
+
+    public Tuile(int m) {
+        this.mouvement = m;
+    }
 
     /**
      * @return the mouvement
@@ -18,20 +24,4 @@ public class Tuile {
         return mouvement;
     }
 
-    /**
-     * @param mouvement the mouvement to set
-     */
-    public void setMouvement(int mouvement) {
-        this.mouvement = mouvement;
-    }
-
-    private int mouvement;
-
-    public Tuile(int m){
-        this.mouvement = m;
-    }
-
-    public Tuile(){
-    }
-    
 }

@@ -71,24 +71,10 @@ public class Joueur {
     }
 
     /**
-     * @return the gagnant
-     */
-    public boolean isGagnant() {
-        return gagnant;
-    }
-
-    /**
      * @param gagnant the gagnant to set
      */
     public void setGagnant(boolean gagnant) {
         this.gagnant = gagnant;
-    }
-
-    /**
-     * @return the pionsReste
-     */
-    public ArrayList<PionJoueur> getPionsReste() {
-        return pionsReste;
     }
 
     /**

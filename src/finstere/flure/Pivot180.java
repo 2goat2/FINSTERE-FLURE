@@ -9,6 +9,12 @@ package finstere.flure;
  *
  * @author nadim
  */
-public class Pivot180 {
-    
+public class Pivot180 extends Obstacle{
+            
+    public Pivot180(int x, int y){
+        super.x = x;
+        super.y = y;
+    }
+
+
 }

@@ -12,7 +12,7 @@ package finstere.flure;
 public class PionJoueur extends Pion {
 
     //Tableau String des couleurs
-    private String[] couleur = new String[]{"bleu", "brun", "gris", "vert", "violet", "rouge", "jaune"};
+    private final String[] couleur = new String[]{"bleu", "brun", "gris", "vert", "violet", "rouge", "jaune"};
 
     //true : face foncée ; false : face claire
     private boolean face = false;
@@ -38,6 +38,7 @@ public class PionJoueur extends Pion {
     //Permet de savoir le joueur lequel ce pion appartient
     private int numJoueur;
 
+    //permet de savoir si le pion est bien initialisé et il est sur le plateau
     private boolean estSurPlateau;
 
     //Constructeur
@@ -82,22 +83,11 @@ public class PionJoueur extends Pion {
         }
     }
 
-    public void setFace(boolean f) {
-        this.face = f;
-    }
-
     /**
      * @return the face
      */
     public boolean isFace() {
         return face;
-    }
-
-    /**
-     * @return the perdu
-     */
-    public boolean isPerdu() {
-        return perdu;
     }
 
     /**
@@ -115,13 +105,6 @@ public class PionJoueur extends Pion {
     }
 
     /**
-     * @param valeurDeFaceFonce the valeurDeFaceFonce to set
-     */
-    public void setValeurDeFaceFonce(int valeurDeFaceFonce) {
-        this.valeurDeFaceFonce = valeurDeFaceFonce;
-    }
-
-    /**
      * @return the valeurDeFaceClaire
      */
     public int getValeurDeFaceClaire() {
@@ -129,39 +112,10 @@ public class PionJoueur extends Pion {
     }
 
     /**
-     * @param valeurDeFaceClaire the valeurDeFaceClaire to set
-     */
-    public void setValeurDeFaceClaire(int valeurDeFaceClaire) {
-        this.valeurDeFaceClaire = valeurDeFaceClaire;
-    }
-
-    /**
-     * @return the utilise
-     */
-    public boolean isUtilise() {
-        return utilise;
-    }
-
-    /**
-     * @param utilise the utilise to set
-     */
-    public void setUtilise(boolean utilise) {
-        this.utilise = utilise;
-    }
-
-    /**
      * @return the valeurActuelle
      */
     public int getValeurActuelle() {
         return valeurActuelle;
-    }
-
-    public void setCompteur(int i) {
-        this.compteur = i;
-    }
-
-    public int getCompteur() {
-        return this.compteur;
     }
 
     /**
@@ -204,13 +158,6 @@ public class PionJoueur extends Pion {
      */
     public int getNumJoueur() {
         return numJoueur;
-    }
-
-    /**
-     * @param numJoueur the numJoueur to set
-     */
-    public void setNumJoueur(int numJoueur) {
-        this.numJoueur = numJoueur;
     }
 
     /**

@@ -1,9 +1,19 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package finstere.flure;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class PaquetDeTuiles {
+/**
+ * Classe PaquetDeTuiles gère le paquet qui contient les tuiles qui déplace le monstre
+ *
+ * @author nadim
+ */
+public final class PaquetDeTuiles {
 
     private final ArrayList<Tuile> paquet = new ArrayList<>();
 
