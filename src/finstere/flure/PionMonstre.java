@@ -90,18 +90,19 @@ public class PionMonstre {
 
             if (gauche > droite && droite != 0) {
                 this.setDirection(getDirections().getDroite(this.getDirection()));
-                this.imgSource = this.imageDirections(direction);
+                this.imgSource = FinFlureGUI.chemin+ this.imageDirections(direction);
                 this.getPlateau().deplacerLeMonstreUneFois(this);
             } else if (droite > gauche && gauche != 0) {
                 this.setDirection(this.getDirections().getGauche(this.getDirection()));
-                this.imgSource = this.imageDirections(direction);
+                this.imgSource = FinFlureGUI.chemin + this.imageDirections(direction);
                 this.getPlateau().deplacerLeMonstreUneFois(this);
             } else {
                 //tout droit
-                this.imgSource = this.imageDirections(direction);
+                this.imgSource = FinFlureGUI.chemin + this.imageDirections(direction);
                 if (regarderObjet(this.getDirection()) != null && Objects.requireNonNull(regarderObjet(this.getDirection())).getClass() == Pierre.class) {
 
                     this.getPlateau().deplacerPierreUneFois(this.getDirection(), (Pierre) regarderObjet(this.getDirection()));
+                    
                     this.getPlateau().deplacerLeMonstreUneFois(this);
 
                 } else {
