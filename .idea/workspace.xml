@@ -41,10 +41,23 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ASN1/src/F" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="Application.FinFlureGUI">
+    <configuration name="FinFlureGUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="finstere.flure.FinFlureGUI" />
+      <module name="FINSTERE-FLURE" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="finstere.flure.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="finstere.flure.Main" />
       <module name="FINSTERE-FLURE" />
@@ -73,6 +86,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.FinFlureGUI" />
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.Test" />
       </list>
@@ -93,6 +107,7 @@
       <workItem from="1648910635173" duration="28771000" />
       <workItem from="1649239840452" duration="28473000" />
       <workItem from="1649435081162" duration="7590000" />
+      <workItem from="1650269132818" duration="347000" />
     </task>
     <servers />
   </component>

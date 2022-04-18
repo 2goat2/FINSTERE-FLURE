@@ -37,6 +37,8 @@ public class PionMonstre {
     //permet de savoir si le monstre a tué un pion
     private boolean aTue = false; // true si le monstre a tué un pion lorsqu'il déplace. La variable est toujours false au debut de chaque déplacement.
 
+    public String imgSource;
+
     //La constructeur
     public PionMonstre(int x, int y, int direction, Plateau p, Partie partie) {
         this.x = x;
@@ -46,16 +48,35 @@ public class PionMonstre {
         this.plateau = p;
         this.pionsTues = 0;
         this.partie = partie;
+        this.imgSource = FinFlureGUI.chemin + imageDirections(direction);
+    }
+
+
+    public final String imageDirections(int direction) {
+
+        switch (direction) {
+            case 1:
+                return "monstre1.gif";
+            case 2:
+                return "monstre2.gif";
+            case 3:
+                return "monstre3.gif";
+            case 4:
+                return "monstre4.gif";
+        }
+        return null;
+
     }
 
     /**
      * La méthode deplacer c'est la méthode principale qui déplace le monstre
-     * 
-     * 1. Le monstre regarde à sa gauche, sa droite et tout droit.
-     * 2. Le monstre calcule le chemin pour chaque objet détecté (S'il y a).
-     * 3. le monstre choisi le chemin le plus court.
-     * 4. le monstre se déplace vers l'objet choisi ou bien se déplace dans sa direction s'il n'a pas trouvé des objets.
-     * 
+     *
+     * 1. Le monstre regarde à sa gauche, sa droite et tout droit. 2. Le monstre
+     * calcule le chemin pour chaque objet détecté (S'il y a). 3. le monstre
+     * choisi le chemin le plus court. 4. le monstre se déplace vers l'objet
+     * choisi ou bien se déplace dans sa direction s'il n'a pas trouvé des
+     * objets.
+     *
      * @param movement le nombre de mouvements
      */
     public void deplacer(int movement) {
@@ -69,13 +90,15 @@ public class PionMonstre {
 
             if (gauche > droite && droite != 0) {
                 this.setDirection(getDirections().getDroite(this.getDirection()));
+                this.imgSource = this.imageDirections(direction);
                 this.getPlateau().deplacerLeMonstreUneFois(this);
             } else if (droite > gauche && gauche != 0) {
                 this.setDirection(this.getDirections().getGauche(this.getDirection()));
+                this.imgSource = this.imageDirections(direction);
                 this.getPlateau().deplacerLeMonstreUneFois(this);
             } else {
                 //tout droit
-
+                this.imgSource = this.imageDirections(direction);
                 if (regarderObjet(this.getDirection()) != null && Objects.requireNonNull(regarderObjet(this.getDirection())).getClass() == Pierre.class) {
 
                     this.getPlateau().deplacerPierreUneFois(this.getDirection(), (Pierre) regarderObjet(this.getDirection()));
@@ -330,7 +353,6 @@ public class PionMonstre {
     public void ajouterPionsTues() {
         this.pionsTues += 1;
     }
-
 
     /**
      * @return the aTue

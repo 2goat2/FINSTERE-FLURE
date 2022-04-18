@@ -17,6 +17,8 @@ public class Pierre{
     private int y;//
     
     private final Plateau plateau;
+    
+    public String imgSource = FinFlureGUI.chemin + "mur.png";
 
     public Pierre(int x, int y, Plateau plateau) {
         this.x = x;

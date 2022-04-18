@@ -5,7 +5,15 @@
  */
 package finstere.flure;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.GridLayout;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Scanner;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 /**
  *
@@ -18,10 +26,15 @@ public class FinFlureGUI extends javax.swing.JFrame {
      */
     public FinFlureGUI() {
         initComponents();
+
         this.plateau.setIcon(new ImageIcon(chemin + "fns_plateau.jpg"));
         this.logo.setIcon(new ImageIcon(chemin + "logo_finstere.gif"));
         this.nomJoueur1.setText(MenuGUI.nom1);
         this.nomJoueur2.setText(MenuGUI.nom2);
+        this.invisibeButtons();
+
+        game();
+
     }
 
     /**
@@ -33,8 +46,6 @@ public class FinFlureGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel3 = new javax.swing.JPanel();
-        plateau = new javax.swing.JLabel();
         logo = new javax.swing.JLabel();
         nomJoueur1 = new javax.swing.JLabel();
         pion11 = new javax.swing.JLabel();
@@ -61,51 +72,179 @@ public class FinFlureGUI extends javax.swing.JFrame {
         gamePhase = new javax.swing.JLabel();
         gameRound = new javax.swing.JLabel();
         buttonStartMonsterTurn = new javax.swing.JButton();
+        panelPlateau = new javax.swing.JPanel();
+        x1y1 = new javax.swing.JLabel();
+        x2y1 = new javax.swing.JLabel();
+        x3y1 = new javax.swing.JLabel();
+        x4y1 = new javax.swing.JLabel();
+        x5y1 = new javax.swing.JLabel();
+        x6y1 = new javax.swing.JLabel();
+        x7y1 = new javax.swing.JLabel();
+        x8y1 = new javax.swing.JLabel();
+        x9y1 = new javax.swing.JLabel();
+        x10y1 = new javax.swing.JLabel();
+        x11y1 = new javax.swing.JLabel();
+        x12y1 = new javax.swing.JLabel();
+        x1y2 = new javax.swing.JLabel();
+        x2y2 = new javax.swing.JLabel();
+        x3y2 = new javax.swing.JLabel();
+        x4y2 = new javax.swing.JLabel();
+        x5y2 = new javax.swing.JLabel();
+        x6y2 = new javax.swing.JLabel();
+        x7y2 = new javax.swing.JLabel();
+        x8y2 = new javax.swing.JLabel();
+        x9y2 = new javax.swing.JLabel();
+        x10y2 = new javax.swing.JLabel();
+        x11y2 = new javax.swing.JLabel();
+        x12y2 = new javax.swing.JLabel();
+        x13y2 = new javax.swing.JLabel();
+        x14y3 = new javax.swing.JLabel();
+        x13y3 = new javax.swing.JLabel();
+        x12y3 = new javax.swing.JLabel();
+        x11y3 = new javax.swing.JLabel();
+        x10y3 = new javax.swing.JLabel();
+        x9y3 = new javax.swing.JLabel();
+        x8y3 = new javax.swing.JLabel();
+        x7y3 = new javax.swing.JLabel();
+        x6y3 = new javax.swing.JLabel();
+        x5y3 = new javax.swing.JLabel();
+        x4y3 = new javax.swing.JLabel();
+        x3y3 = new javax.swing.JLabel();
+        x2y3 = new javax.swing.JLabel();
+        x1y3 = new javax.swing.JLabel();
+        x1y4 = new javax.swing.JLabel();
+        x2y4 = new javax.swing.JLabel();
+        x3y4 = new javax.swing.JLabel();
+        x4y4 = new javax.swing.JLabel();
+        x5y4 = new javax.swing.JLabel();
+        x6y4 = new javax.swing.JLabel();
+        x7y4 = new javax.swing.JLabel();
+        x8y4 = new javax.swing.JLabel();
+        x9y4 = new javax.swing.JLabel();
+        x10y4 = new javax.swing.JLabel();
+        x11y4 = new javax.swing.JLabel();
+        x12y4 = new javax.swing.JLabel();
+        x13y4 = new javax.swing.JLabel();
+        x14y4 = new javax.swing.JLabel();
+        x15y4 = new javax.swing.JLabel();
+        x1y5 = new javax.swing.JLabel();
+        x2y5 = new javax.swing.JLabel();
+        x3y5 = new javax.swing.JLabel();
+        x4y5 = new javax.swing.JLabel();
+        x5y5 = new javax.swing.JLabel();
+        x6y5 = new javax.swing.JLabel();
+        x7y5 = new javax.swing.JLabel();
+        x8y5 = new javax.swing.JLabel();
+        x9y5 = new javax.swing.JLabel();
+        x10y5 = new javax.swing.JLabel();
+        x11y5 = new javax.swing.JLabel();
+        x12y5 = new javax.swing.JLabel();
+        x13y5 = new javax.swing.JLabel();
+        x14y5 = new javax.swing.JLabel();
+        x15y5 = new javax.swing.JLabel();
+        x16y5 = new javax.swing.JLabel();
+        x1y6 = new javax.swing.JLabel();
+        x2y6 = new javax.swing.JLabel();
+        x3y6 = new javax.swing.JLabel();
+        x4y6 = new javax.swing.JLabel();
+        x5y6 = new javax.swing.JLabel();
+        x6y6 = new javax.swing.JLabel();
+        x7y6 = new javax.swing.JLabel();
+        x8y6 = new javax.swing.JLabel();
+        x9y6 = new javax.swing.JLabel();
+        x10y6 = new javax.swing.JLabel();
+        x11y6 = new javax.swing.JLabel();
+        x12y6 = new javax.swing.JLabel();
+        x13y6 = new javax.swing.JLabel();
+        x14y6 = new javax.swing.JLabel();
+        x15y6 = new javax.swing.JLabel();
+        x16y6 = new javax.swing.JLabel();
+        x16y7 = new javax.swing.JLabel();
+        x15y7 = new javax.swing.JLabel();
+        x14y7 = new javax.swing.JLabel();
+        x13y7 = new javax.swing.JLabel();
+        x12y7 = new javax.swing.JLabel();
+        x11y7 = new javax.swing.JLabel();
+        x10y7 = new javax.swing.JLabel();
+        x9y7 = new javax.swing.JLabel();
+        x8y7 = new javax.swing.JLabel();
+        x7y7 = new javax.swing.JLabel();
+        x6y7 = new javax.swing.JLabel();
+        x5y7 = new javax.swing.JLabel();
+        x4y7 = new javax.swing.JLabel();
+        x3y7 = new javax.swing.JLabel();
+        x2y7 = new javax.swing.JLabel();
+        x1y7 = new javax.swing.JLabel();
+        x1y8 = new javax.swing.JLabel();
+        x2y8 = new javax.swing.JLabel();
+        x3y8 = new javax.swing.JLabel();
+        x4y8 = new javax.swing.JLabel();
+        x5y8 = new javax.swing.JLabel();
+        x6y8 = new javax.swing.JLabel();
+        x7y8 = new javax.swing.JLabel();
+        x8y8 = new javax.swing.JLabel();
+        x9y8 = new javax.swing.JLabel();
+        x10y8 = new javax.swing.JLabel();
+        x11y8 = new javax.swing.JLabel();
+        x12y8 = new javax.swing.JLabel();
+        x13y8 = new javax.swing.JLabel();
+        x14y8 = new javax.swing.JLabel();
+        x15y8 = new javax.swing.JLabel();
+        x1y9 = new javax.swing.JLabel();
+        x2y9 = new javax.swing.JLabel();
+        x3y9 = new javax.swing.JLabel();
+        x4y9 = new javax.swing.JLabel();
+        x5y9 = new javax.swing.JLabel();
+        x6y9 = new javax.swing.JLabel();
+        x7y9 = new javax.swing.JLabel();
+        x8y9 = new javax.swing.JLabel();
+        x9y9 = new javax.swing.JLabel();
+        x10y9 = new javax.swing.JLabel();
+        x11y9 = new javax.swing.JLabel();
+        x12y9 = new javax.swing.JLabel();
+        x13y9 = new javax.swing.JLabel();
+        x14y9 = new javax.swing.JLabel();
+        x1y10 = new javax.swing.JLabel();
+        x2y10 = new javax.swing.JLabel();
+        x3y10 = new javax.swing.JLabel();
+        x4y10 = new javax.swing.JLabel();
+        x5y10 = new javax.swing.JLabel();
+        x6y10 = new javax.swing.JLabel();
+        x7y10 = new javax.swing.JLabel();
+        x8y10 = new javax.swing.JLabel();
+        x9y10 = new javax.swing.JLabel();
+        x10y10 = new javax.swing.JLabel();
+        x11y10 = new javax.swing.JLabel();
+        x12y10 = new javax.swing.JLabel();
+        x13y10 = new javax.swing.JLabel();
+        x1y11 = new javax.swing.JLabel();
+        x2y11 = new javax.swing.JLabel();
+        x3y11 = new javax.swing.JLabel();
+        x4y11 = new javax.swing.JLabel();
+        x5y11 = new javax.swing.JLabel();
+        x6y11 = new javax.swing.JLabel();
+        x7y11 = new javax.swing.JLabel();
+        x8y11 = new javax.swing.JLabel();
+        x9y11 = new javax.swing.JLabel();
+        x10y11 = new javax.swing.JLabel();
+        x11y11 = new javax.swing.JLabel();
+        x12y11 = new javax.swing.JLabel();
+        plateau = new javax.swing.JLabel();
+        notification = new javax.swing.JLabel();
+        b1 = new javax.swing.JButton();
+        b2 = new javax.swing.JButton();
+        b3 = new javax.swing.JButton();
+        b4 = new javax.swing.JButton();
+        warning = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Finistre Flure");
         setBackground(new java.awt.Color(0, 255, 255));
-        setUndecorated(true);
         setSize(new java.awt.Dimension(0, 0));
-
-        jPanel3.addContainerListener(new java.awt.event.ContainerAdapter() {
-            public void componentAdded(java.awt.event.ContainerEvent evt) {
-                jPanel3ComponentAdded(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(plateau, javax.swing.GroupLayout.DEFAULT_SIZE, 694, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(plateau, javax.swing.GroupLayout.PREFERRED_SIZE, 569, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
 
         nomJoueur1.setText("joueur1");
 
-        pion11.setText("1");
-
-        pion12.setText("2");
-
-        pion13.setText("3");
-
-        pion14.setText("4");
-
         nomJoueur2.setText("Joueur2");
-
-        pion21.setText("1");
-
-        pion22.setText("2");
-
-        pion23.setText("3");
-
-        pion24.setText("4");
 
         tuile2.setText("tuile2");
 
@@ -142,109 +281,483 @@ public class FinFlureGUI extends javax.swing.JFrame {
             }
         });
 
+        panelPlateau.setLayout(null);
+        panelPlateau.add(x1y1);
+        x1y1.setBounds(30, 30, 30, 30);
+        panelPlateau.add(x2y1);
+        x2y1.setBounds(70, 30, 30, 30);
+        panelPlateau.add(x3y1);
+        x3y1.setBounds(110, 30, 30, 30);
+        panelPlateau.add(x4y1);
+        x4y1.setBounds(150, 30, 30, 30);
+        panelPlateau.add(x5y1);
+        x5y1.setBounds(190, 30, 30, 30);
+        panelPlateau.add(x6y1);
+        x6y1.setBounds(230, 30, 30, 30);
+        panelPlateau.add(x7y1);
+        x7y1.setBounds(270, 30, 30, 30);
+        panelPlateau.add(x8y1);
+        x8y1.setBounds(310, 30, 30, 30);
+        panelPlateau.add(x9y1);
+        x9y1.setBounds(350, 30, 30, 30);
+        panelPlateau.add(x10y1);
+        x10y1.setBounds(390, 30, 30, 30);
+        panelPlateau.add(x11y1);
+        x11y1.setBounds(430, 30, 30, 30);
+        panelPlateau.add(x12y1);
+        x12y1.setBounds(470, 30, 30, 30);
+        panelPlateau.add(x1y2);
+        x1y2.setBounds(30, 70, 30, 30);
+        panelPlateau.add(x2y2);
+        x2y2.setBounds(70, 70, 30, 30);
+        panelPlateau.add(x3y2);
+        x3y2.setBounds(110, 70, 30, 30);
+        panelPlateau.add(x4y2);
+        x4y2.setBounds(150, 70, 30, 30);
+        panelPlateau.add(x5y2);
+        x5y2.setBounds(190, 70, 30, 30);
+        panelPlateau.add(x6y2);
+        x6y2.setBounds(230, 70, 30, 30);
+        panelPlateau.add(x7y2);
+        x7y2.setBounds(270, 70, 30, 30);
+        panelPlateau.add(x8y2);
+        x8y2.setBounds(310, 70, 30, 30);
+        panelPlateau.add(x9y2);
+        x9y2.setBounds(350, 70, 30, 30);
+        panelPlateau.add(x10y2);
+        x10y2.setBounds(390, 70, 30, 30);
+        panelPlateau.add(x11y2);
+        x11y2.setBounds(430, 70, 30, 30);
+        panelPlateau.add(x12y2);
+        x12y2.setBounds(470, 70, 30, 30);
+        panelPlateau.add(x13y2);
+        x13y2.setBounds(510, 70, 30, 30);
+        panelPlateau.add(x14y3);
+        x14y3.setBounds(550, 110, 30, 30);
+        panelPlateau.add(x13y3);
+        x13y3.setBounds(510, 110, 30, 30);
+        panelPlateau.add(x12y3);
+        x12y3.setBounds(470, 110, 30, 30);
+        panelPlateau.add(x11y3);
+        x11y3.setBounds(430, 110, 30, 30);
+        panelPlateau.add(x10y3);
+        x10y3.setBounds(390, 110, 30, 30);
+        panelPlateau.add(x9y3);
+        x9y3.setBounds(350, 110, 30, 30);
+        panelPlateau.add(x8y3);
+        x8y3.setBounds(310, 110, 30, 30);
+        panelPlateau.add(x7y3);
+        x7y3.setBounds(270, 110, 30, 30);
+        panelPlateau.add(x6y3);
+        x6y3.setBounds(230, 110, 30, 30);
+        panelPlateau.add(x5y3);
+        x5y3.setBounds(190, 110, 30, 30);
+        panelPlateau.add(x4y3);
+        x4y3.setBounds(150, 110, 30, 30);
+        panelPlateau.add(x3y3);
+        x3y3.setBounds(110, 110, 30, 30);
+        panelPlateau.add(x2y3);
+        x2y3.setBounds(70, 110, 30, 30);
+        panelPlateau.add(x1y3);
+        x1y3.setBounds(30, 110, 30, 30);
+        panelPlateau.add(x1y4);
+        x1y4.setBounds(30, 150, 30, 30);
+        panelPlateau.add(x2y4);
+        x2y4.setBounds(70, 150, 30, 30);
+        panelPlateau.add(x3y4);
+        x3y4.setBounds(110, 150, 30, 30);
+        panelPlateau.add(x4y4);
+        x4y4.setBounds(150, 150, 30, 30);
+        panelPlateau.add(x5y4);
+        x5y4.setBounds(190, 150, 30, 30);
+        panelPlateau.add(x6y4);
+        x6y4.setBounds(230, 150, 30, 30);
+        panelPlateau.add(x7y4);
+        x7y4.setBounds(270, 150, 30, 30);
+        panelPlateau.add(x8y4);
+        x8y4.setBounds(310, 150, 30, 30);
+        panelPlateau.add(x9y4);
+        x9y4.setBounds(350, 150, 30, 30);
+        panelPlateau.add(x10y4);
+        x10y4.setBounds(390, 150, 30, 30);
+        panelPlateau.add(x11y4);
+        x11y4.setBounds(430, 150, 30, 30);
+        panelPlateau.add(x12y4);
+        x12y4.setBounds(470, 150, 30, 30);
+        panelPlateau.add(x13y4);
+        x13y4.setBounds(510, 150, 30, 30);
+        panelPlateau.add(x14y4);
+        x14y4.setBounds(550, 150, 30, 30);
+        panelPlateau.add(x15y4);
+        x15y4.setBounds(590, 150, 30, 30);
+        panelPlateau.add(x1y5);
+        x1y5.setBounds(30, 190, 30, 30);
+        panelPlateau.add(x2y5);
+        x2y5.setBounds(70, 190, 30, 30);
+        panelPlateau.add(x3y5);
+        x3y5.setBounds(110, 190, 30, 30);
+        panelPlateau.add(x4y5);
+        x4y5.setBounds(150, 190, 30, 30);
+        panelPlateau.add(x5y5);
+        x5y5.setBounds(190, 190, 30, 30);
+        panelPlateau.add(x6y5);
+        x6y5.setBounds(230, 190, 30, 30);
+        panelPlateau.add(x7y5);
+        x7y5.setBounds(270, 190, 30, 30);
+        panelPlateau.add(x8y5);
+        x8y5.setBounds(310, 190, 30, 30);
+        panelPlateau.add(x9y5);
+        x9y5.setBounds(350, 190, 30, 30);
+        panelPlateau.add(x10y5);
+        x10y5.setBounds(390, 190, 30, 30);
+        panelPlateau.add(x11y5);
+        x11y5.setBounds(430, 190, 30, 30);
+        panelPlateau.add(x12y5);
+        x12y5.setBounds(470, 190, 30, 30);
+        panelPlateau.add(x13y5);
+        x13y5.setBounds(510, 190, 30, 30);
+        panelPlateau.add(x14y5);
+        x14y5.setBounds(550, 190, 30, 30);
+        panelPlateau.add(x15y5);
+        x15y5.setBounds(590, 190, 30, 30);
+        panelPlateau.add(x16y5);
+        x16y5.setBounds(630, 190, 30, 30);
+        panelPlateau.add(x1y6);
+        x1y6.setBounds(30, 230, 30, 30);
+        panelPlateau.add(x2y6);
+        x2y6.setBounds(70, 230, 30, 30);
+        panelPlateau.add(x3y6);
+        x3y6.setBounds(110, 230, 30, 30);
+        panelPlateau.add(x4y6);
+        x4y6.setBounds(150, 230, 30, 30);
+        panelPlateau.add(x5y6);
+        x5y6.setBounds(190, 230, 30, 30);
+        panelPlateau.add(x6y6);
+        x6y6.setBounds(230, 230, 30, 30);
+        panelPlateau.add(x7y6);
+        x7y6.setBounds(270, 230, 30, 30);
+        panelPlateau.add(x8y6);
+        x8y6.setBounds(310, 230, 30, 30);
+        panelPlateau.add(x9y6);
+        x9y6.setBounds(350, 230, 30, 30);
+        panelPlateau.add(x10y6);
+        x10y6.setBounds(390, 230, 30, 30);
+        panelPlateau.add(x11y6);
+        x11y6.setBounds(430, 230, 30, 30);
+        panelPlateau.add(x12y6);
+        x12y6.setBounds(470, 230, 30, 30);
+        panelPlateau.add(x13y6);
+        x13y6.setBounds(510, 230, 30, 30);
+        panelPlateau.add(x14y6);
+        x14y6.setBounds(550, 230, 30, 30);
+        panelPlateau.add(x15y6);
+        x15y6.setBounds(590, 230, 30, 30);
+        panelPlateau.add(x16y6);
+        x16y6.setBounds(630, 230, 30, 30);
+        panelPlateau.add(x16y7);
+        x16y7.setBounds(630, 270, 30, 30);
+        panelPlateau.add(x15y7);
+        x15y7.setBounds(590, 270, 30, 30);
+        panelPlateau.add(x14y7);
+        x14y7.setBounds(550, 270, 30, 30);
+        panelPlateau.add(x13y7);
+        x13y7.setBounds(510, 270, 30, 30);
+        panelPlateau.add(x12y7);
+        x12y7.setBounds(470, 270, 30, 30);
+        panelPlateau.add(x11y7);
+        x11y7.setBounds(430, 270, 30, 30);
+        panelPlateau.add(x10y7);
+        x10y7.setBounds(390, 270, 30, 30);
+        panelPlateau.add(x9y7);
+        x9y7.setBounds(350, 270, 30, 30);
+        panelPlateau.add(x8y7);
+        x8y7.setBounds(310, 270, 30, 30);
+        panelPlateau.add(x7y7);
+        x7y7.setBounds(270, 270, 30, 30);
+        panelPlateau.add(x6y7);
+        x6y7.setBounds(230, 270, 30, 30);
+        panelPlateau.add(x5y7);
+        x5y7.setBounds(190, 270, 30, 30);
+        panelPlateau.add(x4y7);
+        x4y7.setBounds(150, 270, 30, 30);
+        panelPlateau.add(x3y7);
+        x3y7.setBounds(110, 270, 30, 30);
+        panelPlateau.add(x2y7);
+        x2y7.setBounds(70, 270, 30, 30);
+        panelPlateau.add(x1y7);
+        x1y7.setBounds(30, 270, 30, 30);
+        panelPlateau.add(x1y8);
+        x1y8.setBounds(70, 310, 30, 30);
+        panelPlateau.add(x2y8);
+        x2y8.setBounds(110, 310, 30, 30);
+        panelPlateau.add(x3y8);
+        x3y8.setBounds(150, 310, 30, 30);
+        panelPlateau.add(x4y8);
+        x4y8.setBounds(190, 310, 30, 30);
+        panelPlateau.add(x5y8);
+        x5y8.setBounds(230, 310, 30, 30);
+        panelPlateau.add(x6y8);
+        x6y8.setBounds(270, 310, 30, 30);
+        panelPlateau.add(x7y8);
+        x7y8.setBounds(310, 310, 30, 30);
+        panelPlateau.add(x8y8);
+        x8y8.setBounds(350, 310, 30, 30);
+        panelPlateau.add(x9y8);
+        x9y8.setBounds(390, 310, 30, 30);
+        panelPlateau.add(x10y8);
+        x10y8.setBounds(430, 310, 30, 30);
+        panelPlateau.add(x11y8);
+        x11y8.setBounds(470, 310, 30, 30);
+        panelPlateau.add(x12y8);
+        x12y8.setBounds(510, 310, 30, 30);
+        panelPlateau.add(x13y8);
+        x13y8.setBounds(550, 310, 30, 30);
+        panelPlateau.add(x14y8);
+        x14y8.setBounds(590, 310, 30, 30);
+        panelPlateau.add(x15y8);
+        x15y8.setBounds(630, 310, 30, 30);
+        panelPlateau.add(x1y9);
+        x1y9.setBounds(110, 350, 30, 30);
+        panelPlateau.add(x2y9);
+        x2y9.setBounds(150, 350, 30, 30);
+        panelPlateau.add(x3y9);
+        x3y9.setBounds(190, 350, 30, 30);
+        panelPlateau.add(x4y9);
+        x4y9.setBounds(230, 350, 30, 30);
+        panelPlateau.add(x5y9);
+        x5y9.setBounds(270, 350, 30, 30);
+        panelPlateau.add(x6y9);
+        x6y9.setBounds(310, 350, 30, 30);
+        panelPlateau.add(x7y9);
+        x7y9.setBounds(350, 350, 30, 30);
+        panelPlateau.add(x8y9);
+        x8y9.setBounds(390, 350, 30, 30);
+        panelPlateau.add(x9y9);
+        x9y9.setBounds(430, 350, 30, 30);
+        panelPlateau.add(x10y9);
+        x10y9.setBounds(470, 350, 30, 30);
+        panelPlateau.add(x11y9);
+        x11y9.setBounds(510, 350, 30, 30);
+        panelPlateau.add(x12y9);
+        x12y9.setBounds(550, 350, 30, 30);
+        panelPlateau.add(x13y9);
+        x13y9.setBounds(590, 350, 30, 30);
+        panelPlateau.add(x14y9);
+        x14y9.setBounds(630, 350, 30, 30);
+        panelPlateau.add(x1y10);
+        x1y10.setBounds(150, 390, 30, 30);
+        panelPlateau.add(x2y10);
+        x2y10.setBounds(190, 390, 30, 30);
+        panelPlateau.add(x3y10);
+        x3y10.setBounds(230, 390, 30, 30);
+        panelPlateau.add(x4y10);
+        x4y10.setBounds(270, 390, 30, 30);
+        panelPlateau.add(x5y10);
+        x5y10.setBounds(310, 390, 30, 30);
+        panelPlateau.add(x6y10);
+        x6y10.setBounds(350, 390, 30, 30);
+        panelPlateau.add(x7y10);
+        x7y10.setBounds(390, 390, 30, 30);
+        panelPlateau.add(x8y10);
+        x8y10.setBounds(430, 390, 30, 30);
+        panelPlateau.add(x9y10);
+        x9y10.setBounds(470, 390, 30, 30);
+        panelPlateau.add(x10y10);
+        x10y10.setBounds(510, 390, 30, 30);
+        panelPlateau.add(x11y10);
+        x11y10.setBounds(550, 390, 30, 30);
+        panelPlateau.add(x12y10);
+        x12y10.setBounds(590, 390, 30, 30);
+        panelPlateau.add(x13y10);
+        x13y10.setBounds(630, 390, 30, 30);
+        panelPlateau.add(x1y11);
+        x1y11.setBounds(190, 430, 30, 30);
+        panelPlateau.add(x2y11);
+        x2y11.setBounds(230, 430, 30, 30);
+        panelPlateau.add(x3y11);
+        x3y11.setBounds(270, 430, 30, 30);
+        panelPlateau.add(x4y11);
+        x4y11.setBounds(310, 430, 30, 30);
+        panelPlateau.add(x5y11);
+        x5y11.setBounds(350, 430, 30, 30);
+        panelPlateau.add(x6y11);
+        x6y11.setBounds(390, 430, 30, 30);
+        panelPlateau.add(x7y11);
+        x7y11.setBounds(430, 430, 30, 30);
+        panelPlateau.add(x8y11);
+        x8y11.setBounds(470, 430, 30, 30);
+        panelPlateau.add(x9y11);
+        x9y11.setBounds(510, 430, 30, 30);
+        panelPlateau.add(x10y11);
+        x10y11.setBounds(550, 430, 30, 30);
+        panelPlateau.add(x11y11);
+        x11y11.setBounds(590, 430, 30, 30);
+        panelPlateau.add(x12y11);
+        x12y11.setBounds(630, 430, 30, 30);
+
+        plateau.setBackground(new Color(0,0,0,10));
+        plateau.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fns_plateau.jpg"))); // NOI18N
+        panelPlateau.add(plateau);
+        plateau.setBounds(0, 0, 694, 479);
+
+        b1.setText("1");
+        b1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b1ActionPerformed(evt);
+            }
+        });
+
+        b2.setText("2");
+        b2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b2ActionPerformed(evt);
+            }
+        });
+
+        b3.setText("3");
+        b3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b3ActionPerformed(evt);
+            }
+        });
+
+        b4.setText("4");
+        b4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(logo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(pion11, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pion12, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pion13, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap()
+                        .addComponent(tuile1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(tuile2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(pion14, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel4)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(bearingMonstre, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(jLabel3)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(viewMonstre, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(jLabel2)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(statuMonstre, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(124, 124, 124)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(gameRound, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(gamePhase, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(buttonStartMonsterTurn, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(panelPlateau, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(pion11, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(pion12, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(pion13, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(pion14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(nomJoueur1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(nomJoueur2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(pion21, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(pion21, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(pion22, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(pion22, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(pion23, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(pion24, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(tuile1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(tuile2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel4)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(bearingMonstre, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(jLabel3)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(viewMonstre, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(statuMonstre, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(124, 124, 124)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(pion23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(pion24, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(gameRound, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(gamePhase, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(buttonStartMonsterTurn, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(notification, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(b1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(b2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(b3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(b4))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(warning, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(61, 61, 61))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(39, 39, 39)
                         .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(nomJoueur1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(pion11, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(pion12, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(pion13, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(pion14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(pion11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(pion13, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                                        .addComponent(pion14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(pion12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(2, 2, 2)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(nomJoueur2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(pion21, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(pion22, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(pion23, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(pion24, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(pion21, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(pion22, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(pion23, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(pion24, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(warning, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(notification, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(b1)
+                            .addComponent(b2)
+                            .addComponent(b3)
+                            .addComponent(b4))
+                        .addGap(49, 49, 49))
+                    .addComponent(panelPlateau, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(tuile1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(tuile2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tuile1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tuile2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -279,12 +792,75 @@ public class FinFlureGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonStartMonsterTurnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStartMonsterTurnActionPerformed
-        // TODO add your handling code here:
+        this.partie.getMonstre().deplacer(1);
+        this.mettreMonstreSurGUI(this.partie.getMonstre());
     }//GEN-LAST:event_buttonStartMonsterTurnActionPerformed
 
-    private void jPanel3ComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_jPanel3ComponentAdded
+    private void b1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jPanel3ComponentAdded
+        if (this.choix1 == -1) {
+            this.choix1 = Integer.parseInt(this.b1.getText()) - 1;
+            this.notification.setText("pion 2 :");
+            this.b1.setEnabled(false);
+        } else {
+            this.choix2 = Integer.parseInt(this.b1.getText()) - 1;
+            this.notification.setText(" ");
+            this.b1.setEnabled(false);
+            this.b2.setEnabled(false);
+            this.b3.setEnabled(false);
+            this.b4.setEnabled(false);
+        }
+
+    }//GEN-LAST:event_b1ActionPerformed
+
+    private void b2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b2ActionPerformed
+        // TODO add your handling code here:
+        if (this.choix1 == -1) {
+            this.choix1 = Integer.parseInt(this.b2.getText()) - 1;
+            this.notification.setText("pion 2 :");
+            this.b2.setEnabled(false);
+        } else {
+            this.choix2 = Integer.parseInt(this.b2.getText()) - 1;
+            this.notification.setText(" ");
+            this.b1.setEnabled(false);
+            this.b2.setEnabled(false);
+            this.b3.setEnabled(false);
+            this.b4.setEnabled(false);
+        }
+
+    }//GEN-LAST:event_b2ActionPerformed
+
+    private void b3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b3ActionPerformed
+        if (this.choix1 == -1) {
+            this.choix1 = Integer.parseInt(this.b3.getText()) - 1;
+            this.notification.setText("pion 2 :");
+            this.b3.setEnabled(false);
+        } else {
+            this.choix2 = Integer.parseInt(this.b3.getText()) - 1;
+            this.notification.setText(" ");
+            this.b1.setEnabled(false);
+            this.b2.setEnabled(false);
+            this.b3.setEnabled(false);
+            this.b4.setEnabled(false);
+        }
+
+    }//GEN-LAST:event_b3ActionPerformed
+
+    private void b4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b4ActionPerformed
+        if (this.choix1 == -1) {
+            this.choix1 = Integer.parseInt(this.b4.getText()) - 1;
+            this.notification.setText("pion 2 :");
+            this.b4.setEnabled(false);
+        } else {
+            this.choix2 = Integer.parseInt(this.b4.getText()) - 1;
+            this.notification.setText(" ");
+            this.b1.setEnabled(false);
+            this.b2.setEnabled(false);
+            this.b3.setEnabled(false);
+            this.b4.setEnabled(false);
+        }
+
+    }//GEN-LAST:event_b4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -321,7 +897,320 @@ public class FinFlureGUI extends javax.swing.JFrame {
         });
     }
 
+    private void initJoueurs() {
+
+        for (int i = 0; i < 2; i++) {
+
+            if (i == 0) {
+                this.partie.getListJoueur().add(new Joueur(MenuGUI.nom1));
+            } else {
+                this.partie.getListJoueur().add(new Joueur(MenuGUI.nom2));
+            }
+
+            ArrayList<PionJoueur> pionJoueurList = new ArrayList<>();
+
+            pionJoueurList.add(new PionJoueur(16, 11, false, 6, 1, i));
+            pionJoueurList.add(new PionJoueur(16, 11, false, 4, 3, i));
+            pionJoueurList.add(new PionJoueur(16, 11, false, 3, 4, i));
+            pionJoueurList.add(new PionJoueur(16, 11, false, 2, 5, i));
+
+            this.partie.getListJoueur().get(i).setPions(pionJoueurList);
+        }
+
+        this.pion11.setIcon(new ImageIcon(this.partie.getListJoueur().get(0).getPion().get(0).imageSource));
+        this.pion12.setIcon(new ImageIcon(this.partie.getListJoueur().get(0).getPion().get(1).imageSource));
+        this.pion13.setIcon(new ImageIcon(this.partie.getListJoueur().get(0).getPion().get(2).imageSource));
+        this.pion14.setIcon(new ImageIcon(this.partie.getListJoueur().get(0).getPion().get(3).imageSource));
+
+        this.pion21.setIcon(new ImageIcon(this.partie.getListJoueur().get(1).getPion().get(0).imageSource));
+        this.pion22.setIcon(new ImageIcon(this.partie.getListJoueur().get(1).getPion().get(1).imageSource));
+        this.pion23.setIcon(new ImageIcon(this.partie.getListJoueur().get(1).getPion().get(2).imageSource));
+        this.pion24.setIcon(new ImageIcon(this.partie.getListJoueur().get(1).getPion().get(3).imageSource));
+
+    }
+
+    private void game() {
+
+        this.partie = new Partie();
+
+        initJoueurs();
+
+        this.partie.setP(new Plateau());
+
+        this.partie.setMonstre(new PionMonstre(1, 1, 2, this.partie.getP(), this.partie));
+
+        this.partie.mettreLeMontreSurPlateau();
+        mettreMonstreSurGUI(this.partie.getMonstre());
+
+        this.partie.ajouterObstacles();
+        mettreObstacleSurGUI(this.partie.getObstacle());
+        this.partie.getP().print();
+        //commencerPar2();
+
+    }
+
+    private void mettreMonstreSurGUI(PionMonstre m) {
+
+        javax.swing.JLabel[] labels = {
+            x1y1, x2y1, x3y1, x4y1, x5y1, x6y1, x7y1, x8y1, x9y1, x10y1, x11y1, x12y1,
+            x1y2, x2y2, x3y2, x4y2, x5y2, x6y2, x7y2, x8y2, x9y2, x10y2, x11y2, x12y2, x13y2,
+            x1y3, x2y3, x3y3, x4y3, x5y3, x6y3, x7y3, x8y3, x9y3, x10y3, x11y3, x12y3, x13y3, x14y3,
+            x1y4, x2y4, x3y4, x4y4, x5y4, x6y4, x7y4, x8y4, x9y4, x10y4, x11y4, x12y4, x13y4, x14y4, x15y4,
+            x1y5, x2y5, x3y5, x4y5, x5y5, x6y5, x7y5, x8y5, x9y5, x10y5, x11y5, x12y5, x13y5, x14y5, x15y5, x16y5,
+            x1y6, x2y6, x3y6, x4y6, x5y6, x6y6, x7y6, x8y6, x9y6, x10y6, x11y6, x12y6, x13y6, x14y6, x15y6, x16y6,
+            x1y7, x2y7, x3y7, x4y7, x5y7, x6y7, x7y7, x8y7, x9y7, x10y7, x11y7, x12y7, x13y7, x14y7, x15y7, x16y7,
+            x1y8, x2y8, x3y8, x4y8, x5y8, x6y8, x7y8, x8y8, x9y8, x10y8, x11y8, x12y8, x13y8, x14y8, x15y8,
+            x1y9, x2y9, x3y9, x4y9, x5y9, x6y9, x7y9, x8y9, x9y9, x10y9, x11y9, x12y9, x13y9, x14y9,
+            x1y10, x2y10, x3y10, x4y10, x5y10, x6y10, x7y10, x8y10, x9y10, x10y10, x11y10, x12y10, x13y10,
+            x1y11, x2y11, x3y11, x4y11, x5y11, x6y11, x7y11, x8y11, x9y11, x10y11, x11y11, x12y11};
+
+        int x, y;
+
+        if (m.getX() == 1) {
+
+            x = 30;
+
+        } else {
+            x = 30 + ((m.getX() - 1) * 40);
+        }
+
+        if (m.getY() == 1) {
+
+            y = 30;
+
+        } else {
+            y = 30 + ((m.getY() - 1) * 40);
+        }
+        System.out.println(x + " " + m.getX());
+        System.out.println(y + " " + m.getY());
+
+        for (javax.swing.JLabel c : labels) {
+
+            if (c.getBounds().x == x && c.getBounds().y == y) {
+
+                System.out.println(c.getBounds());
+                c.setIcon(new ImageIcon(m.imgSource));
+            }
+
+        }
+
+    }
+
+    private void mettreObstacleSurGUI(ArrayList<Pierre> pierres) {
+
+        javax.swing.JLabel[] labels = {
+            x1y1, x2y1, x3y1, x4y1, x5y1, x6y1, x7y1, x8y1, x9y1, x10y1, x11y1, x12y1,
+            x1y2, x2y2, x3y2, x4y2, x5y2, x6y2, x7y2, x8y2, x9y2, x10y2, x11y2, x12y2, x13y2,
+            x1y3, x2y3, x3y3, x4y3, x5y3, x6y3, x7y3, x8y3, x9y3, x10y3, x11y3, x12y3, x13y3, x14y3,
+            x1y4, x2y4, x3y4, x4y4, x5y4, x6y4, x7y4, x8y4, x9y4, x10y4, x11y4, x12y4, x13y4, x14y4, x15y4,
+            x1y5, x2y5, x3y5, x4y5, x5y5, x6y5, x7y5, x8y5, x9y5, x10y5, x11y5, x12y5, x13y5, x14y5, x15y5, x16y5,
+            x1y6, x2y6, x3y6, x4y6, x5y6, x6y6, x7y6, x8y6, x9y6, x10y6, x11y6, x12y6, x13y6, x14y6, x15y6, x16y6,
+            x1y7, x2y7, x3y7, x4y7, x5y7, x6y7, x7y7, x8y7, x9y7, x10y7, x11y7, x12y7, x13y7, x14y7, x15y7, x16y7,
+            x1y8, x2y8, x3y8, x4y8, x5y8, x6y8, x7y8, x8y8, x9y8, x10y8, x11y8, x12y8, x13y8, x14y8, x15y8,
+            x1y9, x2y9, x3y9, x4y9, x5y9, x6y9, x7y9, x8y9, x9y9, x10y9, x11y9, x12y9, x13y9, x14y9,
+            x1y10, x2y10, x3y10, x4y10, x5y10, x6y10, x7y10, x8y10, x9y10, x10y10, x11y10, x12y10, x13y10,
+            x1y11, x2y11, x3y11, x4y11, x5y11, x6y11, x7y11, x8y11, x9y11, x10y11, x11y11, x12y11};
+
+        int x, y;
+        for (Pierre pierre : pierres) {
+            this.partie.getP().setObjet(pierre.getY(), pierre.getX(), pierre);
+
+            if (pierre.getX() == 1) {
+
+                x = 30;
+
+            } else {
+                x = 30 + ((pierre.getX() - 1) * 40);
+            }
+
+            if (pierre.getY() == 1) {
+
+                y = 30;
+
+            } else {
+                y = 30 + ((pierre.getY() - 1) * 40);
+            }
+
+            for (javax.swing.JLabel c : labels) {
+
+                if (c.getBounds().x == x && c.getBounds().y == y) {
+
+                    System.out.println(c.getBounds());
+                    c.setIcon(new ImageIcon(pierre.imgSource));
+                }
+
+            }
+        }
+
+    }
+
+    private void visibleButtons() {
+        this.b1.setVisible(true);
+        this.b2.setVisible(true);
+        this.b3.setVisible(true);
+        this.b4.setVisible(true);
+    }
+
+    private void invisibeButtons() {
+        this.b1.setVisible(false);
+        this.b2.setVisible(false);
+        this.b3.setVisible(false);
+        this.b4.setVisible(false);
+    }
+
+    private void enableButtons() {
+        this.b1.setEnabled(true);
+        this.b2.setEnabled(true);
+        this.b3.setEnabled(true);
+        this.b4.setEnabled(true);
+    }
+
+    private void disableButtons() {
+        this.b1.setEnabled(false);
+        this.b2.setEnabled(false);
+        this.b3.setEnabled(false);
+        this.b4.setEnabled(false);
+    }
+
+    private void commencerPar2() {
+
+        this.notification.setText("Joueur 1 pion 1 : \n");
+        this.visibleButtons();
+        this.enableButtons();
+        if (this.choix1 != -1 && this.choix2 != -1) {
+            this.notification.setText(" jj");
+            placer2pionsAuDebut();
+
+        }
+
+    }
+
+    private void placer2pionsAuDebut() {
+
+        for (int i = 0; i < this.partie.getListJoueur().size(); i++) {
+
+            if ((this.choix1 != -1) && (this.choix2 != -1)) {
+                this.notification.setText("Joueur 2: Veuillez choisir 2 pions pour commencer la partie\n");
+                this.warning.setIcon(new ImageIcon(chemin + "!.gif"));
+            }
+
+            ArrayList<PionJoueur> temp = new ArrayList<>(this.partie.getListJoueur().get(i).getPions());
+
+            this.partie.getListJoueur().get(i).setPionsReste(temp);
+            this.partie.getP().print();
+
+            for (int j = 0; j < this.partie.getListJoueur().get(i).getPions().size(); j++) {
+
+                if (j == this.choix1 || j == this.choix2) {
+
+                    //Garder les coordonées anciennes
+                    this.partie.getListJoueur().get(i).getPions().get(j).setxAncien(this.partie.getListJoueur().get(i).getPions().get(j).getX());
+                    this.partie.getListJoueur().get(i).getPions().get(j).setyAncien(this.partie.getListJoueur().get(i).getPions().get(j).getY());
+
+                    Scanner scX = new Scanner(System.in);
+                    Scanner scY = new Scanner(System.in);
+                    int xScanne = 1;
+                    int yScanne = 1;
+
+                    if (this.partie.isManche()) {
+                        this.gameRound.setText("MANCHE 1");
+                    } else {
+                        this.gameRound.setText("MANCHE 2");
+                    }
+
+                    do {
+
+                        this.notification.setText("Le pion " + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.partie.getListJoueur().get(i).getNom() + " est hors le plateau!");
+                        System.out.println(this.partie.getListJoueur().get(i).getPions().get(j).getValeurActuelle() + " cases possible pour ce pion.");
+
+                        System.out.println("Veuillez entrer --- Y --- du pion " + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.partie.getListJoueur().get(i).getNom());
+                        xScanne = scX.nextInt();
+
+                        while ((xScanne < 1) || (xScanne > this.partie.getP().getHauteur())) {
+                            System.out.println("Veuillez entrer une valeur vrai entre (1 et 11) pour l'Y du pion " + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.partie.getListJoueur().get(i).getNom());
+                            xScanne = scX.nextInt();
+                        }
+
+                        while (xScanne != this.partie.getListJoueur().get(i).getPions().get(j).getEspaceDeCommencer().getY()) {
+                            System.out.println("Le pion doit commencer par la case : " + this.partie.getListJoueur().get(i).getPions().get(j).getEspaceDeCommencer().getX() + "-" + this.partie.getListJoueur().get(i).getPions().get(j).getEspaceDeCommencer().getY());
+                            xScanne = scX.nextInt();
+                        }
+
+                        System.out.println("Veuillez entrer --- X --- du pion " + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.partie.getListJoueur().get(i).getNom());
+                        yScanne = scY.nextInt();
+                        while ((yScanne < 0) || (yScanne > this.partie.getP().getLargeur())) {
+                            System.out.println("Veuillez entrer une valeur vrai entre (1 et 16) pour l'X du pion " + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.partie.getListJoueur().get(i).getNom());
+                            yScanne = scY.nextInt();
+                        }
+                        while (yScanne != this.partie.getListJoueur().get(i).getPions().get(j).getEspaceDeCommencer().getX()) {
+                            System.out.println("Le pion doit commencer par la case : " + this.partie.getListJoueur().get(i).getPions().get(j).getEspaceDeCommencer().getX() + "-" + this.partie.getListJoueur().get(i).getPions().get(j).getEspaceDeCommencer().getY());
+                            yScanne = scY.nextInt();
+                        }
+
+                    } while (this.partie.deplacerEtVerifierUnObjetDansUneCase(xScanne, yScanne, this.partie.getListJoueur().get(i).getPions().get(j)));
+
+                    this.partie.getListJoueur().get(i).getPions().get(j).setX(xScanne);
+                    this.partie.getListJoueur().get(i).getPions().get(j).setY(yScanne);
+
+                    //Garder les coordonées anciennes
+                    this.partie.getListJoueur().get(i).getPions().get(j).setxAncien(this.partie.getListJoueur().get(i).getPions().get(j).getX());
+                    this.partie.getListJoueur().get(i).getPions().get(j).setyAncien(this.partie.getListJoueur().get(i).getPions().get(j).getY());
+
+                    this.partie.getP().setObjet(xScanne, yScanne, this.partie.getListJoueur().get(i).getPions().get(j), this.partie.getListJoueur().get(i));
+
+                    this.partie.getListJoueur().get(i).getPion().get(j).setValeurActuelle(this.partie.getListJoueur().get(i).getPion().get(j).getValeurActuelle() - 1);
+                    this.partie.getP().print();
+
+                    this.partie.getP().getPlateau()[xScanne][yScanne] = new Espace(false);
+
+                    do {
+
+                        System.out.println(this.partie.getListJoueur().get(i).getPions().get(j).getValeurActuelle() + " cases possible pour ce pion.");
+
+                        System.out.println("Veuillez entrer --- Y --- du pion " + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.partie.getListJoueur().get(i).getNom());
+                        xScanne = scX.nextInt();
+
+                        while ((xScanne < 1) || (xScanne > this.partie.getP().getHauteur())) {
+                            System.out.println("Veuillez entrer une valeur vrai entre (1 et 11) pour l'Y du pion " + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.partie.getListJoueur().get(i).getNom());
+                            xScanne = scX.nextInt();
+                        }
+
+                        System.out.println("Veuillez entrer --- X --- du pion " + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.partie.getListJoueur().get(i).getNom());
+                        yScanne = scY.nextInt();
+                        while ((yScanne < 0) || (yScanne > this.partie.getP().getLargeur())) {
+                            System.out.println("Veuillez entrer une valeur vrai entre (1 et 16) pour l'X du pion " + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.partie.getListJoueur().get(i).getNom());
+                            yScanne = scY.nextInt();
+                        }
+
+                    } while (this.partie.deplacerEtVerifierUnObjetDansUneCase(xScanne, yScanne, this.partie.getListJoueur().get(i).getPions().get(j)));
+
+                    this.partie.getListJoueur().get(i).getPions().get(j).setX(xScanne);
+                    this.partie.getListJoueur().get(i).getPions().get(j).setY(yScanne);
+                    System.out.println("Place ancienne pour ce pion : " + this.partie.getListJoueur().get(i).getPions().get(j).getxAncien() + " | " + this.partie.getListJoueur().get(i).getPions().get(j).getyAncien());
+                    System.out.println("Ancien2 " + this.partie.getP().getPlateau()[xScanne][yScanne].isOccupee());
+                    this.partie.getP().setObjet(xScanne, yScanne, this.partie.getListJoueur().get(i).getPions().get(j), this.partie.getListJoueur().get(i));
+                    System.out.println("new " + this.partie.getP().getPlateau()[xScanne][yScanne].isOccupee());
+                    this.partie.getListJoueur().get(i).getPion().get(j).setEstSurPlateau(true);
+                    this.partie.getListJoueur().get(i).getPion().get(j).setValeurActuelle(this.partie.getListJoueur().get(i).getPion().get(j).getValeurActuelle() + 1);
+
+                    this.choix1 = -1;
+                    this.choix2 = -1;
+                    this.enableButtons();
+
+                    this.partie.getP().print();
+                }
+            }
+        }
+
+        this.partie.setManche(!this.partie.isManche());
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton b1;
+    private javax.swing.JButton b2;
+    private javax.swing.JButton b3;
+    private javax.swing.JButton b4;
     private javax.swing.JLabel bearingMonstre;
     private javax.swing.JButton buttonStartMonsterTurn;
     private javax.swing.JLabel gamePhase;
@@ -333,10 +1222,11 @@ public class FinFlureGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel logo;
     private javax.swing.JLabel nomJoueur1;
     private javax.swing.JLabel nomJoueur2;
+    private javax.swing.JLabel notification;
+    private javax.swing.JPanel panelPlateau;
     private javax.swing.JLabel pion11;
     private javax.swing.JLabel pion12;
     private javax.swing.JLabel pion13;
@@ -350,10 +1240,165 @@ public class FinFlureGUI extends javax.swing.JFrame {
     private javax.swing.JLabel tuile1;
     private javax.swing.JLabel tuile2;
     private javax.swing.JLabel viewMonstre;
+    private javax.swing.JLabel warning;
+    private javax.swing.JLabel x10y1;
+    private javax.swing.JLabel x10y10;
+    private javax.swing.JLabel x10y11;
+    private javax.swing.JLabel x10y2;
+    private javax.swing.JLabel x10y3;
+    private javax.swing.JLabel x10y4;
+    private javax.swing.JLabel x10y5;
+    private javax.swing.JLabel x10y6;
+    private javax.swing.JLabel x10y7;
+    private javax.swing.JLabel x10y8;
+    private javax.swing.JLabel x10y9;
+    private javax.swing.JLabel x11y1;
+    private javax.swing.JLabel x11y10;
+    private javax.swing.JLabel x11y11;
+    private javax.swing.JLabel x11y2;
+    private javax.swing.JLabel x11y3;
+    private javax.swing.JLabel x11y4;
+    private javax.swing.JLabel x11y5;
+    private javax.swing.JLabel x11y6;
+    private javax.swing.JLabel x11y7;
+    private javax.swing.JLabel x11y8;
+    private javax.swing.JLabel x11y9;
+    private javax.swing.JLabel x12y1;
+    private javax.swing.JLabel x12y10;
+    private javax.swing.JLabel x12y11;
+    private javax.swing.JLabel x12y2;
+    private javax.swing.JLabel x12y3;
+    private javax.swing.JLabel x12y4;
+    private javax.swing.JLabel x12y5;
+    private javax.swing.JLabel x12y6;
+    private javax.swing.JLabel x12y7;
+    private javax.swing.JLabel x12y8;
+    private javax.swing.JLabel x12y9;
+    private javax.swing.JLabel x13y10;
+    private javax.swing.JLabel x13y2;
+    private javax.swing.JLabel x13y3;
+    private javax.swing.JLabel x13y4;
+    private javax.swing.JLabel x13y5;
+    private javax.swing.JLabel x13y6;
+    private javax.swing.JLabel x13y7;
+    private javax.swing.JLabel x13y8;
+    private javax.swing.JLabel x13y9;
+    private javax.swing.JLabel x14y3;
+    private javax.swing.JLabel x14y4;
+    private javax.swing.JLabel x14y5;
+    private javax.swing.JLabel x14y6;
+    private javax.swing.JLabel x14y7;
+    private javax.swing.JLabel x14y8;
+    private javax.swing.JLabel x14y9;
+    private javax.swing.JLabel x15y4;
+    private javax.swing.JLabel x15y5;
+    private javax.swing.JLabel x15y6;
+    private javax.swing.JLabel x15y7;
+    private javax.swing.JLabel x15y8;
+    private javax.swing.JLabel x16y5;
+    private javax.swing.JLabel x16y6;
+    private javax.swing.JLabel x16y7;
+    private javax.swing.JLabel x1y1;
+    private javax.swing.JLabel x1y10;
+    private javax.swing.JLabel x1y11;
+    private javax.swing.JLabel x1y2;
+    private javax.swing.JLabel x1y3;
+    private javax.swing.JLabel x1y4;
+    private javax.swing.JLabel x1y5;
+    private javax.swing.JLabel x1y6;
+    private javax.swing.JLabel x1y7;
+    private javax.swing.JLabel x1y8;
+    private javax.swing.JLabel x1y9;
+    private javax.swing.JLabel x2y1;
+    private javax.swing.JLabel x2y10;
+    private javax.swing.JLabel x2y11;
+    private javax.swing.JLabel x2y2;
+    private javax.swing.JLabel x2y3;
+    private javax.swing.JLabel x2y4;
+    private javax.swing.JLabel x2y5;
+    private javax.swing.JLabel x2y6;
+    private javax.swing.JLabel x2y7;
+    private javax.swing.JLabel x2y8;
+    private javax.swing.JLabel x2y9;
+    private javax.swing.JLabel x3y1;
+    private javax.swing.JLabel x3y10;
+    private javax.swing.JLabel x3y11;
+    private javax.swing.JLabel x3y2;
+    private javax.swing.JLabel x3y3;
+    private javax.swing.JLabel x3y4;
+    private javax.swing.JLabel x3y5;
+    private javax.swing.JLabel x3y6;
+    private javax.swing.JLabel x3y7;
+    private javax.swing.JLabel x3y8;
+    private javax.swing.JLabel x3y9;
+    private javax.swing.JLabel x4y1;
+    private javax.swing.JLabel x4y10;
+    private javax.swing.JLabel x4y11;
+    private javax.swing.JLabel x4y2;
+    private javax.swing.JLabel x4y3;
+    private javax.swing.JLabel x4y4;
+    private javax.swing.JLabel x4y5;
+    private javax.swing.JLabel x4y6;
+    private javax.swing.JLabel x4y7;
+    private javax.swing.JLabel x4y8;
+    private javax.swing.JLabel x4y9;
+    private javax.swing.JLabel x5y1;
+    private javax.swing.JLabel x5y10;
+    private javax.swing.JLabel x5y11;
+    private javax.swing.JLabel x5y2;
+    private javax.swing.JLabel x5y3;
+    private javax.swing.JLabel x5y4;
+    private javax.swing.JLabel x5y5;
+    private javax.swing.JLabel x5y6;
+    private javax.swing.JLabel x5y7;
+    private javax.swing.JLabel x5y8;
+    private javax.swing.JLabel x5y9;
+    private javax.swing.JLabel x6y1;
+    private javax.swing.JLabel x6y10;
+    private javax.swing.JLabel x6y11;
+    private javax.swing.JLabel x6y2;
+    private javax.swing.JLabel x6y3;
+    private javax.swing.JLabel x6y4;
+    private javax.swing.JLabel x6y5;
+    private javax.swing.JLabel x6y6;
+    private javax.swing.JLabel x6y7;
+    private javax.swing.JLabel x6y8;
+    private javax.swing.JLabel x6y9;
+    private javax.swing.JLabel x7y1;
+    private javax.swing.JLabel x7y10;
+    private javax.swing.JLabel x7y11;
+    private javax.swing.JLabel x7y2;
+    private javax.swing.JLabel x7y3;
+    private javax.swing.JLabel x7y4;
+    private javax.swing.JLabel x7y5;
+    private javax.swing.JLabel x7y6;
+    private javax.swing.JLabel x7y7;
+    private javax.swing.JLabel x7y8;
+    private javax.swing.JLabel x7y9;
+    private javax.swing.JLabel x8y1;
+    private javax.swing.JLabel x8y10;
+    private javax.swing.JLabel x8y11;
+    private javax.swing.JLabel x8y2;
+    private javax.swing.JLabel x8y3;
+    private javax.swing.JLabel x8y4;
+    private javax.swing.JLabel x8y5;
+    private javax.swing.JLabel x8y6;
+    private javax.swing.JLabel x8y7;
+    private javax.swing.JLabel x8y8;
+    private javax.swing.JLabel x8y9;
+    private javax.swing.JLabel x9y1;
+    private javax.swing.JLabel x9y10;
+    private javax.swing.JLabel x9y11;
+    private javax.swing.JLabel x9y2;
+    private javax.swing.JLabel x9y3;
+    private javax.swing.JLabel x9y4;
+    private javax.swing.JLabel x9y5;
+    private javax.swing.JLabel x9y6;
+    private javax.swing.JLabel x9y7;
+    private javax.swing.JLabel x9y8;
+    private javax.swing.JLabel x9y9;
     // End of variables declaration//GEN-END:variables
-    private static final String chemin = "C:\\Users\\nadim\\Documents\\GitHub\\FINSTERE-FLURE\\src\\img\\";
-    
-    private void initJoueur(){
-        
-    }
+    public static final String chemin = "C:\\Users\\nadim\\Documents\\GitHub\\FINSTERE-FLURE\\src\\img\\";
+    private Partie partie;
+    private int choix1 = -1, choix2 = -1;
 }

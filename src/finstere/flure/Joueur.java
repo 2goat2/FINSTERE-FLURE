@@ -6,6 +6,7 @@
 package finstere.flure;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *

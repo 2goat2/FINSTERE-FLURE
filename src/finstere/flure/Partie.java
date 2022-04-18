@@ -30,7 +30,7 @@ public class Partie {
     private Joueur gagnant;
 
     //La liste des pions gagnants dans cette partie
-    private final ArrayList<PionJoueur> piongagnant;
+    private ArrayList<PionJoueur> piongagnant;
 
     //La liste d'obstacles dans cette partie
     private ArrayList<Pierre> obstacle;
@@ -61,6 +61,7 @@ public class Partie {
         this.premierDeplacementDeJoueurs = true;
 
     }
+    
 
     /*
     * Méthode pour init les joueurs avant de commencer la partie
@@ -127,7 +128,7 @@ public class Partie {
             System.out.println("mouvement");
 
             Tuile t = paquet.donnerTuile();
-            if (this.premierDeplacementDeJoueurs) {
+            if (this.isPremierDeplacementDeJoueurs()) {
                 while (Objects.requireNonNull(t).getMouvement() == 1) {
                     t = paquet.donnerTuile();
                 }
@@ -159,32 +160,32 @@ public class Partie {
 
             deplacerPionJoueur();
 
-            this.gagnant = this.gagnant(this.getListJoueur());
+            this.setGagnant(this.gagnant(this.getListJoueur()));
 
         }
 
         System.out.println("liste de joueurs : " + this.getListJoueur().toString());
-        System.out.println("joueur gagnant : " + this.gagnant.getNom());
+        System.out.println("joueur gagnant : " + this.getGagnant().getNom());
         System.out.println("liste de Pions perdus : " + this.getPionperdu().toString());
-        System.out.println("liste de Pions gagnants : " + this.piongagnant);
+        System.out.println("liste de Pions gagnants : " + this.getPiongagnant());
 
     }
 
-    private void ajouterObstacles(){
+    public void ajouterObstacles(){
 
-        this.obstacle.add(new Pierre(4,3,this.p));
-        this.obstacle.add(new Pierre(5,8,this.p));
-        this.obstacle.add(new Pierre(6,10,this.p));
-        this.obstacle.add(new Pierre(7,7,this.p));
-        this.obstacle.add(new Pierre(8,5,this.p));
-        this.obstacle.add(new Pierre(9,6,this.p));
-        this.obstacle.add(new Pierre(9,10,this.p));
-        this.obstacle.add(new Pierre(13,4,this.p));
-        this.obstacle.add(new Pierre(13,8,this.p));
-        this.obstacle.add(new Pierre(14,6,this.p));
-        this.obstacle.add(new Pierre(15,9,this.p));
+        this.getObstacle().add(new Pierre(4,3, this.getP()));
+        this.getObstacle().add(new Pierre(5,8, this.getP()));
+        this.getObstacle().add(new Pierre(6,10, this.getP()));
+        this.getObstacle().add(new Pierre(7,7, this.getP()));
+        this.getObstacle().add(new Pierre(8,5, this.getP()));
+        this.getObstacle().add(new Pierre(9,6, this.getP()));
+        this.getObstacle().add(new Pierre(9,10, this.getP()));
+        this.getObstacle().add(new Pierre(13,4, this.getP()));
+        this.getObstacle().add(new Pierre(13,8, this.getP()));
+        this.getObstacle().add(new Pierre(14,6, this.getP()));
+        this.getObstacle().add(new Pierre(15,9, this.getP()));
 
-        for (Pierre pierre : this.obstacle) {
+        for (Pierre pierre : this.getObstacle()) {
             this.getP().setObjet(pierre.getY(), pierre.getX(), pierre);
         }
     }
@@ -234,7 +235,7 @@ public class Partie {
                 }
 
                 this.getListJoueur().get(i).setPionsReste(temp);
-                this.p.print();
+                this.getP().print();
 
                 for (int j = 0; j < this.getListJoueur().get(i).getPions().size(); j++) {
 
@@ -249,7 +250,7 @@ public class Partie {
                         int xScanne = 1;
                         int yScanne = 1;
 
-                        if (this.manche) {
+                        if (this.isManche()) {
                             System.out.println("MANCHE 1");
                         } else {
                             System.out.println("MANCHE 2");
@@ -358,7 +359,7 @@ public class Partie {
                     int xScanne = 1;
                     int yScanne = 1;
 
-                    if (this.manche) {
+                    if (this.isManche()) {
                         System.out.println("MANCHE 1");
                     } else {
                         System.out.println("MANCHE 2");
@@ -456,11 +457,11 @@ public class Partie {
      */
     private void deplacerPionJoueur() {
 
-        if (this.premierDeplacementDeJoueurs){
+        if (this.isPremierDeplacementDeJoueurs()){
             placer2pionsALaFin();
         }
 
-        this.premierDeplacementDeJoueurs = false;
+        this.setPremierDeplacementDeJoueurs(false);
 
         for (int i = 0; i < this.getListJoueur().size(); i++) {
             for (int j = 0; j < this.getListJoueur().get(i).getPions().size(); j++) {
@@ -533,13 +534,13 @@ public class Partie {
 
                 } else if (xScanne == 0 && yScanne == 0) {
 
-                    this.piongagnant.add(this.getListJoueur().get(i).getPions().get(j));
-                    this.p.getPlateau()[1][1].supprimerObject();
-                    this.listJoueur.get(i).getPions().remove(j);
+                    this.getPiongagnant().add(this.getListJoueur().get(i).getPions().get(j));
+                    this.getP().getPlateau()[1][1].supprimerObject();
+                    this.getListJoueur().get(i).getPions().remove(j);
                 }
 
                 this.getP().print();
-                System.out.println(this.piongagnant);
+                System.out.println(this.getPiongagnant());
 
                 this.setManche(!this.isManche());
             }
@@ -556,10 +557,10 @@ public class Partie {
         int pions1 = 0;
         int pions2 = 0;
 
-        for (int i = 0; i < this.piongagnant.size(); i++) {
-            if (this.piongagnant.get(i).getNumJoueur() == 0) {
+        for (int i = 0; i < this.getPiongagnant().size(); i++) {
+            if (this.getPiongagnant().get(i).getNumJoueur() == 0) {
                 pions1 += 1;
-            } else if (this.piongagnant.get(i).getNumJoueur() == 1) {
+            } else if (this.getPiongagnant().get(i).getNumJoueur() == 1) {
                 pions2 += 1;
             }
         }
@@ -581,7 +582,7 @@ public class Partie {
     }
 
     //Methode qui permet au monstre à se mettre sur le plateau
-    private void mettreLeMontreSurPlateau() {
+    public void mettreLeMontreSurPlateau() {
         System.out.println("\n");
         System.out.println(" !!!!!!!!!!!!!!!!!!!!!!!!!!! ");
         System.out.println(" !!! Le monstre est venu !!! ");
@@ -621,7 +622,7 @@ public class Partie {
      * @param obj l'objet qui se déplace
      * @return Retourne true si l'objet a été bien se déplacé, sinon false
      */
-    private boolean deplacerEtVerifierUnObjetDansUneCase(int x, int y, Object obj) {
+    public boolean deplacerEtVerifierUnObjetDansUneCase(int x, int y, Object obj) {
 
         if (this.getP().getPlateau()[x][y].isOccupee()) {
 
@@ -669,9 +670,9 @@ public class Partie {
 
                         pion.setX(1);
                         pion.setY(1);
-                        this.p.setObjet(1, 1, pion);
-                        this.p.getPlateau()[pion.getxAncien()][pion.getyAncien()].supprimerObject();
-                        this.p.print();
+                        this.getP().setObjet(1, 1, pion);
+                        this.getP().getPlateau()[pion.getxAncien()][pion.getyAncien()].supprimerObject();
+                        this.getP().print();
                         return true;
 
                     }
@@ -757,7 +758,7 @@ public class Partie {
      * @return the finish
      */
     public boolean getFinish() {
-        return finish;
+        return isFinish();
     }
 
     /**
@@ -765,6 +766,83 @@ public class Partie {
      */
     public void setFinish(boolean finish) {
         this.finish = finish;
+    }
+
+    /**
+     * @param listJoueur the listJoueur to set
+     */
+    public void setListJoueur(ArrayList<Joueur> listJoueur) {
+        this.listJoueur = listJoueur;
+    }
+
+    /**
+     * @param pionperdu the pionperdu to set
+     */
+    public void setPionperdu(ArrayList<PionJoueur> pionperdu) {
+        this.pionperdu = pionperdu;
+    }
+
+    /**
+     * @return the gagnant
+     */
+    public Joueur getGagnant() {
+        return gagnant;
+    }
+
+    /**
+     * @param gagnant the gagnant to set
+     */
+    public void setGagnant(Joueur gagnant) {
+        this.gagnant = gagnant;
+    }
+
+    /**
+     * @return the piongagnant
+     */
+    public ArrayList<PionJoueur> getPiongagnant() {
+        return piongagnant;
+    }
+
+    /**
+     * @param piongagnant the piongagnant to set
+     */
+    public void setPiongagnant(ArrayList<PionJoueur> piongagnant) {
+        this.piongagnant = piongagnant;
+    }
+
+    /**
+     * @return the obstacle
+     */
+    public ArrayList<Pierre> getObstacle() {
+        return obstacle;
+    }
+
+    /**
+     * @param obstacle the obstacle to set
+     */
+    public void setObstacle(ArrayList<Pierre> obstacle) {
+        this.obstacle = obstacle;
+    }
+
+    /**
+     * @return the premierDeplacementDeJoueurs
+     */
+    public boolean isPremierDeplacementDeJoueurs() {
+        return premierDeplacementDeJoueurs;
+    }
+
+    /**
+     * @param premierDeplacementDeJoueurs the premierDeplacementDeJoueurs to set
+     */
+    public void setPremierDeplacementDeJoueurs(boolean premierDeplacementDeJoueurs) {
+        this.premierDeplacementDeJoueurs = premierDeplacementDeJoueurs;
+    }
+
+    /**
+     * @return the EspaceDeDebut
+     */
+    public Espace getEspaceDeDebut() {
+        return EspaceDeDebut;
     }
 
 }

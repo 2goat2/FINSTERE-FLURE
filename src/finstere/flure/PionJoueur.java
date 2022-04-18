@@ -5,6 +5,8 @@
  */
 package finstere.flure;
 
+import java.util.Random;
+
 /**
  *
  * @author nadim La classe PionMonstre extends la classe Pion
@@ -12,7 +14,9 @@ package finstere.flure;
 public class PionJoueur extends Pion {
 
     //Tableau String des couleurs
-    private final String[] couleur = new String[]{"bleu", "brun", "gris", "vert", "violet", "rouge", "jaune"};
+    private final String[] tabcouleur = new String[]{"blue", "brown", "gray", "green", "purple", "red", "yellow"};
+
+    private String couleur;
 
     //true : face foncée ; false : face claire
     private boolean face = false;
@@ -41,6 +45,8 @@ public class PionJoueur extends Pion {
     //permet de savoir si le pion est bien initialisé et il est sur le plateau
     private boolean estSurPlateau;
 
+    public String imageSource;
+
     //Constructeur
     public PionJoueur(int x, int y, boolean face, int f1, int f2, int i) {
 
@@ -55,6 +61,13 @@ public class PionJoueur extends Pion {
         this.yAncien = 0;
         this.numJoueur = i;
         this.estSurPlateau = false;
+        
+        if (this.numJoueur == 0) {
+            this.couleur = "blue";
+        } else {
+            this.couleur = "red";
+        }
+        this.imageSource = FinFlureGUI.chemin + "pion" + this.couleur + "_" + this.valeurDeFaceFonce + "_" + this.valeurDeFaceClaire + "_" + this.getFace() + ".gif";
 
     }
 
@@ -65,21 +78,25 @@ public class PionJoueur extends Pion {
             this.setValeurActuelle(this.getValeurDeFaceClaire());
         }
     }
+    
+    
+    public final String getRandomCouleur() {
+        Random ra = new Random();
+        int x = ra.nextInt(7);
+        return this.tabcouleur[x];
+    }
+
 
     @Override
     public String toString() {
         return "Pion : " + this.valeurDeFaceClaire + "/" + this.valeurDeFaceFonce;
     }
 
-    public String[] getCouleur() {
-        return this.couleur;
-    }
-
-    public String getFace() {
-        if (this.isFace() == true) {
-            return "claire";
+    public final String getFace() {
+        if (this.isFace() == false) {
+            return "clair";
         } else {
-            return "foncée";
+            return "fonce";
         }
     }
 
@@ -174,5 +191,18 @@ public class PionJoueur extends Pion {
         this.estSurPlateau = estSurPlateau;
     }
 
+    /**
+     * @return the couleur
+     */
+    public String getCouleur() {
+        return couleur;
+    }
+
+    /**
+     * @param couleur the couleur to set
+     */
+    public void setCouleur(String couleur) {
+        this.couleur = couleur;
+    }
 
 }
