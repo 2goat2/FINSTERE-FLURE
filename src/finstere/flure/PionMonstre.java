@@ -265,6 +265,7 @@ public class PionMonstre {
         p.setxAncien(17);
         p.setyAncien(11);
         this.setaTue(true);
+        FinFlureGUI.cmtDeplacementJoueur += 1;
 
         System.out.println(this.partie.getManche());
         if (this.partie.getManche()) {

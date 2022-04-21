@@ -37,9 +37,14 @@ public class FinFlureGUI extends javax.swing.JFrame {
         this.logo.setIcon(new ImageIcon(chemin + "logo_finstere.gif"));
         this.nomJoueur1.setText(MenuGUI.nom1);
         this.nomJoueur2.setText(MenuGUI.nom2);
+        this.buttonStartMonsterTurn.setEnabled(false);
         this.ok.setEnabled(false);
-        this.notification.setText(MenuGUI.nom1 + " :\nDouble-click sur un pion pour le\nchoisir");
-        pionsJoueur2Enabled(false);
+        if (MenuGUI.nom1 == null || MenuGUI.nom2 == null) {
+            this.warning.setIcon(new ImageIcon(chemin + "!.gif"));
+            this.notification.setText("Il faut lancer le jeu de la\nclasse MenuGUI");
+        } else {
+            this.notification.setText(MenuGUI.nom1 + " :\nDouble-click sur un pion pour le\nchoisir");
+        }
         game();
 
     }
@@ -2149,6 +2154,8 @@ public class FinFlureGUI extends javax.swing.JFrame {
 
     private void buttonStartMonsterTurnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStartMonsterTurnActionPerformed
 
+        
+
         javax.swing.JLabel[] labels = {
             x1y1, x2y1, x3y1, x4y1, x5y1, x6y1, x7y1, x8y1, x9y1, x10y1, x11y1, x12y1,
             x1y2, x2y2, x3y2, x4y2, x5y2, x6y2, x7y2, x8y2, x9y2, x10y2, x11y2, x12y2, x13y2,
@@ -2258,32 +2265,53 @@ public class FinFlureGUI extends javax.swing.JFrame {
                 this.partie.getMonstre().deplacer(tuile.getMouvement());
             }
         }
-        this.mettreObstacleSurGUI(this.partie.getObstacle());
-        this.mettreMonstreSurGUI(this.partie.getMonstre());
-    }//GEN-LAST:event_buttonStartMonsterTurnActionPerformed
 
-    private PionJoueur iconToPion(ImageIcon icon) {
-        for (int i = 0; i < this.partie.getListJoueur().size(); i++) {
-            for (int j = 0; j < this.partie.getListJoueur().get(i).getPion().size(); j++) {
-                ImageIcon temp = new ImageIcon(this.partie.getListJoueur().get(i).getPion().get(j).imageSource);
-                if (temp == icon) {
-                    return this.partie.getListJoueur().get(i).getPion().get(j);
+        for (javax.swing.JLabel label : labels) {
+
+            if (label.getIcon() != null) {
+                String imgIcon1 = label.getIcon().toString();
+                for (int i = 0; i < this.partie.getListJoueur().size(); i++) {
+                    for (int j = 0; j < this.partie.getListJoueur().get(i).getPion().size(); j++) {
+                        String imgIcon2 = this.partie.getListJoueur().get(i).getPion().get(j).icon.toString();
+
+                        if (imgIcon1 == null ? imgIcon2 == null : imgIcon1.equals(imgIcon2)) {
+
+                            label.setEnabled(true);
+
+                        }
+
+                    }
                 }
+
             }
         }
-        return null;
-
-    }
-
+        this.mettreObstacleSurGUI(this.partie.getObstacle());
+        this.mettreMonstreSurGUI(this.partie.getMonstre());
+        this.pionsJoueur1Enabled(true);
+        this.pionsJoueur2Enabled(true);
+        this.notification.setText("Double-click sur le pion pour le choisir\net Right-click sur la nouvelle case\npour le déplacer");
+        this.premierDeplacement = false;
+        this.cmt += 1;
+        this.cmt1 += 1;
+        this.buttonStartMonsterTurn.setEnabled(false);
+    }//GEN-LAST:event_buttonStartMonsterTurnActionPerformed
 
     private void okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okActionPerformed
 
         if (this.cmt == 2) {
             this.pionsJoueur2Enabled(true);
+            this.notification.setText("Double-click sur un pion pour le\nchoisir");
+        } else {
+            this.pionsJoueur1Enabled(false);
+            this.notification.setText("Double-click sur un pion pour le\nchoisir");
+
         }
+
         if (this.cmt1 == 2) {
             this.pionsJoueur1Enabled(true);
             this.pionsJoueur2Enabled(true);
+        } else {
+            this.pionsJoueur2Enabled(false);
         }
 
         this.labelReleased = this.x12y11;
@@ -2333,7 +2361,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
 
                     }
 
-                    this.notification.setText("Double-click sur le pion pour le choisir\net double-click sur la nouvelle case\npour le déplacer");
+                    this.notification.setText("Double-click sur le pion pour le choisir\net Right-click sur la nouvelle case\npour le déplacer");
 
                     this.partie.getP().print();
                 }
@@ -2344,11 +2372,29 @@ public class FinFlureGUI extends javax.swing.JFrame {
 
     private void deplacerPion() {
 
+        this.pionsJoueur1Enabled(true);
+        this.pionsJoueur2Enabled(true);
+
         for (int i = 0; i < this.partie.getListJoueur().size(); i++) {
             for (int j = 0; j < this.partie.getListJoueur().get(i).getPion().size(); j++) {
 
                 String imgIcon1 = this.partie.getListJoueur().get(i).getPion().get(j).icon.toString();
                 String imgIcon2 = this.labelPressed.getIcon().toString();
+
+                javax.swing.JLabel[] labels = {
+                    this.pion11, this.pion12, this.pion13, this.pion14,
+                    this.pion21, this.pion22, this.pion23, this.pion24};
+
+                for (JLabel label : labels) {
+                    String labelIcon = label.getIcon().toString();
+                    if (imgIcon2 == null ? labelIcon == null : imgIcon2.equals(labelIcon)) {
+                        label.setEnabled(false);
+                    }
+                }
+
+                if (this.cmt < 2 || this.cmt1 < 2) {
+                    this.notification.setText("Double-click sur un pion pour le\nchoisir");
+                }
 
                 if (imgIcon1 == null ? imgIcon2 == null : imgIcon1.equals(imgIcon2)) {
 
@@ -2391,11 +2437,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
 
                     }
 
-                   
-
                     this.partie.getP().print();
-                } else {
-                    
                 }
             }
         }
@@ -2418,7 +2460,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
                     this.notification.setText("Case occupée!\n");
                     return true;
                 }
-                
+
             } else {
 
                 this.notification.setText("Case occupée!\n");
@@ -2464,7 +2506,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
 
     private void pion11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pion11MouseClicked
         // TODO add your handling code here:
-        if (this.pion11.isEnabled() && this.cmt < 2) {
+        if (this.pion11.isEnabled() && this.cmt < 3 && this.cmt != 0) {
 
             removeBorders();
             Border border = BorderFactory.createLineBorder(Color.BLUE, 1);
@@ -2490,7 +2532,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
 
     private void pion12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pion12MouseClicked
         // TODO add your handling code here:
-        if (this.pion12.isEnabled() && this.cmt < 2) {
+        if (this.pion12.isEnabled() && this.cmt < 3 && this.cmt != 0) {
 
             removeBorders();
             Border border = BorderFactory.createLineBorder(Color.BLUE, 1);
@@ -2518,7 +2560,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
     private void pion13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pion13MouseClicked
         // TODO add your handling code here:
 
-        if (this.pion13.isEnabled() && this.cmt < 2) {
+        if (this.pion13.isEnabled() && this.cmt < 3 && this.cmt != 0) {
 
             Border border = BorderFactory.createLineBorder(Color.BLUE, 1);
             this.pion13.setBorder(border);
@@ -2544,7 +2586,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
 
     private void pion14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pion14MouseClicked
         // TODO add your handling code here:
-        if (this.pion14.isEnabled() && this.cmt < 2) {
+        if (this.pion14.isEnabled() && this.cmt < 3 && this.cmt != 0) {
 
             removeBorders();
             Border border = BorderFactory.createLineBorder(Color.BLUE, 1);
@@ -2570,7 +2612,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
 
     private void pion21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pion21MouseClicked
         // TODO add your handling code here:
-        if (this.pion21.isEnabled() && this.cmt1 < 2) {
+        if (this.pion21.isEnabled() && this.cmt1 < 3 && this.cmt1 != 0) {
 
             removeBorders();
             Border border = BorderFactory.createLineBorder(Color.BLUE, 1);
@@ -2595,7 +2637,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
 
     private void pion22MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pion22MouseClicked
         // TODO add your handling code here:
-        if (this.pion22.isEnabled() && this.cmt1 < 2) {
+        if (this.pion22.isEnabled() && this.cmt1 < 3 && this.cmt1 != 0) {
             removeBorders();
             Border border = BorderFactory.createLineBorder(Color.BLUE, 1);
             this.pion22.setBorder(border);
@@ -2618,7 +2660,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
 
     private void pion23MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pion23MouseClicked
         // TODO add your handling code here:
-        if (this.pion23.isEnabled() && this.cmt1 < 2) {
+        if (this.pion23.isEnabled() && this.cmt1 < 3 && this.cmt1 != 0) {
             removeBorders();
             Border border = BorderFactory.createLineBorder(Color.BLUE, 1);
             this.pion23.setBorder(border);
@@ -2642,7 +2684,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
 
     private void pion24MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pion24MouseClicked
         // TODO add your handling code here:
-        if (this.pion24.isEnabled() && this.cmt1 < 2) {
+        if (this.pion24.isEnabled() && this.cmt1 < 3 && this.cmt1 != 0) {
             removeBorders();
             Border border = BorderFactory.createLineBorder(Color.BLUE, 1);
             this.pion24.setBorder(border);
@@ -2693,7 +2735,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
             if (evt.getClickCount() == 2 && evt.getButton() == MouseEvent.BUTTON1 && evt.getSource() == label) {
                 labelReleased = new javax.swing.JLabel();
                 labelPressed = label;
-                label.setBorder(border1);
+
                 System.out.println(labelPressed);
 
             }
@@ -2701,7 +2743,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
             if (evt.getSource() == label && SwingUtilities.isRightMouseButton(evt)) {
 
                 labelReleased = label;
-                label.setBorder(border2);
+
                 deplacerPion();
                 System.out.println(labelReleased);
                 System.out.println(labelReleased.getX() + " y : " + labelReleased.getY());
@@ -2716,7 +2758,25 @@ public class FinFlureGUI extends javax.swing.JFrame {
 
     private void movePion(javax.swing.JLabel labelchoisi, javax.swing.JLabel labelcible) {
         labelcible.setIcon(labelchoisi.getIcon());
+        labelcible.setEnabled(false);
+        cmtDeplacementJoueur += 1;
         labelchoisi.setIcon(new ImageIcon());
+
+        if (premierDeplacement == true) {
+            if (cmtDeplacementJoueur == 4) {
+                this.buttonStartMonsterTurn.setEnabled(true);
+            } else {
+                this.buttonStartMonsterTurn.setEnabled(false);
+            }
+        }
+
+        if (premierDeplacement == false) {
+            if (cmtDeplacementJoueur % 8 == 0) {
+                this.buttonStartMonsterTurn.setEnabled(true);
+            } else {
+                this.buttonStartMonsterTurn.setEnabled(false);
+            }
+        }
     }
 
     private void removeBorders() {
@@ -3153,10 +3213,12 @@ public class FinFlureGUI extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     public static final String chemin = "C:\\Users\\nadim\\Documents\\GitHub\\FINSTERE-FLURE\\src\\img\\";
     private Partie partie;
+    private boolean premierDeplacement = true;
     private javax.swing.JLabel labelPressed = new javax.swing.JLabel();
     private javax.swing.JLabel labelReleased = this.x12y11;
     private javax.swing.JLabel pionChoisi = new javax.swing.JLabel();
     private int choix1 = -1, choix2 = -1;
     private int choix3 = -1, choix4 = -1;
-    private int cmt = 0, cmt1 = 0;
+    private int cmt = -2, cmt1 = -2;
+    public static int cmtDeplacementJoueur = 0;
 }
