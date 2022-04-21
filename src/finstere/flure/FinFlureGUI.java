@@ -3229,7 +3229,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
     private javax.swing.JLabel x9y8;
     private javax.swing.JLabel x9y9;
     // End of variables declaration//GEN-END:variables
-    public static final String chemin = "C:\\Users\\nadim\\Documents\\GitHub\\FINSTERE-FLURE\\src\\img\\";
+    public static final String chemin = "C:\\Users\\damie\\Documents\\GitHub\\FINSTERE-FLURE\\src\\img\\";
     //C:\\Users\\nadim\\Documents\\GitHub\\FINSTERE-FLURE\\src\\img\\
     private Partie partie;
     private boolean premierDeplacement = true;
