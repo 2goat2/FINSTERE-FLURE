@@ -2146,6 +2146,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 310, 180, 198));
 
+        background.setLabelFor(background);
         background.setText("jLabel8");
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(-7, 0, 900, 640));
 
@@ -2153,8 +2154,6 @@ public class FinFlureGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonStartMonsterTurnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStartMonsterTurnActionPerformed
-
-        
 
         javax.swing.JLabel[] labels = {
             x1y1, x2y1, x3y1, x4y1, x5y1, x6y1, x7y1, x8y1, x9y1, x10y1, x11y1, x12y1,
@@ -2285,10 +2284,9 @@ public class FinFlureGUI extends javax.swing.JFrame {
 
             }
         }
+
         this.mettreObstacleSurGUI(this.partie.getObstacle());
         this.mettreMonstreSurGUI(this.partie.getMonstre());
-        this.pionsJoueur1Enabled(true);
-        this.pionsJoueur2Enabled(true);
         this.notification.setText("Double-click sur le pion pour le choisir\net Right-click sur la nouvelle case\npour le déplacer");
         this.premierDeplacement = false;
         this.cmt += 1;
@@ -2506,7 +2504,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
 
     private void pion11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pion11MouseClicked
         // TODO add your handling code here:
-        if (this.pion11.isEnabled() && this.cmt < 3 && this.cmt != 0) {
+        if (this.pion11.isEnabled() && this.cmt < 3 && this.cmt != 0 && !this.pion11choisi) {
 
             removeBorders();
             Border border = BorderFactory.createLineBorder(Color.BLUE, 1);
@@ -2519,9 +2517,11 @@ public class FinFlureGUI extends javax.swing.JFrame {
                 this.cmt += 1;
                 this.choix1 = 0;
                 this.pion11.setEnabled(false);
-
+                this.pion11choisi = true;
                 this.ok.setEnabled(true);
 
+            } else if (this.pion11choisi) {
+                this.notification.setText("Vous avez déjà choisi\n ce pion!");
             }
 
             System.out.println(this.choix1 + "vhoix 2 : " + this.choix2);
@@ -2532,7 +2532,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
 
     private void pion12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pion12MouseClicked
         // TODO add your handling code here:
-        if (this.pion12.isEnabled() && this.cmt < 3 && this.cmt != 0) {
+        if (this.pion12.isEnabled() && this.cmt < 3 && this.cmt != 0 && !this.pion12choisi) {
 
             removeBorders();
             Border border = BorderFactory.createLineBorder(Color.BLUE, 1);
@@ -2545,9 +2545,11 @@ public class FinFlureGUI extends javax.swing.JFrame {
                 this.cmt += 1;
                 this.choix1 = 1;
                 this.pion12.setEnabled(false);
-
+                this.pion12choisi = true;
                 this.ok.setEnabled(true);
 
+            } else if (this.pion12choisi) {
+                this.notification.setText("Vous avez déjà choisi\n ce pion!");
             }
 
             System.out.println(this.choix1 + "vhoix 2 : " + this.choix2);
@@ -2560,7 +2562,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
     private void pion13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pion13MouseClicked
         // TODO add your handling code here:
 
-        if (this.pion13.isEnabled() && this.cmt < 3 && this.cmt != 0) {
+        if (this.pion13.isEnabled() && this.cmt < 3 && this.cmt != 0 && !this.pion13choisi) {
 
             Border border = BorderFactory.createLineBorder(Color.BLUE, 1);
             this.pion13.setBorder(border);
@@ -2571,9 +2573,12 @@ public class FinFlureGUI extends javax.swing.JFrame {
                 removeBorders();
                 this.cmt += 1;
                 this.choix1 = 2;
+                this.pion13choisi = true;
                 this.pion13.setEnabled(false);
                 this.ok.setEnabled(true);
 
+            } else if (this.pion13choisi) {
+                this.notification.setText("Vous avez déjà choisi\n ce pion!");
             }
 
             System.out.println(this.choix1 + "vhoix 2 : " + this.choix2);
@@ -2586,7 +2591,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
 
     private void pion14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pion14MouseClicked
         // TODO add your handling code here:
-        if (this.pion14.isEnabled() && this.cmt < 3 && this.cmt != 0) {
+        if (this.pion14.isEnabled() && this.cmt < 3 && this.cmt != 0 && !this.pion14choisi) {
 
             removeBorders();
             Border border = BorderFactory.createLineBorder(Color.BLUE, 1);
@@ -2599,9 +2604,11 @@ public class FinFlureGUI extends javax.swing.JFrame {
                 this.cmt += 1;
                 this.choix1 = 3;
                 this.pion14.setEnabled(false);
-
+                this.pion14choisi = true;
                 this.ok.setEnabled(true);
 
+            } else if (this.pion14choisi) {
+                this.notification.setText("Vous avez déjà choisi\n ce pion!");
             }
 
             System.out.println(this.choix1 + "vhoix 2 : " + this.choix2);
@@ -2612,7 +2619,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
 
     private void pion21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pion21MouseClicked
         // TODO add your handling code here:
-        if (this.pion21.isEnabled() && this.cmt1 < 3 && this.cmt1 != 0) {
+        if (this.pion21.isEnabled() && this.cmt1 < 3 && this.cmt1 != 0 && !this.pion21choisi) {
 
             removeBorders();
             Border border = BorderFactory.createLineBorder(Color.BLUE, 1);
@@ -2627,9 +2634,11 @@ public class FinFlureGUI extends javax.swing.JFrame {
                 this.choix2 = 0;
                 this.pion21.setEnabled(false);
                 this.ok.setEnabled(true);
-
+                this.pion21choisi = true;
                 System.out.println(this.choix1 + "vhoix 2 : " + this.choix2);
                 System.out.println(this.cmt1);
+            } else if (!this.pion21choisi) {
+                this.notification.setText("Vous avez déjà choisi\n ce pion!");
             }
         }
 
@@ -2637,7 +2646,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
 
     private void pion22MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pion22MouseClicked
         // TODO add your handling code here:
-        if (this.pion22.isEnabled() && this.cmt1 < 3 && this.cmt1 != 0) {
+        if (this.pion22.isEnabled() && this.cmt1 < 3 && this.cmt1 != 0 && !this.pion22choisi) {
             removeBorders();
             Border border = BorderFactory.createLineBorder(Color.BLUE, 1);
             this.pion22.setBorder(border);
@@ -2649,7 +2658,10 @@ public class FinFlureGUI extends javax.swing.JFrame {
                 this.choix1 = -1;
                 this.choix2 = 1;
                 this.pion22.setEnabled(false);
+                this.pion22choisi = true;
                 this.ok.setEnabled(true);
+            } else if (this.pion22choisi) {
+                this.notification.setText("Vous avez déjà choisi\n ce pion!");
             }
 
             System.out.println(this.choix1 + "vhoix 2 : " + this.choix2);
@@ -2660,7 +2672,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
 
     private void pion23MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pion23MouseClicked
         // TODO add your handling code here:
-        if (this.pion23.isEnabled() && this.cmt1 < 3 && this.cmt1 != 0) {
+        if (this.pion23.isEnabled() && this.cmt1 < 3 && this.cmt1 != 0 && !this.pion23choisi) {
             removeBorders();
             Border border = BorderFactory.createLineBorder(Color.BLUE, 1);
             this.pion23.setBorder(border);
@@ -2673,7 +2685,10 @@ public class FinFlureGUI extends javax.swing.JFrame {
                 this.choix1 = -1;
                 this.choix2 = 2;
                 this.pion23.setEnabled(false);
+                this.pion23choisi = true;
                 this.ok.setEnabled(true);
+            } else if (this.pion23choisi) {
+                this.notification.setText("Vous avez déjà choisi\n ce pion!");
             }
 
             System.out.println(this.choix1 + "vhoix 2 : " + this.choix2);
@@ -2684,7 +2699,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
 
     private void pion24MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pion24MouseClicked
         // TODO add your handling code here:
-        if (this.pion24.isEnabled() && this.cmt1 < 3 && this.cmt1 != 0) {
+        if (this.pion24.isEnabled() && this.cmt1 < 3 && this.cmt1 != 0 && !this.pion24choisi) {
             removeBorders();
             Border border = BorderFactory.createLineBorder(Color.BLUE, 1);
             this.pion24.setBorder(border);
@@ -2696,9 +2711,12 @@ public class FinFlureGUI extends javax.swing.JFrame {
                 this.cmt1 += 1;
                 this.choix1 = -1;
                 this.choix2 = 3;
+                this.pion24choisi = true;
                 this.pion24.setEnabled(false);
                 this.ok.setEnabled(true);
 
+            } else if (this.pion24choisi) {
+                this.notification.setText("Vous avez déjà choisi\n ce pion!");
             }
 
             System.out.println(this.choix1 + "vhoix 2 : " + this.choix2);
@@ -3212,6 +3230,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
     private javax.swing.JLabel x9y9;
     // End of variables declaration//GEN-END:variables
     public static final String chemin = "C:\\Users\\nadim\\Documents\\GitHub\\FINSTERE-FLURE\\src\\img\\";
+    //C:\\Users\\nadim\\Documents\\GitHub\\FINSTERE-FLURE\\src\\img\\
     private Partie partie;
     private boolean premierDeplacement = true;
     private javax.swing.JLabel labelPressed = new javax.swing.JLabel();
@@ -3219,6 +3238,8 @@ public class FinFlureGUI extends javax.swing.JFrame {
     private javax.swing.JLabel pionChoisi = new javax.swing.JLabel();
     private int choix1 = -1, choix2 = -1;
     private int choix3 = -1, choix4 = -1;
+    private boolean pion11choisi = false, pion12choisi = false, pion13choisi = false, pion14choisi = false;
+    private boolean pion21choisi = false, pion22choisi = false, pion23choisi = false, pion24choisi = false;
     private int cmt = -2, cmt1 = -2;
     public static int cmtDeplacementJoueur = 0;
 }
