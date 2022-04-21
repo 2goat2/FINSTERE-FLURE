@@ -682,6 +682,8 @@ public class Partie {
 
         return false;
     }
+    
+    
 
     //GETTERS ET SETTERS
     /**

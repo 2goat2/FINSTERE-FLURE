@@ -268,7 +268,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(716, 39, 162, 65));
 
-        nomJoueur1.setFont(new java.awt.Font("Viner Hand ITC", 0, 10)); // NOI18N
+        nomJoueur1.setFont(new java.awt.Font("Viner Hand ITC", 0, 14)); // NOI18N
         nomJoueur1.setText("joueur1");
         getContentPane().add(nomJoueur1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 110, 178, 21));
 
@@ -304,7 +304,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
         });
         getContentPane().add(pion14, new org.netbeans.lib.awtextra.AbsoluteConstraints(838, 142, 40, 40));
 
-        nomJoueur2.setFont(new java.awt.Font("Viner Hand ITC", 0, 10)); // NOI18N
+        nomJoueur2.setFont(new java.awt.Font("Viner Hand ITC", 0, 14)); // NOI18N
         nomJoueur2.setText("Joueur2");
         getContentPane().add(nomJoueur2, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 195, 178, 30));
 
@@ -2230,7 +2230,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
             while (Objects.requireNonNull(tuile).getMouvement() == 1) {
                 tuile = paquet.donnerTuile();
             }
-            
+
             this.tuile2.setIcon(new ImageIcon());
             this.tuile2.setIcon(this.tuile1.getIcon());
             this.tuile1.setIcon(new ImageIcon(tuile.imgSource));
@@ -2381,7 +2381,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
                         System.out.println(labelReleased.getY() + " " + y);
                     }
 
-                    if (!this.partie.deplacerEtVerifierUnObjetDansUneCase(y, x, j)) {
+                    if (!deplacerEtVerifierUnObjetDansUneCaseSurGUI(y, x, j)) {
 
                         this.partie.getP().getPlateau()[this.partie.getListJoueur().get(i).getPions().get(j).getX()][this.partie.getListJoueur().get(i).getPions().get(j).getY()].supprimerObject();
                         this.partie.getListJoueur().get(i).getPions().get(j).setX(y);
@@ -2391,16 +2391,76 @@ public class FinFlureGUI extends javax.swing.JFrame {
 
                     }
 
-                    this.notification.setText("déplaceé");
+                   
 
                     this.partie.getP().print();
                 } else {
-                    this.notification.setText("not found deplacé" + i + j);
+                    
                 }
             }
         }
 
     }
+
+    public boolean deplacerEtVerifierUnObjetDansUneCaseSurGUI(int x, int y, Object obj) {
+
+        if (this.partie.getP().getPlateau()[x][y].isOccupee()) {
+
+            if (obj.getClass().equals(PionJoueur.class) && this.partie.getP().getPlateau()[x][y].getObjet() == PionJoueur.class) {
+
+                PionJoueur pionJoueur = (PionJoueur) obj;
+
+                if (pionJoueur.getX() == y && pionJoueur.getY() == x) {
+                    this.notification.setText("le pion est resté sur sa place\n");
+                    return false;
+
+                } else {
+                    this.notification.setText("Case occupée!\n");
+                    return true;
+                }
+                
+            } else {
+
+                this.notification.setText("Case occupée!\n");
+                return true;
+            }
+
+        } else if (obj.getClass().equals(PionJoueur.class)) {
+
+            PionJoueur pionJoueur = (PionJoueur) obj;
+
+            if (pionJoueur.getX() == y && pionJoueur.getY() == x) {
+
+                System.out.println("\n");
+
+            } else if (Math.abs(x - pionJoueur.getxAncien()) + Math.abs(y - pionJoueur.getyAncien()) > pionJoueur.getValeurActuelle()) {
+
+                this.notification.setText("Vous avez passé le nombre maximal de mouvement pour ce pion ! ");
+                return true;
+
+            } else if (x == 1 && y == 1) {     // si le joueur a encore (n != 0) de mouvements et veut sortir pendant le même tour
+
+                if (obj.getClass().equals(PionJoueur.class)) {
+
+                    PionJoueur pion = (PionJoueur) obj;
+
+                    if (Math.abs(x - pion.getxAncien()) + Math.abs(y - pion.getyAncien()) < pion.getValeurActuelle()) {
+
+                        pion.setX(1);
+                        pion.setY(1);
+                        this.partie.getP().setObjet(1, 1, pion);
+                        this.partie.getP().getPlateau()[pion.getxAncien()][pion.getyAncien()].supprimerObject();
+                        this.partie.getP().print();
+                        return true;
+
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
 
     private void pion11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pion11MouseClicked
         // TODO add your handling code here:
@@ -2417,6 +2477,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
                 this.cmt += 1;
                 this.choix1 = 0;
                 this.pion11.setEnabled(false);
+
                 this.ok.setEnabled(true);
 
             }
@@ -2442,6 +2503,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
                 this.cmt += 1;
                 this.choix1 = 1;
                 this.pion12.setEnabled(false);
+
                 this.ok.setEnabled(true);
 
             }
@@ -2495,6 +2557,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
                 this.cmt += 1;
                 this.choix1 = 3;
                 this.pion14.setEnabled(false);
+
                 this.ok.setEnabled(true);
 
             }
@@ -2518,6 +2581,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
 
                 removeBorders();
                 this.cmt1 += 1;
+                this.choix1 = -1;
                 this.choix2 = 0;
                 this.pion21.setEnabled(false);
                 this.ok.setEnabled(true);
@@ -2540,6 +2604,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
                 this.notification.setText("Click sur ok pour le mettre\nsur le plateau\n");
 
                 this.cmt1 += 1;
+                this.choix1 = -1;
                 this.choix2 = 1;
                 this.pion22.setEnabled(false);
                 this.ok.setEnabled(true);
@@ -2563,6 +2628,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
                 this.notification.setText("Click sur ok pour le mettre\nsur le plateau\n");
 
                 this.cmt1 += 1;
+                this.choix1 = -1;
                 this.choix2 = 2;
                 this.pion23.setEnabled(false);
                 this.ok.setEnabled(true);
@@ -2586,6 +2652,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
 
                 removeBorders();
                 this.cmt1 += 1;
+                this.choix1 = -1;
                 this.choix2 = 3;
                 this.pion24.setEnabled(false);
                 this.ok.setEnabled(true);

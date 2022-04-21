@@ -42,7 +42,7 @@
     <Component class="javax.swing.JLabel" name="nomJoueur1">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Viner Hand ITC" size="10" style="0"/>
+          <Font name="Viner Hand ITC" size="14" style="0"/>
         </Property>
         <Property name="text" type="java.lang.String" value="joueur1"/>
       </Properties>
@@ -115,7 +115,7 @@
     <Component class="javax.swing.JLabel" name="nomJoueur2">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Viner Hand ITC" size="10" style="0"/>
+          <Font name="Viner Hand ITC" size="14" style="0"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Joueur2"/>
       </Properties>

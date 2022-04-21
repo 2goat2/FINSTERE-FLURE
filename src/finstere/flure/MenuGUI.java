@@ -45,10 +45,10 @@ public class MenuGUI extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setText("Veuillez entrer le nom du premier joueur : ");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 79, 190, 28));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 79, 210, 28));
 
         jLabel3.setText("Veuillez entrer le nom du deuxiem joueur : ");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 147, 193, 28));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 147, 220, 28));
 
         nomJoueur1.setText("jTextField1");
         nomJoueur1.addActionListener(new java.awt.event.ActionListener() {
@@ -56,10 +56,10 @@ public class MenuGUI extends javax.swing.JFrame {
                 nomJoueur1ActionPerformed(evt);
             }
         });
-        getContentPane().add(nomJoueur1, new org.netbeans.lib.awtextra.AbsoluteConstraints(212, 80, 182, 28));
+        getContentPane().add(nomJoueur1, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 80, 150, 28));
 
         nomJoueur2.setText("jTextField1");
-        getContentPane().add(nomJoueur2, new org.netbeans.lib.awtextra.AbsoluteConstraints(214, 148, 180, 28));
+        getContentPane().add(nomJoueur2, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 148, 150, 28));
 
         jButton1.setText("Commencer");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
