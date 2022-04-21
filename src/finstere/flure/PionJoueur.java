@@ -6,6 +6,7 @@
 package finstere.flure;
 
 import java.util.Random;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -46,6 +47,8 @@ public class PionJoueur extends Pion {
     private boolean estSurPlateau;
 
     public String imageSource;
+    
+    public ImageIcon icon = new ImageIcon(this.imageSource);
 
     //Constructeur
     public PionJoueur(int x, int y, boolean face, int f1, int f2, int i) {
@@ -69,6 +72,7 @@ public class PionJoueur extends Pion {
         }
         this.imageSource = FinFlureGUI.chemin + "pion" + this.couleur + "_" + this.valeurDeFaceFonce + "_" + this.valeurDeFaceClaire + "_" + this.getFace() + ".gif";
 
+        this.icon = new ImageIcon(this.imageSource);
     }
 
     public void flipValeurActuelle() {

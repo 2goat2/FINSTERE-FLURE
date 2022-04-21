@@ -6,15 +6,20 @@
 package finstere.flure;
 
 /**
- * La classe qui gére les tuiles qui donnent le monstre le nombre de ses mouvements
+ * La classe qui gére les tuiles qui donnent le monstre le nombre de ses
+ * mouvements
+ *
  * @author nadim
  */
 public class Tuile {
 
     private int mouvement;
+    public String imgSource;
 
     public Tuile(int m) {
         this.mouvement = m;
+        this.imgSource = FinFlureGUI.chemin + "lauriers" + this.mouvement + ".gif";
+
     }
 
     /**

@@ -9,12 +9,17 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
+import javax.swing.border.Border;
 
 /**
  *
@@ -27,14 +32,33 @@ public class FinFlureGUI extends javax.swing.JFrame {
      */
     public FinFlureGUI() {
         initComponents();
-
+        this.background.setIcon(new ImageIcon(chemin + "background1.png"));
         this.plateau.setIcon(new ImageIcon(chemin + "fns_plateau.jpg"));
         this.logo.setIcon(new ImageIcon(chemin + "logo_finstere.gif"));
         this.nomJoueur1.setText(MenuGUI.nom1);
         this.nomJoueur2.setText(MenuGUI.nom2);
-        this.invisibeButtons();
-
+        this.ok.setEnabled(false);
+        this.notification.setText(MenuGUI.nom1 + " :\nDouble-click sur un pion pour le\nchoisir");
+        pionsJoueur2Enabled(false);
         game();
+
+    }
+
+    private void pionsJoueur1Enabled(boolean b) {
+
+        this.pion11.setEnabled(b);
+        this.pion12.setEnabled(b);
+        this.pion13.setEnabled(b);
+        this.pion14.setEnabled(b);
+
+    }
+
+    private void pionsJoueur2Enabled(boolean b) {
+
+        this.pion21.setEnabled(b);
+        this.pion22.setEnabled(b);
+        this.pion23.setEnabled(b);
+        this.pion24.setEnabled(b);
 
     }
 
@@ -60,13 +84,13 @@ public class FinFlureGUI extends javax.swing.JFrame {
         pion24 = new javax.swing.JLabel();
         tuile2 = new javax.swing.JLabel();
         tuile1 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         statuMonstre = new javax.swing.JLabel();
         viewMonstre = new javax.swing.JLabel();
-        bearingMonstre = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -231,368 +255,1864 @@ public class FinFlureGUI extends javax.swing.JFrame {
         x11y11 = new javax.swing.JLabel();
         x12y11 = new javax.swing.JLabel();
         plateau = new javax.swing.JLabel();
-        notification = new javax.swing.JLabel();
-        b1 = new javax.swing.JButton();
-        b2 = new javax.swing.JButton();
-        b3 = new javax.swing.JButton();
-        b4 = new javax.swing.JButton();
+        ok = new javax.swing.JButton();
         warning = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        notification = new javax.swing.JTextArea();
+        background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Finistre Flure");
         setBackground(new java.awt.Color(0, 255, 255));
         setSize(new java.awt.Dimension(0, 0));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(716, 39, 162, 65));
 
+        nomJoueur1.setFont(new java.awt.Font("Viner Hand ITC", 0, 10)); // NOI18N
         nomJoueur1.setText("joueur1");
+        getContentPane().add(nomJoueur1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 110, 178, 21));
 
+        pion11.setLabelFor(pion11);
+        pion11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pion11MouseClicked(evt);
+            }
+        });
+        getContentPane().add(pion11, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 142, 40, 42));
+
+        pion12.setLabelFor(pion12);
+        pion12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pion12MouseClicked(evt);
+            }
+        });
+        getContentPane().add(pion12, new org.netbeans.lib.awtextra.AbsoluteConstraints(746, 142, 40, 40));
+
+        pion13.setLabelFor(pion13);
+        pion13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pion13MouseClicked(evt);
+            }
+        });
+        getContentPane().add(pion13, new org.netbeans.lib.awtextra.AbsoluteConstraints(792, 142, 40, 40));
+
+        pion14.setLabelFor(pion14);
+        pion14.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pion14MouseClicked(evt);
+            }
+        });
+        getContentPane().add(pion14, new org.netbeans.lib.awtextra.AbsoluteConstraints(838, 142, 40, 40));
+
+        nomJoueur2.setFont(new java.awt.Font("Viner Hand ITC", 0, 10)); // NOI18N
         nomJoueur2.setText("Joueur2");
+        getContentPane().add(nomJoueur2, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 195, 178, 30));
 
-        tuile2.setText("tuile2");
+        pion21.setLabelFor(pion21);
+        pion21.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pion21MouseClicked(evt);
+            }
+        });
+        getContentPane().add(pion21, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 231, 40, 40));
 
-        tuile1.setText("tuile1");
+        pion22.setLabelFor(pion22);
+        pion22.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pion22MouseClicked(evt);
+            }
+        });
+        getContentPane().add(pion22, new org.netbeans.lib.awtextra.AbsoluteConstraints(746, 231, 40, 40));
 
+        pion23.setLabelFor(pion23);
+        pion23.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pion23MouseClicked(evt);
+            }
+        });
+        getContentPane().add(pion23, new org.netbeans.lib.awtextra.AbsoluteConstraints(792, 231, 40, 40));
+
+        pion24.setLabelFor(pion24);
+        pion24.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pion24MouseClicked(evt);
+            }
+        });
+        getContentPane().add(pion24, new org.netbeans.lib.awtextra.AbsoluteConstraints(838, 231, 40, 40));
+
+        tuile2.setFont(new java.awt.Font("Viner Hand ITC", 0, 10)); // NOI18N
+        getContentPane().add(tuile2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 520, 72, 91));
+
+        tuile1.setFont(new java.awt.Font("Viner Hand ITC", 0, 10)); // NOI18N
+        getContentPane().add(tuile1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 520, 72, 91));
+
+        jLabel8.setFont(new java.awt.Font("Viner Hand ITC", 1, 10)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel8.setText("Tuile courante");
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 490, -1, -1));
+
+        jLabel9.setFont(new java.awt.Font("Viner Hand ITC", 1, 10)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel9.setText("Tuile précédente");
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 490, -1, -1));
+
+        jLabel1.setFont(new java.awt.Font("Viner Hand ITC", 1, 10)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 0, 0));
         jLabel1.setText("Monstre info :");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 520, 90, -1));
 
+        jLabel2.setFont(new java.awt.Font("Viner Hand ITC", 0, 10)); // NOI18N
         jLabel2.setText("Status :");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 540, -1, -1));
 
-        jLabel3.setText("View :");
+        jLabel3.setFont(new java.awt.Font("Viner Hand ITC", 0, 10)); // NOI18N
+        jLabel3.setText("Vue :");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 570, -1, -1));
 
-        jLabel4.setText("Bearing :");
-
+        statuMonstre.setFont(new java.awt.Font("Viner Hand ITC", 0, 10)); // NOI18N
         statuMonstre.setText("null");
+        getContentPane().add(statuMonstre, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 540, 48, -1));
 
+        viewMonstre.setFont(new java.awt.Font("Viner Hand ITC", 0, 10)); // NOI18N
         viewMonstre.setText("null");
+        getContentPane().add(viewMonstre, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 570, 48, -1));
 
-        bearingMonstre.setText("null");
+        jLabel5.setFont(new java.awt.Font("Viner Hand ITC", 1, 10)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 51, 51));
+        jLabel5.setText("Jeu info : ");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 520, 85, -1));
 
-        jLabel5.setText("Game info : ");
+        jLabel6.setFont(new java.awt.Font("Viner Hand ITC", 0, 10)); // NOI18N
+        jLabel6.setText("La Manche :");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 540, -1, -1));
 
-        jLabel6.setText("Game phase :");
+        jLabel7.setFont(new java.awt.Font("Viner Hand ITC", 0, 10)); // NOI18N
+        jLabel7.setText("La partie:");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 570, -1, -1));
 
-        jLabel7.setText("Game round :");
-
+        gamePhase.setFont(new java.awt.Font("Viner Hand ITC", 0, 10)); // NOI18N
         gamePhase.setText("null");
+        getContentPane().add(gamePhase, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 540, 48, -1));
 
+        gameRound.setFont(new java.awt.Font("Viner Hand ITC", 0, 10)); // NOI18N
         gameRound.setText("null");
+        getContentPane().add(gameRound, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 570, 48, -1));
 
+        buttonStartMonsterTurn.setFont(new java.awt.Font("Viner Hand ITC", 0, 10)); // NOI18N
         buttonStartMonsterTurn.setText("Start monster turn !");
         buttonStartMonsterTurn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonStartMonsterTurnActionPerformed(evt);
             }
         });
+        getContentPane().add(buttonStartMonsterTurn, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 520, 164, -1));
 
         panelPlateau.setLayout(null);
         panelPlateau.add(x1y1);
         x1y1.setBounds(30, 30, 30, 30);
+
+        x2y1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x2y1);
         x2y1.setBounds(70, 30, 30, 30);
+
+        x3y1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x3y1);
         x3y1.setBounds(110, 30, 30, 30);
+
+        x4y1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x4y1);
         x4y1.setBounds(150, 30, 30, 30);
+
+        x5y1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x5y1);
         x5y1.setBounds(190, 30, 30, 30);
+
+        x6y1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x6y1);
         x6y1.setBounds(230, 30, 30, 30);
+
+        x7y1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x7y1);
         x7y1.setBounds(270, 30, 30, 30);
+
+        x8y1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x8y1);
         x8y1.setBounds(310, 30, 30, 30);
+
+        x9y1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x9y1);
         x9y1.setBounds(350, 30, 30, 30);
+
+        x10y1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x10y1);
         x10y1.setBounds(390, 30, 30, 30);
+
+        x11y1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x11y1);
         x11y1.setBounds(430, 30, 30, 30);
+
+        x12y1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x12y1);
         x12y1.setBounds(470, 30, 30, 30);
+
+        x1y2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x1y2);
         x1y2.setBounds(30, 70, 30, 30);
+
+        x2y2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x2y2);
         x2y2.setBounds(70, 70, 30, 30);
+
+        x3y2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x3y2);
         x3y2.setBounds(110, 70, 30, 30);
+
+        x4y2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x4y2);
         x4y2.setBounds(150, 70, 30, 30);
+
+        x5y2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x5y2);
         x5y2.setBounds(190, 70, 30, 30);
+
+        x6y2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x6y2);
         x6y2.setBounds(230, 70, 30, 30);
+
+        x7y2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x7y2);
         x7y2.setBounds(270, 70, 30, 30);
+
+        x8y2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x8y2);
         x8y2.setBounds(310, 70, 30, 30);
+
+        x9y2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x9y2);
         x9y2.setBounds(350, 70, 30, 30);
+
+        x10y2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x10y2);
         x10y2.setBounds(390, 70, 30, 30);
+
+        x11y2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x11y2);
         x11y2.setBounds(430, 70, 30, 30);
+
+        x12y2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x12y2);
         x12y2.setBounds(470, 70, 30, 30);
+
+        x13y2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x13y2);
         x13y2.setBounds(510, 70, 30, 30);
+
+        x14y3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x14y3);
         x14y3.setBounds(550, 110, 30, 30);
+
+        x13y3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x13y3);
         x13y3.setBounds(510, 110, 30, 30);
+
+        x12y3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x12y3);
         x12y3.setBounds(470, 110, 30, 30);
+
+        x11y3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x11y3);
         x11y3.setBounds(430, 110, 30, 30);
+
+        x10y3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x10y3);
         x10y3.setBounds(390, 110, 30, 30);
+
+        x9y3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x9y3);
         x9y3.setBounds(350, 110, 30, 30);
+
+        x8y3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x8y3);
         x8y3.setBounds(310, 110, 30, 30);
+
+        x7y3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x7y3);
         x7y3.setBounds(270, 110, 30, 30);
+
+        x6y3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x6y3);
         x6y3.setBounds(230, 110, 30, 30);
+
+        x5y3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x5y3);
         x5y3.setBounds(190, 110, 30, 30);
+
+        x4y3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x4y3);
         x4y3.setBounds(150, 110, 30, 30);
+
+        x3y3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x3y3);
         x3y3.setBounds(110, 110, 30, 30);
+
+        x2y3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x2y3);
         x2y3.setBounds(70, 110, 30, 30);
+
+        x1y3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x1y3);
         x1y3.setBounds(30, 110, 30, 30);
+
+        x1y4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x1y4);
         x1y4.setBounds(30, 150, 30, 30);
+
+        x2y4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x2y4);
         x2y4.setBounds(70, 150, 30, 30);
+
+        x3y4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x3y4);
         x3y4.setBounds(110, 150, 30, 30);
+
+        x4y4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x4y4);
         x4y4.setBounds(150, 150, 30, 30);
+
+        x5y4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x5y4);
         x5y4.setBounds(190, 150, 30, 30);
+
+        x6y4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x6y4);
         x6y4.setBounds(230, 150, 30, 30);
+
+        x7y4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x7y4);
         x7y4.setBounds(270, 150, 30, 30);
+
+        x8y4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x8y4);
         x8y4.setBounds(310, 150, 30, 30);
+
+        x9y4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x9y4);
         x9y4.setBounds(350, 150, 30, 30);
+
+        x10y4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x10y4);
         x10y4.setBounds(390, 150, 30, 30);
+
+        x11y4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x11y4);
         x11y4.setBounds(430, 150, 30, 30);
+
+        x12y4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x12y4);
         x12y4.setBounds(470, 150, 30, 30);
+
+        x13y4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x13y4);
         x13y4.setBounds(510, 150, 30, 30);
+
+        x14y4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x14y4);
         x14y4.setBounds(550, 150, 30, 30);
+
+        x15y4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x15y4);
         x15y4.setBounds(590, 150, 30, 30);
+
+        x1y5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x1y5);
         x1y5.setBounds(30, 190, 30, 30);
+
+        x2y5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x2y5);
         x2y5.setBounds(70, 190, 30, 30);
+
+        x3y5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x3y5);
         x3y5.setBounds(110, 190, 30, 30);
+
+        x4y5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x4y5);
         x4y5.setBounds(150, 190, 30, 30);
+
+        x5y5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x5y5);
         x5y5.setBounds(190, 190, 30, 30);
+
+        x6y5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x6y5);
         x6y5.setBounds(230, 190, 30, 30);
+
+        x7y5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x7y5);
         x7y5.setBounds(270, 190, 30, 30);
+
+        x8y5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x8y5);
         x8y5.setBounds(310, 190, 30, 30);
+
+        x9y5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x9y5);
         x9y5.setBounds(350, 190, 30, 30);
+
+        x10y5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x10y5);
         x10y5.setBounds(390, 190, 30, 30);
+
+        x11y5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x11y5);
         x11y5.setBounds(430, 190, 30, 30);
+
+        x12y5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x12y5);
         x12y5.setBounds(470, 190, 30, 30);
+
+        x13y5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x13y5);
         x13y5.setBounds(510, 190, 30, 30);
+
+        x14y5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x14y5);
         x14y5.setBounds(550, 190, 30, 30);
+
+        x15y5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x15y5);
         x15y5.setBounds(590, 190, 30, 30);
+
+        x16y5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x16y5);
         x16y5.setBounds(630, 190, 30, 30);
+
+        x1y6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x1y6);
         x1y6.setBounds(30, 230, 30, 30);
+
+        x2y6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x2y6);
         x2y6.setBounds(70, 230, 30, 30);
+
+        x3y6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x3y6);
         x3y6.setBounds(110, 230, 30, 30);
+
+        x4y6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x4y6);
         x4y6.setBounds(150, 230, 30, 30);
+
+        x5y6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x5y6);
         x5y6.setBounds(190, 230, 30, 30);
+
+        x6y6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x6y6);
         x6y6.setBounds(230, 230, 30, 30);
+
+        x7y6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x7y6);
         x7y6.setBounds(270, 230, 30, 30);
+
+        x8y6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x8y6);
         x8y6.setBounds(310, 230, 30, 30);
+
+        x9y6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x9y6);
         x9y6.setBounds(350, 230, 30, 30);
+
+        x10y6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x10y6);
         x10y6.setBounds(390, 230, 30, 30);
+
+        x11y6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x11y6);
         x11y6.setBounds(430, 230, 30, 30);
+
+        x12y6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x12y6);
         x12y6.setBounds(470, 230, 30, 30);
+
+        x13y6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x13y6);
         x13y6.setBounds(510, 230, 30, 30);
+
+        x14y6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x14y6);
         x14y6.setBounds(550, 230, 30, 30);
+
+        x15y6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x15y6);
         x15y6.setBounds(590, 230, 30, 30);
+
+        x16y6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x16y6);
         x16y6.setBounds(630, 230, 30, 30);
+
+        x16y7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x16y7);
         x16y7.setBounds(630, 270, 30, 30);
+
+        x15y7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x15y7);
         x15y7.setBounds(590, 270, 30, 30);
+
+        x14y7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x14y7);
         x14y7.setBounds(550, 270, 30, 30);
+
+        x13y7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x13y7);
         x13y7.setBounds(510, 270, 30, 30);
+
+        x12y7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x12y7);
         x12y7.setBounds(470, 270, 30, 30);
+
+        x11y7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x11y7);
         x11y7.setBounds(430, 270, 30, 30);
+
+        x10y7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x10y7);
         x10y7.setBounds(390, 270, 30, 30);
+
+        x9y7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x9y7);
         x9y7.setBounds(350, 270, 30, 30);
+
+        x8y7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x8y7);
         x8y7.setBounds(310, 270, 30, 30);
+
+        x7y7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x7y7);
         x7y7.setBounds(270, 270, 30, 30);
+
+        x6y7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x6y7);
         x6y7.setBounds(230, 270, 30, 30);
+
+        x5y7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x5y7);
         x5y7.setBounds(190, 270, 30, 30);
+
+        x4y7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x4y7);
         x4y7.setBounds(150, 270, 30, 30);
+
+        x3y7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x3y7);
         x3y7.setBounds(110, 270, 30, 30);
+
+        x2y7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x2y7);
         x2y7.setBounds(70, 270, 30, 30);
+
+        x1y7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x1y7);
         x1y7.setBounds(30, 270, 30, 30);
+
+        x1y8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x1y8);
         x1y8.setBounds(70, 310, 30, 30);
+
+        x2y8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x2y8);
         x2y8.setBounds(110, 310, 30, 30);
+
+        x3y8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x3y8);
         x3y8.setBounds(150, 310, 30, 30);
+
+        x4y8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x4y8);
         x4y8.setBounds(190, 310, 30, 30);
+
+        x5y8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x5y8);
         x5y8.setBounds(230, 310, 30, 30);
+
+        x6y8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x6y8);
         x6y8.setBounds(270, 310, 30, 30);
+
+        x7y8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x7y8);
         x7y8.setBounds(310, 310, 30, 30);
+
+        x8y8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x8y8);
         x8y8.setBounds(350, 310, 30, 30);
+
+        x9y8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x9y8);
         x9y8.setBounds(390, 310, 30, 30);
+
+        x10y8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x10y8);
         x10y8.setBounds(430, 310, 30, 30);
+
+        x11y8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x11y8);
         x11y8.setBounds(470, 310, 30, 30);
+
+        x12y8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x12y8);
         x12y8.setBounds(510, 310, 30, 30);
+
+        x13y8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x13y8);
         x13y8.setBounds(550, 310, 30, 30);
+
+        x14y8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x14y8);
         x14y8.setBounds(590, 310, 30, 30);
+
+        x15y8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x15y8);
         x15y8.setBounds(630, 310, 30, 30);
+
+        x1y9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x1y9);
         x1y9.setBounds(110, 350, 30, 30);
+
+        x2y9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x2y9);
         x2y9.setBounds(150, 350, 30, 30);
+
+        x3y9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x3y9);
         x3y9.setBounds(190, 350, 30, 30);
+
+        x4y9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x4y9);
         x4y9.setBounds(230, 350, 30, 30);
+
+        x5y9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x5y9);
         x5y9.setBounds(270, 350, 30, 30);
+
+        x6y9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x6y9);
         x6y9.setBounds(310, 350, 30, 30);
+
+        x7y9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x7y9);
         x7y9.setBounds(350, 350, 30, 30);
+
+        x8y9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x8y9);
         x8y9.setBounds(390, 350, 30, 30);
+
+        x9y9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x9y9);
         x9y9.setBounds(430, 350, 30, 30);
+
+        x10y9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x10y9);
         x10y9.setBounds(470, 350, 30, 30);
+
+        x11y9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x11y9);
         x11y9.setBounds(510, 350, 30, 30);
+
+        x12y9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x12y9);
         x12y9.setBounds(550, 350, 30, 30);
+
+        x13y9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x13y9);
         x13y9.setBounds(590, 350, 30, 30);
+
+        x14y9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x14y9);
         x14y9.setBounds(630, 350, 30, 30);
+
+        x1y10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x1y10);
         x1y10.setBounds(150, 390, 30, 30);
+
+        x2y10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x2y10);
         x2y10.setBounds(190, 390, 30, 30);
+
+        x3y10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x3y10);
         x3y10.setBounds(230, 390, 30, 30);
+
+        x4y10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x4y10);
         x4y10.setBounds(270, 390, 30, 30);
+
+        x5y10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x5y10);
         x5y10.setBounds(310, 390, 30, 30);
+
+        x6y10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x6y10);
         x6y10.setBounds(350, 390, 30, 30);
+
+        x7y10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x7y10);
         x7y10.setBounds(390, 390, 30, 30);
+
+        x8y10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x8y10);
         x8y10.setBounds(430, 390, 30, 30);
+
+        x9y10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x9y10);
         x9y10.setBounds(470, 390, 30, 30);
+
+        x10y10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x10y10);
         x10y10.setBounds(510, 390, 30, 30);
+
+        x11y10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x11y10);
         x11y10.setBounds(550, 390, 30, 30);
+
+        x12y10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x12y10);
         x12y10.setBounds(590, 390, 30, 30);
+
+        x13y10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x13y10);
         x13y10.setBounds(630, 390, 30, 30);
+
+        x1y11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x1y11);
         x1y11.setBounds(190, 430, 30, 30);
+
+        x2y11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x2y11);
         x2y11.setBounds(230, 430, 30, 30);
+
+        x3y11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x3y11);
         x3y11.setBounds(270, 430, 30, 30);
+
+        x4y11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x4y11);
         x4y11.setBounds(310, 430, 30, 30);
+
+        x5y11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x5y11);
         x5y11.setBounds(350, 430, 30, 30);
+
+        x6y11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x6y11);
         x6y11.setBounds(390, 430, 30, 30);
+
+        x7y11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x7y11);
         x7y11.setBounds(430, 430, 30, 30);
+
+        x8y11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x8y11);
         x8y11.setBounds(470, 430, 30, 30);
+
+        x9y11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x9y11);
         x9y11.setBounds(510, 430, 30, 30);
+
+        x10y11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x10y11);
         x10y11.setBounds(550, 430, 30, 30);
+
+        x11y11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x11y11);
         x11y11.setBounds(590, 430, 30, 30);
+
+        x12y11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                x12y11MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                x12y11MousePressed(evt);
+            }
+        });
         panelPlateau.add(x12y11);
         x12y11.setBounds(630, 430, 30, 30);
 
@@ -601,193 +2121,28 @@ public class FinFlureGUI extends javax.swing.JFrame {
         panelPlateau.add(plateau);
         plateau.setBounds(0, 0, 694, 479);
 
-        b1.setText("1");
-        b1.addActionListener(new java.awt.event.ActionListener() {
+        getContentPane().add(panelPlateau, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 694, 480));
+
+        ok.setFont(new java.awt.Font("Viner Hand ITC", 0, 10)); // NOI18N
+        ok.setText("OK");
+        ok.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                b1ActionPerformed(evt);
+                okActionPerformed(evt);
             }
         });
+        getContentPane().add(ok, new org.netbeans.lib.awtextra.AbsoluteConstraints(748, 521, 85, -1));
+        getContentPane().add(warning, new org.netbeans.lib.awtextra.AbsoluteConstraints(783, 277, 44, 29));
 
-        b2.setText("2");
-        b2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                b2ActionPerformed(evt);
-            }
-        });
+        notification.setBackground(new java.awt.Color(153, 255, 153));
+        notification.setColumns(20);
+        notification.setFont(new java.awt.Font("Viner Hand ITC", 0, 13)); // NOI18N
+        notification.setRows(5);
+        jScrollPane1.setViewportView(notification);
 
-        b3.setText("3");
-        b3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                b3ActionPerformed(evt);
-            }
-        });
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 310, 180, 198));
 
-        b4.setText("4");
-        b4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                b4ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(tuile1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(tuile2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel4)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(bearingMonstre, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(jLabel3)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(viewMonstre, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(jLabel2)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(statuMonstre, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(124, 124, 124)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(gameRound, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(gamePhase, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(buttonStartMonsterTurn, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(panelPlateau, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(pion11, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(pion12, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(pion13, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(pion14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(nomJoueur1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(nomJoueur2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(pion21, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(pion22, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(pion23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(pion24, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(notification, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(b1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(b2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(b3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(b4))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(warning, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(61, 61, 61))))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nomJoueur1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(pion11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(pion13, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-                                        .addComponent(pion14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addComponent(pion12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(2, 2, 2)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(nomJoueur2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(pion21, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(pion22, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(pion23, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(pion24, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(warning, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(notification, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(b1)
-                            .addComponent(b2)
-                            .addComponent(b3)
-                            .addComponent(b4))
-                        .addGap(49, 49, 49))
-                    .addComponent(panelPlateau, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tuile1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tuile2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel2)
-                                    .addComponent(statuMonstre))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel3)
-                                    .addComponent(viewMonstre)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel6)
-                                    .addComponent(gamePhase))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel7)
-                                    .addComponent(gameRound))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(bearingMonstre)))
-                    .addComponent(buttonStartMonsterTurn))
-                .addContainerGap())
-        );
+        background.setText("jLabel8");
+        getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(-7, 0, 900, 640));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -875,7 +2230,11 @@ public class FinFlureGUI extends javax.swing.JFrame {
             while (Objects.requireNonNull(tuile).getMouvement() == 1) {
                 tuile = paquet.donnerTuile();
             }
-
+            
+            this.tuile2.setIcon(new ImageIcon());
+            this.tuile2.setIcon(this.tuile1.getIcon());
+            this.tuile1.setIcon(new ImageIcon(tuile.imgSource));
+            this.tuile1.setText("");
             this.partie.getMonstre().deplacer(tuile.getMouvement());
 
         } else {
@@ -903,71 +2262,406 @@ public class FinFlureGUI extends javax.swing.JFrame {
         this.mettreMonstreSurGUI(this.partie.getMonstre());
     }//GEN-LAST:event_buttonStartMonsterTurnActionPerformed
 
-    private void b1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b1ActionPerformed
+    private PionJoueur iconToPion(ImageIcon icon) {
+        for (int i = 0; i < this.partie.getListJoueur().size(); i++) {
+            for (int j = 0; j < this.partie.getListJoueur().get(i).getPion().size(); j++) {
+                ImageIcon temp = new ImageIcon(this.partie.getListJoueur().get(i).getPion().get(j).imageSource);
+                if (temp == icon) {
+                    return this.partie.getListJoueur().get(i).getPion().get(j);
+                }
+            }
+        }
+        return null;
+
+    }
+
+
+    private void okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okActionPerformed
+
+        if (this.cmt == 2) {
+            this.pionsJoueur2Enabled(true);
+        }
+        if (this.cmt1 == 2) {
+            this.pionsJoueur1Enabled(true);
+            this.pionsJoueur2Enabled(true);
+        }
+
+        this.labelReleased = this.x12y11;
+        this.placerPion();
+        this.ok.setEnabled(false);
+
+    }//GEN-LAST:event_okActionPerformed
+
+    private void placerPion() {
+
+        for (int i = 0; i < this.partie.getListJoueur().size(); i++) {
+            for (int j = 0; j < this.partie.getListJoueur().get(i).getPion().size(); j++) {
+                if ((i == 0 && j == this.choix1) || (i == 1 && j == this.choix2)) {
+                    this.partie.getListJoueur().get(i).getPions().get(j).setxAncien(this.partie.getListJoueur().get(i).getPions().get(j).getX());
+                    this.partie.getListJoueur().get(i).getPions().get(j).setyAncien(this.partie.getListJoueur().get(i).getPions().get(j).getY());
+                    this.partie.getListJoueur().get(i).getPion().get(j).setValeurActuelle(this.partie.getListJoueur().get(i).getPion().get(j).getValeurActuelle() - 1);
+
+                    int x, y;
+
+                    if (labelReleased.getX() == 30) {
+
+                        x = 1;
+                        System.out.println(labelReleased.getX() + " " + x);
+
+                    } else {
+                        x = ((labelReleased.getX() - 30) / 40) + 1;
+                        System.out.println(labelReleased.getX() + " " + x);
+                    }
+
+                    if (labelReleased.getY() == 1) {
+
+                        y = 30;
+                        System.out.println(labelReleased.getY() + " " + y);
+
+                    } else {
+                        y = ((labelReleased.getY() - 30) / 40) + 1;
+                        System.out.println(labelReleased.getY() + " " + y);
+                    }
+
+                    if (!this.partie.deplacerEtVerifierUnObjetDansUneCase(y, x, j)) {
+
+                        this.partie.getListJoueur().get(i).getPions().get(j).setX(y);
+                        this.partie.getListJoueur().get(i).getPions().get(j).setY(x);
+                        this.partie.getListJoueur().get(i).getPion().get(j).setEstSurPlateau(true);
+                        this.partie.getListJoueur().get(i).getPion().get(j).setValeurActuelle(this.partie.getListJoueur().get(i).getPion().get(j).getValeurActuelle() + 1);
+                        mettrePionSurGUI(this.partie.getListJoueur().get(i).getPion().get(j), this.partie.getListJoueur().get(i));
+
+                    }
+
+                    this.notification.setText("Double-click sur le pion pour le choisir\net double-click sur la nouvelle case\npour le déplacer");
+
+                    this.partie.getP().print();
+                }
+            }
+        }
+
+    }
+
+    private void deplacerPion() {
+
+        for (int i = 0; i < this.partie.getListJoueur().size(); i++) {
+            for (int j = 0; j < this.partie.getListJoueur().get(i).getPion().size(); j++) {
+
+                String imgIcon1 = this.partie.getListJoueur().get(i).getPion().get(j).icon.toString();
+                String imgIcon2 = this.labelPressed.getIcon().toString();
+
+                if (imgIcon1 == null ? imgIcon2 == null : imgIcon1.equals(imgIcon2)) {
+
+                    System.out.println("ICONNNN : " + this.partie.getListJoueur().get(i).getPion().get(j).icon);
+                    System.out.println("ICONNNN : " + this.labelPressed.getIcon());
+
+                    this.partie.getListJoueur().get(i).getPions().get(j).setxAncien(this.partie.getListJoueur().get(i).getPions().get(j).getX());
+                    this.partie.getListJoueur().get(i).getPions().get(j).setyAncien(this.partie.getListJoueur().get(i).getPions().get(j).getY());
+                    this.partie.getListJoueur().get(i).getPion().get(j).setValeurActuelle(this.partie.getListJoueur().get(i).getPion().get(j).getValeurActuelle() - 1);
+
+                    int x, y;
+
+                    if (labelReleased.getX() == 30) {
+
+                        x = 1;
+                        System.out.println(labelReleased.getX() + " " + x);
+
+                    } else {
+                        x = ((labelReleased.getX() - 30) / 40) + 1;
+                        System.out.println(labelReleased.getX() + " " + x);
+                    }
+
+                    if (labelReleased.getY() == 1) {
+
+                        y = 30;
+                        System.out.println(labelReleased.getY() + " " + y);
+
+                    } else {
+                        y = ((labelReleased.getY() - 30) / 40) + 1;
+                        System.out.println(labelReleased.getY() + " " + y);
+                    }
+
+                    if (!this.partie.deplacerEtVerifierUnObjetDansUneCase(y, x, j)) {
+
+                        this.partie.getP().getPlateau()[this.partie.getListJoueur().get(i).getPions().get(j).getX()][this.partie.getListJoueur().get(i).getPions().get(j).getY()].supprimerObject();
+                        this.partie.getListJoueur().get(i).getPions().get(j).setX(y);
+                        this.partie.getListJoueur().get(i).getPions().get(j).setY(x);
+
+                        mettrePionSurGUI(this.partie.getListJoueur().get(i).getPion().get(j), this.partie.getListJoueur().get(i));
+
+                    }
+
+                    this.notification.setText("déplaceé");
+
+                    this.partie.getP().print();
+                } else {
+                    this.notification.setText("not found deplacé" + i + j);
+                }
+            }
+        }
+
+    }
+
+    private void pion11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pion11MouseClicked
         // TODO add your handling code here:
-        if (this.choix1 == -1) {
-            this.choix1 = Integer.parseInt(this.b1.getText()) - 1;
-            this.notification.setText("pion 2 :");
-            this.b1.setEnabled(false);
-        } else {
-            this.choix2 = Integer.parseInt(this.b1.getText()) - 1;
-            this.notification.setText(" ");
-            this.b1.setEnabled(false);
-            this.b2.setEnabled(false);
-            this.b3.setEnabled(false);
-            this.b4.setEnabled(false);
+        if (this.pion11.isEnabled() && this.cmt < 2) {
+
+            removeBorders();
+            Border border = BorderFactory.createLineBorder(Color.BLUE, 1);
+            this.pion11.setBorder(border);
+
+            if (evt.getClickCount() == 2 && evt.getButton() == MouseEvent.BUTTON1) {
+                this.notification.setText("Click sur ok pour le mettre\nsur le plateau\n");
+
+                removeBorders();
+                this.cmt += 1;
+                this.choix1 = 0;
+                this.pion11.setEnabled(false);
+                this.ok.setEnabled(true);
+
+            }
+
+            System.out.println(this.choix1 + "vhoix 2 : " + this.choix2);
+            System.out.println(this.cmt);
         }
 
-    }//GEN-LAST:event_b1ActionPerformed
+    }//GEN-LAST:event_pion11MouseClicked
 
-    private void b2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b2ActionPerformed
+    private void pion12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pion12MouseClicked
         // TODO add your handling code here:
-        if (this.choix1 == -1) {
-            this.choix1 = Integer.parseInt(this.b2.getText()) - 1;
-            this.notification.setText("pion 2 :");
-            this.b2.setEnabled(false);
-        } else {
-            this.choix2 = Integer.parseInt(this.b2.getText()) - 1;
-            this.notification.setText(" ");
-            this.b1.setEnabled(false);
-            this.b2.setEnabled(false);
-            this.b3.setEnabled(false);
-            this.b4.setEnabled(false);
+        if (this.pion12.isEnabled() && this.cmt < 2) {
+
+            removeBorders();
+            Border border = BorderFactory.createLineBorder(Color.BLUE, 1);
+            this.pion12.setBorder(border);
+
+            if (evt.getClickCount() == 2 && evt.getButton() == MouseEvent.BUTTON1) {
+
+                removeBorders();
+                this.notification.setText("Click sur ok pour le mettre\nsur le plateau\n");
+                this.cmt += 1;
+                this.choix1 = 1;
+                this.pion12.setEnabled(false);
+                this.ok.setEnabled(true);
+
+            }
+
+            System.out.println(this.choix1 + "vhoix 2 : " + this.choix2);
+            System.out.println(this.cmt);
         }
 
-    }//GEN-LAST:event_b2ActionPerformed
 
-    private void b3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b3ActionPerformed
-        if (this.choix1 == -1) {
-            this.choix1 = Integer.parseInt(this.b3.getText()) - 1;
-            this.notification.setText("pion 2 :");
-            this.b3.setEnabled(false);
-        } else {
-            this.choix2 = Integer.parseInt(this.b3.getText()) - 1;
-            this.notification.setText(" ");
-            this.b1.setEnabled(false);
-            this.b2.setEnabled(false);
-            this.b3.setEnabled(false);
-            this.b4.setEnabled(false);
+    }//GEN-LAST:event_pion12MouseClicked
+
+    private void pion13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pion13MouseClicked
+        // TODO add your handling code here:
+
+        if (this.pion13.isEnabled() && this.cmt < 2) {
+
+            Border border = BorderFactory.createLineBorder(Color.BLUE, 1);
+            this.pion13.setBorder(border);
+
+            if (evt.getClickCount() == 2 && evt.getButton() == MouseEvent.BUTTON1) {
+                this.notification.setText("Click sur ok pour le mettre\nsur le plateau\n");
+
+                removeBorders();
+                this.cmt += 1;
+                this.choix1 = 2;
+                this.pion13.setEnabled(false);
+                this.ok.setEnabled(true);
+
+            }
+
+            System.out.println(this.choix1 + "vhoix 2 : " + this.choix2);
+            System.out.println(this.cmt);
         }
 
-    }//GEN-LAST:event_b3ActionPerformed
+        removeBorders();
 
-    private void b4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b4ActionPerformed
-        if (this.choix1 == -1) {
-            this.choix1 = Integer.parseInt(this.b4.getText()) - 1;
-            this.notification.setText("pion 2 :");
-            this.b4.setEnabled(false);
-        } else {
-            this.choix2 = Integer.parseInt(this.b4.getText()) - 1;
-            this.notification.setText(" ");
-            this.b1.setEnabled(false);
-            this.b2.setEnabled(false);
-            this.b3.setEnabled(false);
-            this.b4.setEnabled(false);
+    }//GEN-LAST:event_pion13MouseClicked
+
+    private void pion14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pion14MouseClicked
+        // TODO add your handling code here:
+        if (this.pion14.isEnabled() && this.cmt < 2) {
+
+            removeBorders();
+            Border border = BorderFactory.createLineBorder(Color.BLUE, 1);
+            this.pion14.setBorder(border);
+
+            if (evt.getClickCount() == 2 && evt.getButton() == MouseEvent.BUTTON1) {
+                this.notification.setText("Click sur ok pour le mettre\nsur le plateau\n");
+
+                removeBorders();
+                this.cmt += 1;
+                this.choix1 = 3;
+                this.pion14.setEnabled(false);
+                this.ok.setEnabled(true);
+
+            }
+
+            System.out.println(this.choix1 + "vhoix 2 : " + this.choix2);
+            System.out.println(this.cmt);
         }
 
-    }//GEN-LAST:event_b4ActionPerformed
+    }//GEN-LAST:event_pion14MouseClicked
+
+    private void pion21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pion21MouseClicked
+        // TODO add your handling code here:
+        if (this.pion21.isEnabled() && this.cmt1 < 2) {
+
+            removeBorders();
+            Border border = BorderFactory.createLineBorder(Color.BLUE, 1);
+            this.pion21.setBorder(border);
+
+            if (evt.getClickCount() == 2 && evt.getButton() == MouseEvent.BUTTON1) {
+                this.notification.setText("Click sur ok pour le mettre\nsur le plateau\n");
+
+                removeBorders();
+                this.cmt1 += 1;
+                this.choix2 = 0;
+                this.pion21.setEnabled(false);
+                this.ok.setEnabled(true);
+
+                System.out.println(this.choix1 + "vhoix 2 : " + this.choix2);
+                System.out.println(this.cmt1);
+            }
+        }
+
+    }//GEN-LAST:event_pion21MouseClicked
+
+    private void pion22MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pion22MouseClicked
+        // TODO add your handling code here:
+        if (this.pion22.isEnabled() && this.cmt1 < 2) {
+            removeBorders();
+            Border border = BorderFactory.createLineBorder(Color.BLUE, 1);
+            this.pion22.setBorder(border);
+            if (evt.getClickCount() == 2 && evt.getButton() == MouseEvent.BUTTON1) {
+                removeBorders();
+                this.notification.setText("Click sur ok pour le mettre\nsur le plateau\n");
+
+                this.cmt1 += 1;
+                this.choix2 = 1;
+                this.pion22.setEnabled(false);
+                this.ok.setEnabled(true);
+            }
+
+            System.out.println(this.choix1 + "vhoix 2 : " + this.choix2);
+            System.out.println(this.cmt1);
+        }
+
+    }//GEN-LAST:event_pion22MouseClicked
+
+    private void pion23MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pion23MouseClicked
+        // TODO add your handling code here:
+        if (this.pion23.isEnabled() && this.cmt1 < 2) {
+            removeBorders();
+            Border border = BorderFactory.createLineBorder(Color.BLUE, 1);
+            this.pion23.setBorder(border);
+
+            if (evt.getClickCount() == 2 && evt.getButton() == MouseEvent.BUTTON1) {
+                removeBorders();
+                this.notification.setText("Click sur ok pour le mettre\nsur le plateau\n");
+
+                this.cmt1 += 1;
+                this.choix2 = 2;
+                this.pion23.setEnabled(false);
+                this.ok.setEnabled(true);
+            }
+
+            System.out.println(this.choix1 + "vhoix 2 : " + this.choix2);
+            System.out.println(this.cmt1);
+        }
+
+    }//GEN-LAST:event_pion23MouseClicked
+
+    private void pion24MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pion24MouseClicked
+        // TODO add your handling code here:
+        if (this.pion24.isEnabled() && this.cmt1 < 2) {
+            removeBorders();
+            Border border = BorderFactory.createLineBorder(Color.BLUE, 1);
+            this.pion24.setBorder(border);
+
+            if (evt.getClickCount() == 2 && evt.getButton() == MouseEvent.BUTTON1) {
+                this.notification.setText("Click sur ok pour le mettre\nsur le plateau\n");
+
+                removeBorders();
+                this.cmt1 += 1;
+                this.choix2 = 3;
+                this.pion24.setEnabled(false);
+                this.ok.setEnabled(true);
+
+            }
+
+            System.out.println(this.choix1 + "vhoix 2 : " + this.choix2);
+            System.out.println(this.cmt1);
+        }
+
+    }//GEN-LAST:event_pion24MouseClicked
+
+    private void x12y11MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_x12y11MousePressed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_x12y11MousePressed
+
+    private void x12y11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_x12y11MouseClicked
+
+        Border border1 = BorderFactory.createLineBorder(Color.BLUE, 1);
+        Border border2 = BorderFactory.createLineBorder(Color.RED, 1);
+
+        javax.swing.JLabel[] labels = {
+            this.x1y1, x2y1, x3y1, x4y1, x5y1, x6y1, x7y1, x8y1, x9y1, x10y1, x11y1, x12y1,
+            x1y2, x2y2, x3y2, x4y2, x5y2, x6y2, x7y2, x8y2, x9y2, x10y2, x11y2, x12y2, x13y2,
+            x1y3, x2y3, x3y3, x4y3, x5y3, x6y3, x7y3, x8y3, x9y3, x10y3, x11y3, x12y3, x13y3, x14y3,
+            x1y4, x2y4, x3y4, x4y4, x5y4, x6y4, x7y4, x8y4, x9y4, x10y4, x11y4, x12y4, x13y4, x14y4, x15y4,
+            x1y5, x2y5, x3y5, x4y5, x5y5, x6y5, x7y5, x8y5, x9y5, x10y5, x11y5, x12y5, x13y5, x14y5, x15y5, x16y5,
+            x1y6, x2y6, x3y6, x4y6, x5y6, x6y6, x7y6, x8y6, x9y6, x10y6, x11y6, x12y6, x13y6, x14y6, x15y6, x16y6,
+            x1y7, x2y7, x3y7, x4y7, x5y7, x6y7, x7y7, x8y7, x9y7, x10y7, x11y7, x12y7, x13y7, x14y7, x15y7, x16y7,
+            x1y8, x2y8, x3y8, x4y8, x5y8, x6y8, x7y8, x8y8, x9y8, x10y8, x11y8, x12y8, x13y8, x14y8, x15y8,
+            x1y9, x2y9, x3y9, x4y9, x5y9, x6y9, x7y9, x8y9, x9y9, x10y9, x11y9, x12y9, x13y9, x14y9,
+            x1y10, x2y10, x3y10, x4y10, x5y10, x6y10, x7y10, x8y10, x9y10, x10y10, x11y10, x12y10, x13y10,
+            x1y11, x2y11, x3y11, x4y11, x5y11, x6y11, x7y11, x8y11, x9y11, x10y11, x11y11, x12y11};
+
+        for (JLabel label : labels) {
+
+            if (evt.getClickCount() == 2 && evt.getButton() == MouseEvent.BUTTON1 && evt.getSource() == label) {
+                labelReleased = new javax.swing.JLabel();
+                labelPressed = label;
+                label.setBorder(border1);
+                System.out.println(labelPressed);
+
+            }
+
+            if (evt.getSource() == label && SwingUtilities.isRightMouseButton(evt)) {
+
+                labelReleased = label;
+                label.setBorder(border2);
+                deplacerPion();
+                System.out.println(labelReleased);
+                System.out.println(labelReleased.getX() + " y : " + labelReleased.getY());
+                movePion(labelPressed, labelReleased);
+
+                labelPressed = new javax.swing.JLabel();
+            }
+
+        }
+
+     }//GEN-LAST:event_x12y11MouseClicked
+
+    private void movePion(javax.swing.JLabel labelchoisi, javax.swing.JLabel labelcible) {
+        labelcible.setIcon(labelchoisi.getIcon());
+        labelchoisi.setIcon(new ImageIcon());
+    }
+
+    private void removeBorders() {
+        this.pion11.setBorder(BorderFactory.createEmptyBorder());
+        this.pion12.setBorder(BorderFactory.createEmptyBorder());
+        this.pion13.setBorder(BorderFactory.createEmptyBorder());
+        this.pion14.setBorder(BorderFactory.createEmptyBorder());
+        this.pion21.setBorder(BorderFactory.createEmptyBorder());
+        this.pion22.setBorder(BorderFactory.createEmptyBorder());
+        this.pion23.setBorder(BorderFactory.createEmptyBorder());
+        this.pion24.setBorder(BorderFactory.createEmptyBorder());
+    }
 
     /**
      * @param args the command line arguments
@@ -998,6 +2692,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new FinFlureGUI().setVisible(true);
             }
@@ -1016,10 +2711,10 @@ public class FinFlureGUI extends javax.swing.JFrame {
 
             ArrayList<PionJoueur> pionJoueurList = new ArrayList<>();
 
-            pionJoueurList.add(new PionJoueur(16, 11, false, 6, 1, i));
-            pionJoueurList.add(new PionJoueur(16, 11, false, 4, 3, i));
-            pionJoueurList.add(new PionJoueur(16, 11, false, 3, 4, i));
-            pionJoueurList.add(new PionJoueur(16, 11, false, 2, 5, i));
+            pionJoueurList.add(new PionJoueur(11, 17, false, 6, 1, i));
+            pionJoueurList.add(new PionJoueur(11, 17, false, 4, 3, i));
+            pionJoueurList.add(new PionJoueur(11, 17, false, 3, 4, i));
+            pionJoueurList.add(new PionJoueur(11, 17, false, 2, 5, i));
 
             this.partie.getListJoueur().get(i).setPions(pionJoueurList);
         }
@@ -1044,7 +2739,7 @@ public class FinFlureGUI extends javax.swing.JFrame {
 
         this.partie.setP(new Plateau());
 
-        this.partie.setMonstre(new PionMonstre(3, 3, 2, this.partie.getP(), this.partie));
+        this.partie.setMonstre(new PionMonstre(1, 1, 2, this.partie.getP(), this.partie));
 
         this.partie.mettreLeMontreSurPlateau();
         mettreMonstreSurGUI(this.partie.getMonstre());
@@ -1052,7 +2747,6 @@ public class FinFlureGUI extends javax.swing.JFrame {
         this.partie.ajouterObstacles();
         mettreObstacleSurGUI(this.partie.getObstacle());
         this.partie.getP().print();
-        //commencerPar2();
 
     }
 
@@ -1151,188 +2845,73 @@ public class FinFlureGUI extends javax.swing.JFrame {
 
     }
 
-    private void visibleButtons() {
-        this.b1.setVisible(true);
-        this.b2.setVisible(true);
-        this.b3.setVisible(true);
-        this.b4.setVisible(true);
-    }
+    public void mettrePionSurGUI(PionJoueur pion, Joueur nomJoueur) {
 
-    private void invisibeButtons() {
-        this.b1.setVisible(false);
-        this.b2.setVisible(false);
-        this.b3.setVisible(false);
-        this.b4.setVisible(false);
-    }
+        javax.swing.JLabel[] labels = {
+            x1y1, x2y1, x3y1, x4y1, x5y1, x6y1, x7y1, x8y1, x9y1, x10y1, x11y1, x12y1,
+            x1y2, x2y2, x3y2, x4y2, x5y2, x6y2, x7y2, x8y2, x9y2, x10y2, x11y2, x12y2, x13y2,
+            x1y3, x2y3, x3y3, x4y3, x5y3, x6y3, x7y3, x8y3, x9y3, x10y3, x11y3, x12y3, x13y3, x14y3,
+            x1y4, x2y4, x3y4, x4y4, x5y4, x6y4, x7y4, x8y4, x9y4, x10y4, x11y4, x12y4, x13y4, x14y4, x15y4,
+            x1y5, x2y5, x3y5, x4y5, x5y5, x6y5, x7y5, x8y5, x9y5, x10y5, x11y5, x12y5, x13y5, x14y5, x15y5, x16y5,
+            x1y6, x2y6, x3y6, x4y6, x5y6, x6y6, x7y6, x8y6, x9y6, x10y6, x11y6, x12y6, x13y6, x14y6, x15y6, x16y6,
+            x1y7, x2y7, x3y7, x4y7, x5y7, x6y7, x7y7, x8y7, x9y7, x10y7, x11y7, x12y7, x13y7, x14y7, x15y7, x16y7,
+            x1y8, x2y8, x3y8, x4y8, x5y8, x6y8, x7y8, x8y8, x9y8, x10y8, x11y8, x12y8, x13y8, x14y8, x15y8,
+            x1y9, x2y9, x3y9, x4y9, x5y9, x6y9, x7y9, x8y9, x9y9, x10y9, x11y9, x12y9, x13y9, x14y9,
+            x1y10, x2y10, x3y10, x4y10, x5y10, x6y10, x7y10, x8y10, x9y10, x10y10, x11y10, x12y10, x13y10,
+            x1y11, x2y11, x3y11, x4y11, x5y11, x6y11, x7y11, x8y11, x9y11, x10y11, x11y11, x12y11};
 
-    private void enableButtons() {
-        this.b1.setEnabled(true);
-        this.b2.setEnabled(true);
-        this.b3.setEnabled(true);
-        this.b4.setEnabled(true);
-    }
+        int x, y;
 
-    private void disableButtons() {
-        this.b1.setEnabled(false);
-        this.b2.setEnabled(false);
-        this.b3.setEnabled(false);
-        this.b4.setEnabled(false);
-    }
+        this.partie.getP().setObjet(pion.getX(), pion.getY(), pion, nomJoueur);
 
-    private void commencerPar2() {
+        if (pion.getX() == 1) {
 
-        this.notification.setText("Joueur 1 pion 1 : \n");
-        this.visibleButtons();
-        this.enableButtons();
-        if (this.choix1 != -1 && this.choix2 != -1) {
-            this.notification.setText(" jj");
-            placer2pionsAuDebut();
+            y = 30;
+
+        } else {
+            y = 30 + ((pion.getX() - 1) * 40);
+        }
+
+        if (pion.getY() == 1) {
+
+            x = 30;
+
+        } else {
+            x = 30 + ((pion.getY() - 1) * 40);
+        }
+
+        for (javax.swing.JLabel c : labels) {
+
+            if (c.getBounds().x == x && c.getBounds().y == y) {
+
+                System.out.println(c.getBounds());
+                c.setIcon(new ImageIcon(pion.imageSource));
+            }
 
         }
 
-    }
-
-    private void placer2pionsAuDebut() {
-
-        for (int i = 0; i < this.partie.getListJoueur().size(); i++) {
-
-            if ((this.choix1 != -1) && (this.choix2 != -1)) {
-                this.notification.setText("Joueur 2: Veuillez choisir 2 pions pour commencer la partie\n");
-                this.warning.setIcon(new ImageIcon(chemin + "!.gif"));
-            }
-
-            ArrayList<PionJoueur> temp = new ArrayList<>(this.partie.getListJoueur().get(i).getPions());
-
-            this.partie.getListJoueur().get(i).setPionsReste(temp);
-            this.partie.getP().print();
-
-            for (int j = 0; j < this.partie.getListJoueur().get(i).getPions().size(); j++) {
-
-                if (j == this.choix1 || j == this.choix2) {
-
-                    //Garder les coordonées anciennes
-                    this.partie.getListJoueur().get(i).getPions().get(j).setxAncien(this.partie.getListJoueur().get(i).getPions().get(j).getX());
-                    this.partie.getListJoueur().get(i).getPions().get(j).setyAncien(this.partie.getListJoueur().get(i).getPions().get(j).getY());
-
-                    Scanner scX = new Scanner(System.in);
-                    Scanner scY = new Scanner(System.in);
-                    int xScanne = 1;
-                    int yScanne = 1;
-
-                    if (this.partie.isManche()) {
-                        this.gameRound.setText("MANCHE 1");
-                    } else {
-                        this.gameRound.setText("MANCHE 2");
-                    }
-
-                    do {
-
-                        this.notification.setText("Le pion " + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.partie.getListJoueur().get(i).getNom() + " est hors le plateau!");
-                        System.out.println(this.partie.getListJoueur().get(i).getPions().get(j).getValeurActuelle() + " cases possible pour ce pion.");
-
-                        System.out.println("Veuillez entrer --- Y --- du pion " + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.partie.getListJoueur().get(i).getNom());
-                        xScanne = scX.nextInt();
-
-                        while ((xScanne < 1) || (xScanne > this.partie.getP().getHauteur())) {
-                            System.out.println("Veuillez entrer une valeur vrai entre (1 et 11) pour l'Y du pion " + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.partie.getListJoueur().get(i).getNom());
-                            xScanne = scX.nextInt();
-                        }
-
-                        while (xScanne != this.partie.getListJoueur().get(i).getPions().get(j).getEspaceDeCommencer().getY()) {
-                            System.out.println("Le pion doit commencer par la case : " + this.partie.getListJoueur().get(i).getPions().get(j).getEspaceDeCommencer().getX() + "-" + this.partie.getListJoueur().get(i).getPions().get(j).getEspaceDeCommencer().getY());
-                            xScanne = scX.nextInt();
-                        }
-
-                        System.out.println("Veuillez entrer --- X --- du pion " + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.partie.getListJoueur().get(i).getNom());
-                        yScanne = scY.nextInt();
-                        while ((yScanne < 0) || (yScanne > this.partie.getP().getLargeur())) {
-                            System.out.println("Veuillez entrer une valeur vrai entre (1 et 16) pour l'X du pion " + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.partie.getListJoueur().get(i).getNom());
-                            yScanne = scY.nextInt();
-                        }
-                        while (yScanne != this.partie.getListJoueur().get(i).getPions().get(j).getEspaceDeCommencer().getX()) {
-                            System.out.println("Le pion doit commencer par la case : " + this.partie.getListJoueur().get(i).getPions().get(j).getEspaceDeCommencer().getX() + "-" + this.partie.getListJoueur().get(i).getPions().get(j).getEspaceDeCommencer().getY());
-                            yScanne = scY.nextInt();
-                        }
-
-                    } while (this.partie.deplacerEtVerifierUnObjetDansUneCase(xScanne, yScanne, this.partie.getListJoueur().get(i).getPions().get(j)));
-
-                    this.partie.getListJoueur().get(i).getPions().get(j).setX(xScanne);
-                    this.partie.getListJoueur().get(i).getPions().get(j).setY(yScanne);
-
-                    //Garder les coordonées anciennes
-                    this.partie.getListJoueur().get(i).getPions().get(j).setxAncien(this.partie.getListJoueur().get(i).getPions().get(j).getX());
-                    this.partie.getListJoueur().get(i).getPions().get(j).setyAncien(this.partie.getListJoueur().get(i).getPions().get(j).getY());
-
-                    this.partie.getP().setObjet(xScanne, yScanne, this.partie.getListJoueur().get(i).getPions().get(j), this.partie.getListJoueur().get(i));
-
-                    this.partie.getListJoueur().get(i).getPion().get(j).setValeurActuelle(this.partie.getListJoueur().get(i).getPion().get(j).getValeurActuelle() - 1);
-                    this.partie.getP().print();
-
-                    this.partie.getP().getPlateau()[xScanne][yScanne] = new Espace(false);
-
-                    do {
-
-                        System.out.println(this.partie.getListJoueur().get(i).getPions().get(j).getValeurActuelle() + " cases possible pour ce pion.");
-
-                        System.out.println("Veuillez entrer --- Y --- du pion " + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.partie.getListJoueur().get(i).getNom());
-                        xScanne = scX.nextInt();
-
-                        while ((xScanne < 1) || (xScanne > this.partie.getP().getHauteur())) {
-                            System.out.println("Veuillez entrer une valeur vrai entre (1 et 11) pour l'Y du pion " + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.partie.getListJoueur().get(i).getNom());
-                            xScanne = scX.nextInt();
-                        }
-
-                        System.out.println("Veuillez entrer --- X --- du pion " + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.partie.getListJoueur().get(i).getNom());
-                        yScanne = scY.nextInt();
-                        while ((yScanne < 0) || (yScanne > this.partie.getP().getLargeur())) {
-                            System.out.println("Veuillez entrer une valeur vrai entre (1 et 16) pour l'X du pion " + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceClaire() + "/" + this.partie.getListJoueur().get(i).getPions().get(j).getValeurDeFaceFonce() + " pour : " + this.partie.getListJoueur().get(i).getNom());
-                            yScanne = scY.nextInt();
-                        }
-
-                    } while (this.partie.deplacerEtVerifierUnObjetDansUneCase(xScanne, yScanne, this.partie.getListJoueur().get(i).getPions().get(j)));
-
-                    this.partie.getListJoueur().get(i).getPions().get(j).setX(xScanne);
-                    this.partie.getListJoueur().get(i).getPions().get(j).setY(yScanne);
-                    System.out.println("Place ancienne pour ce pion : " + this.partie.getListJoueur().get(i).getPions().get(j).getxAncien() + " | " + this.partie.getListJoueur().get(i).getPions().get(j).getyAncien());
-                    System.out.println("Ancien2 " + this.partie.getP().getPlateau()[xScanne][yScanne].isOccupee());
-                    this.partie.getP().setObjet(xScanne, yScanne, this.partie.getListJoueur().get(i).getPions().get(j), this.partie.getListJoueur().get(i));
-                    System.out.println("new " + this.partie.getP().getPlateau()[xScanne][yScanne].isOccupee());
-                    this.partie.getListJoueur().get(i).getPion().get(j).setEstSurPlateau(true);
-                    this.partie.getListJoueur().get(i).getPion().get(j).setValeurActuelle(this.partie.getListJoueur().get(i).getPion().get(j).getValeurActuelle() + 1);
-
-                    this.choix1 = -1;
-                    this.choix2 = -1;
-                    this.enableButtons();
-
-                    this.partie.getP().print();
-                }
-            }
-        }
-
-        this.partie.setManche(!this.partie.isManche());
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton b1;
-    private javax.swing.JButton b2;
-    private javax.swing.JButton b3;
-    private javax.swing.JButton b4;
-    private javax.swing.JLabel bearingMonstre;
+    private javax.swing.JLabel background;
     private javax.swing.JButton buttonStartMonsterTurn;
     private javax.swing.JLabel gamePhase;
     private javax.swing.JLabel gameRound;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel logo;
     private javax.swing.JLabel nomJoueur1;
     private javax.swing.JLabel nomJoueur2;
-    private javax.swing.JLabel notification;
+    private javax.swing.JTextArea notification;
+    private javax.swing.JButton ok;
     private javax.swing.JPanel panelPlateau;
     private javax.swing.JLabel pion11;
     private javax.swing.JLabel pion12;
@@ -1507,5 +3086,10 @@ public class FinFlureGUI extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     public static final String chemin = "C:\\Users\\nadim\\Documents\\GitHub\\FINSTERE-FLURE\\src\\img\\";
     private Partie partie;
+    private javax.swing.JLabel labelPressed = new javax.swing.JLabel();
+    private javax.swing.JLabel labelReleased = this.x12y11;
+    private javax.swing.JLabel pionChoisi = new javax.swing.JLabel();
     private int choix1 = -1, choix2 = -1;
+    private int choix3 = -1, choix4 = -1;
+    private int cmt = 0, cmt1 = 0;
 }

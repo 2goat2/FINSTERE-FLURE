@@ -19,6 +19,8 @@ public class MenuGUI extends javax.swing.JFrame {
     public MenuGUI() {
         initComponents();
         this.logo.setIcon(new ImageIcon(chemin + "logo_finstere.gif"));
+        this.back.setIcon(new ImageIcon(chemin + "background.jpg"));
+
     }
 
     /**
@@ -37,16 +39,27 @@ public class MenuGUI extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         errorText = new javax.swing.JLabel();
         logo = new javax.swing.JLabel();
+        back = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setText("Veuillez entrer le nom du premier joueur : ");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 79, 190, 28));
 
         jLabel3.setText("Veuillez entrer le nom du deuxiem joueur : ");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 147, 193, 28));
 
         nomJoueur1.setText("jTextField1");
+        nomJoueur1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nomJoueur1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(nomJoueur1, new org.netbeans.lib.awtextra.AbsoluteConstraints(212, 80, 182, 28));
 
         nomJoueur2.setText("jTextField1");
+        getContentPane().add(nomJoueur2, new org.netbeans.lib.awtextra.AbsoluteConstraints(214, 148, 180, 28));
 
         jButton1.setText("Commencer");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -54,59 +67,12 @@ public class MenuGUI extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 217, -1, -1));
 
         errorText.setText("Appuyer sur le bouton pour commencer");
-
-        logo.setText("jLabel4");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(153, 153, 153)
-                        .addComponent(jButton1)
-                        .addGap(150, 150, 150))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(nomJoueur1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(nomJoueur2)))
-                        .addGap(6, 6, 6))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(errorText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(140, 140, 140)
-                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(logo, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nomJoueur1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nomJoueur2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(errorText, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addGap(21, 21, 21))
-        );
+        getContentPane().add(errorText, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 187, 380, 24));
+        getContentPane().add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 0, 135, 61));
+        getContentPane().add(back, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 0, 400, 260));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -123,6 +89,10 @@ public class MenuGUI extends javax.swing.JFrame {
             this.setVisible(false);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void nomJoueur1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomJoueur1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nomJoueur1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -160,6 +130,7 @@ public class MenuGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel back;
     private javax.swing.JLabel errorText;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
